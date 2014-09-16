@@ -298,7 +298,7 @@ class InlineParser {
                     if firstClose != nil { // if we've already passed the first closer:
                         
                         let deepInlines = Array(inlines[delimiterPosition+1..<firstClose.position])
-                        let shallowInlines = Array(inlines[firstClose.position..<inlines.endIndex])
+                        let shallowInlines = Array(inlines[firstClose.position+1..<inlines.endIndex])
                         let subinlines = [firstClose.delimiterCount == 1 ? .Emphasis(deepInlines) : .Strong(deepInlines)] + shallowInlines
                         inlines[delimiterPosition] = firstClose.delimiterCount == 1 ? .Strong(subinlines) : .Emphasis(subinlines)
                         inlines.removeRange(delimiterPosition+1..<inlines.endIndex)
