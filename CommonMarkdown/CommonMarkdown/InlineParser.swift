@@ -77,6 +77,10 @@ struct Text {
     var isEmpty:Bool {
         return position == string.endIndex
     }
+    
+    func since(other:Text) -> String {
+        return string.substringWithRange(other.position ..< position)
+    }
 }
 
 
@@ -160,8 +164,31 @@ class InlineParser {
         return false
     }
     
+    // Attempt to parse backticks, adding either a backtick code span or a
+    // literal sequence of backticks to the 'inlines' list.
     func parseBackticks(inout text:Text, inout inlines:[Inline]) -> Bool {
-        return false
+        
+        if let ticks = text.match(regex("^`+")) {
+            
+            let textAfterTicks = text
+            
+            while let match = text.match(regex("`+")) {
+                if match == ticks {
+                    var textBeforeTicks = text
+                    textBeforeTicks.skip(-countElements(match))
+                    inlines.append(.Code(trim(textBeforeTicks.since(textAfterTicks).stringByReplacingAll(regex("[ \n]+"), withTemplate: " "))))
+                    return true
+                }
+            }
+            
+            // If we got here, we didn't match a closing backtick sequence.
+            inlines.append(.Str(ticks))
+            text = textAfterTicks
+            return true
+            
+        } else {
+            return false
+        }
     }
     
     // Attempt to parse emphasis or strong emphasis in an efficient way,
