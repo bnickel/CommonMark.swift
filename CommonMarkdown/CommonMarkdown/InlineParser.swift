@@ -87,6 +87,7 @@ struct Text {
 class InlineParser {
     
     var refmap = [String: Link]()
+    var labelNestLevel = 0
     
     func parseReference(inout possibleReference:String) -> Bool {
         return false
@@ -320,7 +321,157 @@ class InlineParser {
     }
     
     func parseLink(inout text:Text, inout inlines:[Inline]) -> Bool {
-        return false
+        
+        let originalText = text
+        
+        if let rawLabel = parseLinkLabel(&text) {
+            
+            let textAfterLabel = text
+            
+            // if we got this far, we've parsed a label.
+            // Try to parse an explicit link: [label](url "title")
+            if text.startsWithAny("(") {
+                text.skip(1)
+                text.spln()
+                
+                if let destination = parseLinkDestination(&text) {
+                    text.spln()
+                    let title = parseLinkTitle(&text)
+                    text.spln()
+                    
+                    if text.match(regex("^\\)")) != nil {
+                        inlines.append(.Link(destination: destination, title: title ?? "", label: parseRawLabel(rawLabel)))
+                        return true
+                    }
+                }
+                
+                // Something failed to match. Revert.
+                text = originalText
+                return false
+            }
+            
+            // If we're here, it wasn't an explicit link. Try to parse a reference link.
+            
+            text.spln()
+            
+            let beforeSecondLabel = text
+            
+            var refLabel:String
+            
+            if let label = parseLinkLabel(&text) {
+                if countElements(label) > 2 {
+                    refLabel = label
+                } else {
+                    refLabel = rawLabel
+                }
+            } else {
+                text = textAfterLabel
+                refLabel = rawLabel
+            }
+            
+            // lookup rawlabel in refmap
+            if let link = refmap[normalizeReference(refLabel)] {
+                inlines.append(.Link(destination: link.destination, title: link.title ?? "", label: parseRawLabel(rawLabel)))
+                return true
+            }
+            
+            // Nothing worked, rewind:
+            text = originalText
+            return false
+            
+        } else {
+            return false
+        }
+    }
+    
+    // Attempt to parse a link label, returning number of characters parsed.
+    func parseLinkLabel(inout text:Text) -> String? {
+        let originalText = text
+        
+        if !text.startsWithAny("[") {
+            return nil
+        }
+        
+        var nestLevel = 0
+        
+        if labelNestLevel > 0 {
+            // If we've already checked to the end of this subject
+            // for a label, even with a different starting [, we
+            // know we won't find one here and we can just return.
+            // This avoids lots of backtracking.
+            // Note:  nest level 1 would be: [foo [bar]
+            //        nest level 2 would be: [foo [bar [baz]
+            labelNestLevel -= 1
+            return nil
+        }
+        
+        text.skip(1) // advance past [
+        
+        while let character = text.peek() {
+            if character == "]" && nestLevel == 0 {
+                break
+            }
+            
+            var dummyInlines = [Inline]()
+            
+            switch character {
+            case "`": parseBackticks(&text, inlines: &dummyInlines)
+            case "<": parseAutolink(&text, inlines: &dummyInlines) || parseHTMLTag(&text, inlines: &dummyInlines) || parseString(&text, inlines: &dummyInlines)
+            case "[":
+                nestLevel += 1
+                text.skip(1)
+            case "]":
+                nestLevel -= 1
+                text.skip(1)
+            case "\\": parseEscaped(&text, inlines: &dummyInlines)
+            default: parseString(&text, inlines: &dummyInlines)
+            }
+        }
+        
+        if text.startsWithAny("]") {
+            labelNestLevel = 0
+            text.skip(1)
+            return text.since(originalText)
+        } else {
+            if text.peek() == nil {
+                labelNestLevel = nestLevel
+            }
+            text = originalText
+            return nil
+        }
+    }
+    
+    // Attempt to parse link title (sans quotes), returning the string
+    // or null if no match.
+    func parseLinkTitle(inout text:Text) -> String? {
+        let previousCharacter = text.prev()!
+        
+        if !String(previousCharacter).matches(regex("\\s")) {
+            return nil
+        }
+        
+        if let match = text.match(reLinkTitle) {
+            // chop off quotes from title and unescape:
+            return unescape(shave(match, 1, 1))
+        } else {
+            return nil
+        }
+    };
+    
+    // Attempt to parse link destination, returning the string or
+    // null if no match.
+    func parseLinkDestination(inout text:Text) -> String? {
+        if let match = text.match(reLinkDestinationBraces) { // chop off surrounding <..>:
+            return unescape(shave(match, 1, 1))
+        } else if let match = text.match(reLinkDestination) {
+            return unescape(match)
+        } else {
+            return nil
+        }
+    }
+    
+    func parseRawLabel(string:String) -> [Inline] {
+        return InlineParser().parse(shave(string, 1, 1))
     }
     
     func parseImage(inout text:Text, inout inlines:[Inline]) -> Bool {
@@ -396,4 +547,14 @@ func scanDelims(var text:Text, character:Character) -> (count:Int, canOpen:Bool,
     let canClose = count > 0 && count <= 3 && !String(charBefore).matches(regex("\\s")) && (character != "_" || !String(charAfter).matches(regex("[a-z0-9]", options: .CaseInsensitive)))
     
     return (count, canOpen, canClose)
-};
+}
+
+// Normalize reference label: collapse internal whitespace
+// to single space, remove leading/trailing whitespace, case fold.
+func normalizeReference(reference:String) -> String {
+    return trim(reference).stringByReplacingAll(regex("s+"), withTemplate: " ").uppercaseString
+}
+
+func shave(string:String, leading:Int, trailing:Int) -> String {
+    return string.substringWithRange(advance(string.startIndex, leading) ..< advance(string.endIndex, -trailing))
+}
