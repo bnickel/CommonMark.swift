@@ -98,7 +98,7 @@ public class HTMLRenderer {
     }
     
     func renderBlocks(blocks:[Block], inTightList:Bool) -> String {
-        return join(blockSeparator, map(blocks, { self.renderBlock($0, inTightList: inTightList) }))
+        return join(blockSeparator, map(filter(blocks) { $0.tag != "ReferenceDef" }, { self.renderBlock($0, inTightList: inTightList) }))
     }
     
     func renderInline(inline:Inline) -> String {

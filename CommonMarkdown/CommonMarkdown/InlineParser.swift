@@ -81,6 +81,10 @@ struct Text {
     func since(other:Text) -> String {
         return string.substringWithRange(other.position ..< position)
     }
+    
+    var stringValue: String {
+        return string.substringFromIndex(position)
+    }
 }
 
 
@@ -89,7 +93,43 @@ class InlineParser {
     var refmap = [String: Link]()
     var labelNestLevel = 0
     
+    // Attempt to parse a link reference, modifying refmap.
     func parseReference(inout possibleReference:String) -> Bool {
+        
+        var text = Text(string: possibleReference)
+        
+        if let rawLabel = parseLinkLabel(&text) {
+            
+            if text.startsWithAny(":") {
+                text.skip(1)
+                text.spln()
+                
+                if let destination = parseLinkDestination(&text) {
+                    
+                    let beforeTitle = text
+                    
+                    text.spln()
+                    let title = parseLinkTitle(&text)
+                    
+                    if title == nil {
+                        text = beforeTitle
+                    }
+                    
+                    // make sure we're at line end:
+                    if text.match(regex("^ *(?:\n|$)")) != nil {
+                        let label = normalizeReference(rawLabel)
+                        
+                        if refmap[label] == nil {
+                            refmap.updateValue(Link(destination: destination, title: title), forKey: label)
+                        }
+                        
+                        possibleReference = text.stringValue
+                        return true
+                    }
+                }
+            }
+        }
+        
         return false
     }
     
