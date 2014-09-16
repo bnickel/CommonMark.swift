@@ -326,7 +326,22 @@ class InlineParser {
         return false
     }
     
+    // Attempt to parse an autolink (URL or email in pointy brackets).
     func parseAutolink(inout text:Text, inout inlines:[Inline]) -> Bool {
+        
+        if let match = text.match(regex("^<([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>")) {  // email autolink
+            let destination = match.substringWithRange(advance(match.startIndex, 1)..<advance(match.endIndex, -1))
+            inlines.append(.Link(destination: destination, title: "", label: [.Str("mailto:" + destination)]))
+            return true
+        }
+        
+        if let match = text.match(regex("^<(?:coap|doi|javascript|aaa|aaas|about|acap|cap|cid|crid|data|dav|dict|dns|file|ftp|geo|go|gopher|h323|http|https|iax|icap|im|imap|info|ipp|iris|iris.beep|iris.xpc|iris.xpcs|iris.lwz|ldap|mailto|mid|msrp|msrps|mtqp|mupdate|news|nfs|ni|nih|nntp|opaquelocktoken|pop|pres|rtsp|service|session|shttp|sieve|sip|sips|sms|snmp|soap.beep|soap.beeps|tag|tel|telnet|tftp|thismessage|tn3270|tip|tv|urn|vemmi|ws|wss|xcon|xcon-userid|xmlrpc.beep|xmlrpc.beeps|xmpp|z39.50r|z39.50s|adiumxtra|afp|afs|aim|apt|attachment|aw|beshare|bitcoin|bolo|callto|chrome|chrome-extension|com-eventbrite-attendee|content|cvs|dlna-playsingle|dlna-playcontainer|dtn|dvb|ed2k|facetime|feed|finger|fish|gg|git|gizmoproject|gtalk|hcp|icon|ipn|irc|irc6|ircs|itms|jar|jms|keyparc|lastfm|ldaps|magnet|maps|market|message|mms|ms-help|msnim|mumble|mvn|notes|oid|palm|paparazzi|platform|proxy|psyc|query|res|resource|rmi|rsync|rtmp|secondlife|sftp|sgn|skype|smb|soldat|spotify|ssh|steam|svn|teamspeak|things|udp|unreal|ut2004|ventrilo|view-source|webcal|wtai|wyciwyg|xfire|xri|ymsgr):[^<>\\x00-\\x20]*>", options: .CaseInsensitive)) {
+            
+            let destination = match.substringWithRange(advance(match.startIndex, 1)..<advance(match.endIndex, -1))
+            inlines.append(.Link(destination: destination, title: "", label: [.Str(destination)]))
+            return true
+        }
+        
         return false
     }
     
@@ -335,7 +350,13 @@ class InlineParser {
     }
     
     func parseEntity(inout text:Text, inout inlines:[Inline]) -> Bool {
-        return false
+        
+        if let match = text.match(regex("^&(?:#x[a-f0-9]{1,8}|#[0-9]{1,8}|[a-z][a-z0-9]{1,31});", options: .CaseInsensitive)) {
+            inlines.append(.Entity(match))
+            return true
+        } else {
+            return false
+        }
     }
     
     func parseString(inout text:Text, inout inlines:[Inline]) -> Bool {
