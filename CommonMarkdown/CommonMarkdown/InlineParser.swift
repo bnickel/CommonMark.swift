@@ -141,11 +141,12 @@ class InlineParser {
             case .Str(var text):
                 
                 if let endingWhitespace = text.rangeOfFirstMatch(regex(" +$")) {
+                    let spaceCount = distance(endingWhitespace.startIndex, text.endIndex)
                     text.removeRange(endingWhitespace)
                     inlines.removeLast()
                     inlines.append(.Str(text))
                     
-                    if distance(endingWhitespace.startIndex, text.endIndex) >= 2 {
+                    if spaceCount >= 2 {
                         inlines.append(.Hardbreak)
                         return true
                     }
@@ -345,8 +346,14 @@ class InlineParser {
         return false
     }
     
+    // Attempt to parse a raw HTML tag.
     func parseHTMLTag(inout text:Text, inout inlines:[Inline]) -> Bool {
-        return false
+        if let match = text.match(reHtmlTag) {
+            inlines.append(.HTML(match))
+            return true
+        } else {
+            return false
+        }
     }
     
     func parseEntity(inout text:Text, inout inlines:[Inline]) -> Bool {
