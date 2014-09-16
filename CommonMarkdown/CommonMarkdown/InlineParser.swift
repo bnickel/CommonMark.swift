@@ -160,8 +160,35 @@ class InlineParser {
         return true
     }
     
+    // Parse a backslash-escaped special character, adding either the escaped
+    // character, a hard line break (if the backslash is followed by a newline),
+    // or a literal backslash to the 'inlines' list.
     func parseEscaped(inout text:Text, inout inlines:[Inline]) -> Bool {
-        return false
+        
+        if !text.startsWithAny("\\") {
+            return false
+        }
+        
+        text.skip(1)
+        
+        if let character = text.peek() {
+            
+            if character == "\n" {
+                text.skip(1)
+                inlines.append(.Hardbreak)
+                return true
+            }
+            
+            if String(character).matches(reEscapable) {
+                text.skip(1)
+                inlines.append(.Str(String(character)))
+                return true
+            }
+        }
+        
+        inlines.append(.Str("\\"))
+        
+        return true
     }
     
     // Attempt to parse backticks, adding either a backtick code span or a
