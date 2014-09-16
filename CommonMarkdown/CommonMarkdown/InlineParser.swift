@@ -332,7 +332,7 @@ class InlineParser {
         
         if let match = text.match(regex("^<([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>")) {  // email autolink
             let destination = match.substringWithRange(advance(match.startIndex, 1)..<advance(match.endIndex, -1))
-            inlines.append(.Link(destination: destination, title: "", label: [.Str("mailto:" + destination)]))
+            inlines.append(.Link(destination: "mailto:" + destination, title: "", label: [.Str(destination)]))
             return true
         }
         
