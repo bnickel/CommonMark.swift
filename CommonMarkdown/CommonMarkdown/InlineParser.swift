@@ -474,8 +474,27 @@ class InlineParser {
         return InlineParser().parse(shave(string, 1, 1))
     }
     
+    // Attempt to parse an image.  If the opening '!' is not followed
+    // by a link, add a literal '!' to inlines.
     func parseImage(inout text:Text, inout inlines:[Inline]) -> Bool {
-        return false
+        if !text.startsWithAny("!") {
+            return false
+        }
+        
+        text.skip(1)
+        
+        if parseLink(&text, inlines: &inlines) {
+            switch inlines.last! {
+            case .Link(let destination, let title, let label):
+                inlines[inlines.endIndex - 1] = .Image(destination: destination, title: title, label: label)
+            default:
+                assertionFailure("Expected a link")
+            }
+        } else {
+            inlines.append(.Str("!"))
+        }
+        
+        return true
     }
     
     // Attempt to parse an autolink (URL or email in pointy brackets).
