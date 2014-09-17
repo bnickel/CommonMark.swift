@@ -73,7 +73,7 @@ let reHtmlBlockOpen = regex("^" + HTMLBLOCKOPEN, options: .CaseInsensitive)
 let reLinkTitle = regex(
     "^(?:\"(" + ESCAPED_CHAR + "|[^\"\\x00])*\"" +
     "|" +
-        "\'(" + ESCAPED_CHAR + "|[^\'\\x00])*\"" +
+        "\'(" + ESCAPED_CHAR + "|[^\'\\x00])*\'" +
     "|" +
        "\\((" + ESCAPED_CHAR + "|[^)\\x00])*\\))")
 

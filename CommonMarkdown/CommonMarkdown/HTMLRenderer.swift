@@ -56,7 +56,9 @@ public class HTMLRenderer {
                 
             case .Ordered(let start, _):
                 tag = "ol"
-                attributes = ["start": "\(start)"]
+                if start != 1 {
+                    attributes = ["start": "\(start)"]
+                }
             }
             
             return inTags(tag, attributes: attributes, contents: innerSeparator + renderBlocks(block.children, inTightList: block.tight) + innerSeparator)

@@ -202,3 +202,41 @@ extension String {
         return transformedString
     }
 }
+
+
+extension String {
+    
+    mutating func replaceFirst(expression:RegularExpression, options:NSMatchingOptions = nil, withTemplate template:String) {
+        replaceFirst(expression, options: options, subrange: startIndex ..< endIndex, withTemplate: template)
+    }
+    
+    mutating func replaceFirst(expression:RegularExpression, options:NSMatchingOptions, from fromIndex:Index, withTemplate template:String) {
+        replaceFirst(expression, options: options, subrange: fromIndex ..< endIndex, withTemplate: template)
+    }
+    
+    mutating func replaceFirst(expression:RegularExpression, options:NSMatchingOptions, subrange:Range<Index>, withTemplate template:String) {
+        if let match = firstMatch(expression, options: options, subrange: subrange) {
+            let replacement = expression.expr.replacementStringForResult(match.result, inString: match.foundationString, offset: 0, template: template)
+            
+            self = substringToIndex(match.range.startIndex) + replacement + substringFromIndex(match.range.endIndex)
+        }
+    }
+}
+
+extension String {
+    
+    func stringByReplacingFirst(expression:RegularExpression, options:NSMatchingOptions = nil, withTemplate template:String) -> String {
+        return stringByReplacingFirst(expression, options: options, subrange: startIndex ..< endIndex, withTemplate: template)
+    }
+    
+    func stringByReplacingFirst(expression:RegularExpression, options:NSMatchingOptions, from fromIndex:Index, withTemplate template:String) -> String {
+        return stringByReplacingFirst(expression, options: options, subrange: fromIndex ..< endIndex, withTemplate: template)
+    }
+    
+    func stringByReplacingFirst(expression:RegularExpression, options:NSMatchingOptions, subrange:Range<Index>, withTemplate template:String) -> String {
+        
+        var transformedString = self
+        transformedString.replaceFirst(expression, options: options, subrange: subrange, withTemplate: template)
+        return transformedString
+    }
+}

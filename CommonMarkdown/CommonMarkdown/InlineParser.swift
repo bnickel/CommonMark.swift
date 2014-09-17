@@ -106,25 +106,28 @@ class InlineParser {
                 
                 if let destination = parseLinkDestination(&text) {
                     
-                    let beforeTitle = text
+                    if !destination.isEmpty {
                     
-                    text.spln()
-                    let title = parseLinkTitle(&text)
-                    
-                    if title == nil {
-                        text = beforeTitle
-                    }
-                    
-                    // make sure we're at line end:
-                    if text.match(regex("^ *(?:\n|$)")) != nil {
-                        let label = normalizeReference(rawLabel)
+                        let beforeTitle = text
                         
-                        if refmap[label] == nil {
-                            refmap.updateValue(Link(destination: destination, title: title), forKey: label)
+                        text.spln()
+                        let title = parseLinkTitle(&text)
+                        
+                        if title == nil {
+                            text = beforeTitle
                         }
                         
-                        possibleReference = text.stringValue
-                        return true
+                        // make sure we're at line end:
+                        if text.match(regex("^ *(?:\n|$)")) != nil {
+                            let label = normalizeReference(rawLabel)
+                            
+                            if refmap[label] == nil {
+                                refmap.updateValue(Link(destination: destination, title: title), forKey: label)
+                            }
+                            
+                            possibleReference = text.stringValue
+                            return true
+                        }
                     }
                 }
             }
@@ -611,7 +614,7 @@ func scanDelims(var text:Text, character:Character) -> (count:Int, canOpen:Bool,
 // Normalize reference label: collapse internal whitespace
 // to single space, remove leading/trailing whitespace, case fold.
 func normalizeReference(reference:String) -> String {
-    return trim(reference).stringByReplacingAll(regex("s+"), withTemplate: " ").uppercaseString
+    return trim(reference).stringByReplacingAll(regex("\\s+"), withTemplate: " ").uppercaseString
 }
 
 func shave(string:String, leading:Int, trailing:Int) -> String {

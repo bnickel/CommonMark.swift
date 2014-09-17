@@ -104,6 +104,16 @@ public class DocumentParser {
                     allMatched = false
                 }
                 
+            case "IndentedCode":
+                
+                if indent >= CODE_INDENT {
+                    offset = advance(offset, CODE_INDENT)
+                } else if blank {
+                    offset = firstNonspace
+                } else {
+                    allMatched = false
+                }
+                
             case "ATXHeader":
                 fallthrough
                 
@@ -213,7 +223,7 @@ public class DocumentParser {
                 container = addChild("ATXHeader", lineNumber, distance(line.startIndex, firstNonspace))
                 container.level = countElements(trim(match)) // number of #s
                 // remove trailing ###s:
-                container.strings = [line.substringFromIndex(offset).stringByReplacingAll(regex("(?:(\\\\#) *#*| *#+) *$"), withTemplate: "$1")]
+                container.strings = [line.substringFromIndex(offset).stringByReplacingFirst(regex("(?:(\\\\#) *#*| *#+) *$"), withTemplate: "$1")]
                 break
 
             } else if let match = line.substringFromIndex(firstNonspace).firstMatch(regex("^`{3,}(?!.*`)|^~{3,}(?!.*~)"))?.text {
@@ -489,7 +499,7 @@ public class DocumentParser {
             
         case "IndentedCode":
             
-            block.stringContent = join("\n", block.strings).stringByReplacingAll(regex("(\n *)*$"), withTemplate: "\n")
+            block.stringContent = join("\n", block.strings).stringByReplacingFirst(regex("(\n *)*$"), withTemplate: "\n")
             
         case "FencedCode":
             
