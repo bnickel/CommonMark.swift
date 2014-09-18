@@ -8,8 +8,8 @@
 
 enum BlockType {
     case Document
-    case List
-    case ListItem
+    case List(data:ListData, tight:Bool)
+    case ListItem(ListData)
     case Paragraph
     case BlockQuote
     case ATXHeader(Int)
@@ -48,8 +48,8 @@ func == (lhs: BlockType, rhs:BlockType) -> Bool {
     
     switch (lhs, rhs) {
     case (.Document, .Document):             return true
-    case (.List, .List):                     return true
-    case (.ListItem, .ListItem):             return true
+    case (.List(let a, let b), .List(let y, let z)): return a == y && b == z
+    case (.ListItem(let a), .ListItem(let b)): return a == b
     case (.Paragraph, .Paragraph):           return true
     case (.BlockQuote, .BlockQuote):         return true
     case (.ATXHeader(let a), .ATXHeader(let b)): return a == b
@@ -66,6 +66,8 @@ func == (lhs: BlockType, rhs:BlockType) -> Bool {
 func ~= (lhs: BlockType, rhs:BlockType) -> Bool {
     
     switch (lhs, rhs) {
+    case (.List, .List):                     return true
+    case (.ListItem, .ListItem):             return true
     case (.ATXHeader, .ATXHeader):           return true
     case (.SetextHeader, .SetextHeader):     return true
     case (.FencedCode, .FencedCode):         return true
@@ -77,7 +79,17 @@ extension BlockType {
     
     // Returns true if parent block can contain child block.
     func canContain(childType:BlockType) -> Bool {
-        return contains([.Document, .BlockQuote, .ListItem], self) || (self == .List && childType == .ListItem)
+        switch self {
+        case .Document: return true
+        case .BlockQuote: return true
+        case .ListItem: return true
+        case .List:
+            switch childType {
+            case .ListItem: return true
+            default: return false
+            }
+        default: return false
+        }
     }
     
     // Returns true if block type can accept lines of text.
@@ -95,6 +107,13 @@ extension BlockType {
         case .FencedCode: fallthrough
         case .IndentedCode: fallthrough
         case .HtmlBlock: return true
+        default: return false
+        }
+    }
+    
+    func isListOfType(type:ListType) -> Bool {
+        switch self {
+        case .List(let data, _): return data.type == type
         default: return false
         }
     }
@@ -122,20 +141,10 @@ public class Block {
     }
     
     // TODO: Messy duck type stuff that should be fixed with subclasses maybe.
-    var listData:ListData!
-    var info:String!
     var tight:Bool!
 }
 
 extension Block {
-
-    func highestBlockWithType(type:BlockType) -> Block? {
-        if let block = parent?.highestBlockWithType(type) {
-            return block
-        }
-        
-        return self.type == type ? self : nil
-    }
     
     var endsWithBlankLine:Bool {
         if lastLineBlank {
@@ -213,13 +222,16 @@ func == (lhs:ListType, rhs:ListType) -> Bool {
     default:
         return false
     }
-    
 }
 
-struct ListData {
+struct ListData : Equatable {
     let type:ListType
     let markerOffset:Int
     let padding:Int
+}
+
+func == (lhs:ListData, rhs:ListData) -> Bool {
+    return lhs.type == rhs.type && lhs.markerOffset == rhs.markerOffset && lhs.padding == rhs.padding
 }
 
 func parseListMarker(line:String, offset:String.Index, markerOffset: Int) -> ListData? {

@@ -94,10 +94,10 @@ public class DocumentParser {
                     allMatched = false
                 }
                 
-            case .ListItem:
+            case .ListItem(let data):
                 
-                if indent >= container.listData.markerOffset + container.listData.padding {
-                    offset = advance(offset, container.listData.markerOffset + container.listData.padding)
+                if indent >= data.markerOffset + data.padding {
+                    offset = advance(offset, data.markerOffset + data.padding)
                 } else if (blank) {
                     offset = firstNonspace
                 } else {
@@ -267,14 +267,12 @@ public class DocumentParser {
                 }
             
                 // add the list if needed
-                if container.type != .List || container.listData.type != data.type {
-                    container = addChild(.List, lineNumber, distance(line.startIndex, firstNonspace))
-                    container.listData = data
+                if !container.type.isListOfType(data.type) {
+                    container = addChild(.List(data: data, tight:true), lineNumber, distance(line.startIndex, firstNonspace))
                 }
                 
                 // add the list item
-                container = addChild(.ListItem, lineNumber, distance(line.startIndex, firstNonspace))
-                container.listData = data
+                container = addChild(.ListItem(data), lineNumber, distance(line.startIndex, firstNonspace))
                 
             } else {
                 
@@ -387,9 +385,23 @@ public class DocumentParser {
         return IncorporationResult.Success
     }
     
+    func highestList(block: Block) -> Block? {
+        if let parent = block.parent {
+            if let list = highestList(parent) {
+                return list
+            }
+        }
+        
+        switch block.type {
+        case .List: return block
+        default: return nil
+        }
+        
+    }
+    
     func breakOutOfLists(var block:Block, lineNumber:Int) {
         
-        if let lastList = block.highestBlockWithType(.List) {
+        if let lastList = highestList(block) {
 
             while block !== lastList {
                 finalize(block, lineNumber: lineNumber)

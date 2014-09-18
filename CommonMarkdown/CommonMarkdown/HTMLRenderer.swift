@@ -45,12 +45,12 @@ public class HTMLRenderer {
             
             return inTags("li", contents: trim(renderBlocks(block.children, inTightList: inTightList)))
             
-        case .List:
+        case .List(let data, let tight):
             
             var tag:String
             var attributes = [String: String]()
             
-            switch block.listData.type {
+            switch data.type {
             case .Bullet(_):
                 tag = "ul"
                 
