@@ -22,7 +22,7 @@ public enum IncorporationResult {
 
 public func parse(markdown:String) -> Block {
     let parser = DocumentParser()
-    var lines = split(markdown.stringByReplacingAll(regex("\r\n|\n|\r"), withTemplate: "\n"), { $0 == "\n" })
+    var lines = split(markdown.stringByReplacingAll(regex("\r\n|\n|\r"), withTemplate: "\n"), { $0 == "\n" }, allowEmptySlices: true)
     
     if !lines.isEmpty && lines.last!.isEmpty {
         lines.removeLast()
