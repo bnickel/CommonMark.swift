@@ -845,7 +845,6 @@ class Section_5_2_List_items : XCTestCase {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("A paragraph\nwith two lines.\n\n    indented code\n\n> A block quote.\n")), "<p>A paragraph\nwith two lines.</p>\n<pre><code>indented code\n</code></pre>\n<blockquote>\n<p>A block quote.</p>\n</blockquote>\n", "Source:\n\nA paragraph\nwith two lines.\n\n    indented code\n\n> A block quote.\n\n")
     }
 
-
     func testExample153FromLine2410() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("1.  A paragraph\n    with two lines.\n\n        indented code\n\n    > A block quote.\n")), "<ol>\n<li><p>A paragraph\nwith two lines.</p>\n<pre><code>indented code\n</code></pre>\n<blockquote>\n<p>A block quote.</p>\n</blockquote></li>\n</ol>\n", "Source:\n\n1.  A paragraph\n    with two lines.\n\n        indented code\n\n    > A block quote.\n\n")
     }

@@ -329,17 +329,22 @@ public class DocumentParser {
             // and we don't count blanks in fenced code for purposes of tight/loose
             // lists or breaking out of lists.  We also don't set last_line_blank
             // on an empty list item.
+            print("\(container.tag) \(blank), \(container.lastLineBlank)")
             container.lastLineBlank = blank &&
                 !(container.tag == "BlockQuote" ||
                     container.tag == "FencedCode" ||
                         (container.tag == "ListItem" &&
                             container.children.count == 0 &&
                             container.startLine == lineNumber))
+            println(" -> \(container.lastLineBlank)")
             
             var parent = container.parent
-            while let container = parent {
-                container.lastLineBlank = false
-                parent = container.parent
+            while let c = parent {
+                if c.lastLineBlank {
+                    println("Removing last line on \(c.tag)")
+                }
+                c.lastLineBlank = false
+                parent = c.parent
             }
             
             switch container.tag {
@@ -528,8 +533,8 @@ public class DocumentParser {
                 // spaces between any of them:
                 for (j, subitem) in enumerate(item.children) {
                     
-                    let lastSubitem = j == subitem.children.endIndex - 1
-                    if item.endsWithBlankLine && !(lastItem || lastSubitem) {
+                    let lastSubitem = j == item.children.endIndex - 1
+                    if subitem.endsWithBlankLine && !(lastItem && lastSubitem) {
                         block.tight = false
                         break
                     }

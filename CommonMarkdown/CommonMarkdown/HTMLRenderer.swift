@@ -25,7 +25,7 @@ public class HTMLRenderer {
             
         case "Document":
             
-            let wholeDoc = renderBlocks(block.children, inTightList:inTightList)
+            let wholeDoc = renderBlocks(block.children, inTightList:false)
             return wholeDoc.isEmpty ? wholeDoc : (wholeDoc + "\n")
             
         case "Paragraph":
@@ -38,7 +38,7 @@ public class HTMLRenderer {
             
         case "BlockQuote":
             
-            let filling = renderBlocks(block.children, inTightList: inTightList)
+            let filling = renderBlocks(block.children, inTightList: false)
             return inTags("blockquote", contents: filling.isEmpty ? innerSeparator : (innerSeparator + filling + innerSeparator))
             
         case "ListItem":

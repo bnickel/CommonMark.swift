@@ -57,6 +57,37 @@ extension Block {
 
 }
 
+extension Block : Printable {
+    
+    public var description: String {
+        
+        if children.count > 0 {
+            
+            var description = "\(tag) (\(children.count) children)\n"
+            
+            for child in children {
+                description += join("\n", split(child.description, { $0 == "\n" }, maxSplit: .max, allowEmptySlices: true).map({ "  \($0)"})) + "\n\n"
+            }
+            
+            return description
+        }
+        
+        if inlineContent.count > 0 {
+            
+            var description = "\(tag) (\(children.count) inlines)\n"
+            
+            for inline in inlineContent {
+                description += "\(inline)\n\n"
+            }
+            
+            return description
+            
+        }
+        
+        return "\(tag) \(stringContent)"
+    }
+}
+
 struct Link {
     let destination:String
     let title:String?
