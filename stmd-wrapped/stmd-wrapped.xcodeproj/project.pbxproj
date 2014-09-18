@@ -8,19 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		EB40449D19C2648400B8C9AE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40449C19C2648400B8C9AE /* main.swift */; };
-		EB4044B019C2648400B8C9AE /* stmd_wrappedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4044AF19C2648400B8C9AE /* stmd_wrappedTests.swift */; };
 		EBBAEBAC19CA9DA5007B39A6 /* CommonMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBBAEBAB19CA9DA5007B39A6 /* CommonMark.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		EB4044AA19C2648400B8C9AE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EB40448F19C2648400B8C9AE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EB40449619C2648400B8C9AE;
-			remoteInfo = "stmd-wrapped";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		EB4044BD19C2752900B8C9AE /* CopyFiles */ = {
@@ -35,12 +24,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EB40449719C2648400B8C9AE /* stmd-wrapped.package */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "stmd-wrapped.package"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB40449719C2648400B8C9AE /* stmd-wrapped.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "stmd-wrapped.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB40449B19C2648400B8C9AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB40449C19C2648400B8C9AE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		EB4044A919C2648400B8C9AE /* stmd-wrappedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "stmd-wrappedTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB4044AE19C2648400B8C9AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EB4044AF19C2648400B8C9AE /* stmd_wrappedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stmd_wrappedTests.swift; sourceTree = "<group>"; };
 		EBBAEBAB19CA9DA5007B39A6 /* CommonMark.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonMark.framework; path = "../../../../Library/Developer/Xcode/DerivedData/CommonMarkdown.swift-agyuunbnvpycnofajbovljavukwc/Build/Products/Debug/CommonMark.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,13 +39,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EB4044A619C2648400B8C9AE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -68,7 +47,6 @@
 			children = (
 				EBBAEBAB19CA9DA5007B39A6 /* CommonMark.framework */,
 				EB40449919C2648400B8C9AE /* stmd-wrapped */,
-				EB4044AC19C2648400B8C9AE /* stmd-wrappedTests */,
 				EB40449819C2648400B8C9AE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,8 +54,7 @@
 		EB40449819C2648400B8C9AE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EB40449719C2648400B8C9AE /* stmd-wrapped.package */,
-				EB4044A919C2648400B8C9AE /* stmd-wrappedTests.xctest */,
+				EB40449719C2648400B8C9AE /* stmd-wrapped.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,23 +72,6 @@
 			children = (
 				EB40449B19C2648400B8C9AE /* Info.plist */,
 				EB40449C19C2648400B8C9AE /* main.swift */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		EB4044AC19C2648400B8C9AE /* stmd-wrappedTests */ = {
-			isa = PBXGroup;
-			children = (
-				EB4044AF19C2648400B8C9AE /* stmd_wrappedTests.swift */,
-				EB4044AD19C2648400B8C9AE /* Supporting Files */,
-			);
-			path = "stmd-wrappedTests";
-			sourceTree = "<group>";
-		};
-		EB4044AD19C2648400B8C9AE /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				EB4044AE19C2648400B8C9AE /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -134,26 +94,8 @@
 			);
 			name = "stmd-wrapped";
 			productName = "stmd-wrapped";
-			productReference = EB40449719C2648400B8C9AE /* stmd-wrapped.package */;
+			productReference = EB40449719C2648400B8C9AE /* stmd-wrapped.app */;
 			productType = "com.apple.product-type.application";
-		};
-		EB4044A819C2648400B8C9AE /* stmd-wrappedTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = EB4044B619C2648400B8C9AE /* Build configuration list for PBXNativeTarget "stmd-wrappedTests" */;
-			buildPhases = (
-				EB4044A519C2648400B8C9AE /* Sources */,
-				EB4044A619C2648400B8C9AE /* Frameworks */,
-				EB4044A719C2648400B8C9AE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				EB4044AB19C2648400B8C9AE /* PBXTargetDependency */,
-			);
-			name = "stmd-wrappedTests";
-			productName = "stmd-wrappedTests";
-			productReference = EB4044A919C2648400B8C9AE /* stmd-wrappedTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -166,10 +108,6 @@
 				TargetAttributes = {
 					EB40449619C2648400B8C9AE = {
 						CreatedOnToolsVersion = 6.1;
-					};
-					EB4044A819C2648400B8C9AE = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = EB40449619C2648400B8C9AE;
 					};
 				};
 			};
@@ -187,20 +125,12 @@
 			projectRoot = "";
 			targets = (
 				EB40449619C2648400B8C9AE /* stmd-wrapped */,
-				EB4044A819C2648400B8C9AE /* stmd-wrappedTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		EB40449519C2648400B8C9AE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EB4044A719C2648400B8C9AE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -218,23 +148,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EB4044A519C2648400B8C9AE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EB4044B019C2648400B8C9AE /* stmd_wrappedTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		EB4044AB19C2648400B8C9AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EB40449619C2648400B8C9AE /* stmd-wrapped */;
-			targetProxy = EB4044AA19C2648400B8C9AE /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		EB4044B119C2648400B8C9AE /* Debug */ = {
@@ -326,7 +240,6 @@
 				INFOPLIST_FILE = "stmd-wrapped/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = package;
 			};
 			name = Debug;
 		};
@@ -342,43 +255,6 @@
 				INFOPLIST_FILE = "stmd-wrapped/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = package;
-			};
-			name = Release;
-		};
-		EB4044B719C2648400B8C9AE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "stmd-wrappedTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/stmd-wrapped.app/Contents/MacOS/stmd-wrapped";
-			};
-			name = Debug;
-		};
-		EB4044B819C2648400B8C9AE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "stmd-wrappedTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/stmd-wrapped.app/Contents/MacOS/stmd-wrapped";
 			};
 			name = Release;
 		};
@@ -399,15 +275,6 @@
 			buildConfigurations = (
 				EB4044B419C2648400B8C9AE /* Debug */,
 				EB4044B519C2648400B8C9AE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		EB4044B619C2648400B8C9AE /* Build configuration list for PBXNativeTarget "stmd-wrappedTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EB4044B719C2648400B8C9AE /* Debug */,
-				EB4044B819C2648400B8C9AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
