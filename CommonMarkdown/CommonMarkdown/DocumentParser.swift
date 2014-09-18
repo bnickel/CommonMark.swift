@@ -500,16 +500,14 @@ public class DocumentParser {
                 block.stringContent = join("\n", block.strings[1..<block.strings.endIndex]) + "\n"
             }
             
-        case .List:
-            
-            block.tight = true // tight by default
+        case .List(let data, _):
             
             for (i, item) in enumerate(block.children) {
             
                 // check for non-final list item ending with blank line:
                 let lastItem = i == block.children.endIndex - 1
                 if item.endsWithBlankLine && !lastItem {
-                    block.tight = false
+                    block.type = .List(data:data, tight: false)
                     break
                 }
                 
@@ -519,7 +517,7 @@ public class DocumentParser {
                     
                     let lastSubitem = j == item.children.endIndex - 1
                     if subitem.endsWithBlankLine && !(lastItem && lastSubitem) {
-                        block.tight = false
+                        block.type = .List(data:data, tight: false)
                         break
                     }
                 }

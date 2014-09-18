@@ -61,7 +61,7 @@ public class HTMLRenderer {
                 }
             }
             
-            return inTags(tag, attributes: attributes, contents: innerSeparator + renderBlocks(block.children, inTightList: block.tight) + innerSeparator)
+            return inTags(tag, attributes: attributes, contents: innerSeparator + renderBlocks(block.children, inTightList: tight) + innerSeparator)
             
         case .ATXHeader(let level):
             

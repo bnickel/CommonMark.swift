@@ -139,9 +139,6 @@ public class Block {
         self.startColumn = startColumn
         self.endLine = startLine
     }
-    
-    // TODO: Messy duck type stuff that should be fixed with subclasses maybe.
-    var tight:Bool!
 }
 
 extension Block {
