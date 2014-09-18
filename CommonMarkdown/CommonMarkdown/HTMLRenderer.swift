@@ -80,10 +80,10 @@ public class HTMLRenderer {
             var attributes = [String: String]()
             let infoWords = split(info, { $0 == " " }, maxSplit: 1, allowEmptySlices: true)
             if !infoWords.isEmpty && !infoWords[0].isEmpty {
-                attributes = ["class": infoWords[0]]
+                attributes = ["class": "language-" + infoWords[0]]
             }
             
-            return inTags("pre", attributes: attributes, contents: inTags("code", contents: escape(block.stringContent)))
+            return inTags("pre", contents: inTags("code", attributes: attributes, contents: escape(block.stringContent)))
         
         case .HtmlBlock:
             
