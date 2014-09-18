@@ -329,14 +329,12 @@ public class DocumentParser {
             // and we don't count blanks in fenced code for purposes of tight/loose
             // lists or breaking out of lists.  We also don't set last_line_blank
             // on an empty list item.
-            print("\(container.tag) \(blank), \(container.lastLineBlank)")
             container.lastLineBlank = blank &&
                 !(container.tag == "BlockQuote" ||
                     container.tag == "FencedCode" ||
                         (container.tag == "ListItem" &&
                             container.children.count == 0 &&
                             container.startLine == lineNumber))
-            println(" -> \(container.lastLineBlank)")
             
             var parent = container.parent
             while let c = parent {
