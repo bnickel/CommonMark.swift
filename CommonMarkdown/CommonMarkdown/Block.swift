@@ -15,7 +15,7 @@ enum BlockType {
     case ATXHeader(Int)
     case SetextHeader(Int)
     case IndentedCode
-    case FencedCode(offset:Int, length:Int, character:Character)
+    case FencedCode(offset:Int, length:Int, character:Character, info:String)
     case HtmlBlock
     case ReferenceDef
     case HorizontalRule
@@ -34,7 +34,7 @@ extension BlockType : Printable {
         case .ATXHeader(let level): return "ATXHeader(level:\(level))"
         case .SetextHeader(let level): return "SetextHeader(level:\(level))"
         case .IndentedCode: return "IndentedCode"
-        case .FencedCode(let offset, let length, let character): return ("FencedCode(offset:\(offset), length:\(length), character:\(character))")
+        case .FencedCode(let offset, let length, let character, let info): return ("FencedCode(offset:\(offset), length:\(length), character:\(character), info:\(info))")
         case .HtmlBlock: return "HtmlBlock"
         case .ReferenceDef: return "ReferenceDef"
         case .HorizontalRule: return "HorizontalRule"
@@ -54,7 +54,7 @@ func == (lhs: BlockType, rhs:BlockType) -> Bool {
     case (.BlockQuote, .BlockQuote):         return true
     case (.ATXHeader(let a), .ATXHeader(let b)): return a == b
     case (.SetextHeader(let a), .SetextHeader(let b)): return a == b
-    case (.FencedCode(let a, let b, let c), .FencedCode(let x, let y, let z)): return a == x && b == y && c == z
+    case (.FencedCode(let a, let b, let c, let d), .FencedCode(let w, let x, let y, let z)): return a == w && b == x && c == y && d == z
     case (.IndentedCode, .IndentedCode):     return true
     case (.HtmlBlock, .HtmlBlock):           return true
     case (.ReferenceDef, .ReferenceDef):     return true
@@ -85,14 +85,14 @@ extension BlockType {
         switch self {
         case .Paragraph: fallthrough
         case .IndentedCode: fallthrough
-        case .FencedCode(_, _, _): return true
+        case .FencedCode: return true
         default: return false
         }
     }
     
     var containsPlainText:Bool {
         switch self {
-        case .FencedCode(_, _, _): fallthrough
+        case .FencedCode: fallthrough
         case .IndentedCode: fallthrough
         case .HtmlBlock: return true
         default: return false
@@ -154,7 +154,7 @@ extension Block {
     func shouldRememberBlankLine(lineNumber:Int) -> Bool {
         switch type {
         case .BlockQuote: return false
-        case .FencedCode(_, _, _): return false
+        case .FencedCode: return false
         case .ListItem:
             return !(children.count == 0 && startLine == lineNumber)
         default: return true

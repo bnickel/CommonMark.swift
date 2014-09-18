@@ -124,7 +124,7 @@ public class DocumentParser {
                 // a header can never container > 1 line, so fail to match:
                 allMatched = false
                 
-            case .FencedCode(var index, _, _):
+            case .FencedCode(var index, _, _, _):
                 
                 // skip optional spaces of fence offset
                 while (index > 0 && offset != line.endIndex && line[offset] == " ") {
@@ -228,8 +228,8 @@ public class DocumentParser {
                 // fenced code block
                 let fenceLength = countElements(match)
                 closeUnmatchedBlocks()
-                container = addChild(.FencedCode(offset: distance(offset, firstNonspace), length: fenceLength, character: match[match.startIndex]), lineNumber, distance(line.startIndex, firstNonspace))
-                offset = advance(firstNonspace, fenceLength)
+                container = addChild(.FencedCode(offset: distance(offset, firstNonspace), length: fenceLength, character: match[match.startIndex], info:unescape(trim(line.substringFromIndex(advance(firstNonspace, fenceLength))))), lineNumber, distance(line.startIndex, firstNonspace))
+                offset = line.endIndex
                 break
                 
             } else if line.firstMatch(reHtmlBlockOpen, options: nil, from: firstNonspace) != nil {
@@ -338,7 +338,7 @@ public class DocumentParser {
             case .HtmlBlock:
                 addLine(line, offset: offset)
                 
-            case .FencedCode(_, let fenceLength, let fenceCharacter):
+            case .FencedCode(_, let fenceLength, let fenceCharacter, _):
                 
                 var matched = false
                 
@@ -482,7 +482,6 @@ public class DocumentParser {
         case .FencedCode:
             
             // first line becomes info string
-            block.info = unescape(trim(block.strings[0]))
             if block.strings.count == 1 {
                 block.stringContent = ""
             } else {

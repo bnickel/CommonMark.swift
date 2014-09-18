@@ -75,10 +75,10 @@ public class HTMLRenderer {
             
             return inTags("pre", contents: inTags("code", contents: escape(block.stringContent)))
             
-        case .FencedCode:
+        case .FencedCode(_, _, _, let info):
             
             var attributes = [String: String]()
-            let infoWords = split(block.info, { $0 == " " }, maxSplit: 1, allowEmptySlices: true)
+            let infoWords = split(info, { $0 == " " }, maxSplit: 1, allowEmptySlices: true)
             if !infoWords.isEmpty && !infoWords[0].isEmpty {
                 attributes = ["class": infoWords[0]]
             }
