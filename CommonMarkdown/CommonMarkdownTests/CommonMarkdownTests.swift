@@ -23,12 +23,12 @@ class Section_1_3_About_this_document : XCTestCase {
 class Section_2_Preprocessing : XCTestCase {
 
     func testExample1FromLine205() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\tbaz\t\tbim\n")), "<p>foo baz     bim</p>\n", "Source:\n\nfoo\tbaz\t\tbim\n\n")
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("\tfoo\tbaz\t\tbim\n")), "<pre><code>foo baz     bim\n</code></pre>\n", "Source:\n\n\tfoo\tbaz\t\tbim\n\n")
     }
 
 
-    func testExample2FromLine211() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("οὐ\tχρῆν\n")), "<p>οὐ  χρῆν</p>\n", "Source:\n\nοὐ\tχρῆν\n\n")
+    func testExample2FromLine212() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("    a\ta\n    ὐ\ta\n")), "<pre><code>a   a\nὐ   a\n</code></pre>\n", "Source:\n\n    a\ta\n    ὐ\ta\n\n")
     }
 
 }
@@ -40,7 +40,7 @@ class Section_3_Blocks_and_inlines : XCTestCase {
 
 class Section_3_1_Precedence : XCTestCase {
 
-    func testExample3FromLine237() {
+    func testExample3FromLine241() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- `one\n- two`\n")), "<ul>\n<li>`one</li>\n<li>two`</li>\n</ul>\n", "Source:\n\n- `one\n- two`\n\n")
     }
 
@@ -57,97 +57,97 @@ class Section_4_Leaf_blocks : XCTestCase {
 
 class Section_4_1_Horizontal_rules : XCTestCase {
 
-    func testExample4FromLine275() {
+    func testExample4FromLine279() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("***\n---\n___\n")), "<hr />\n<hr />\n<hr />\n", "Source:\n\n***\n---\n___\n\n")
     }
 
 
-    func testExample5FromLine287() {
+    func testExample5FromLine291() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("+++\n")), "<p>+++</p>\n", "Source:\n\n+++\n\n")
     }
 
 
-    func testExample6FromLine293() {
+    func testExample6FromLine297() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("===\n")), "<p>===</p>\n", "Source:\n\n===\n\n")
     }
 
 
-    func testExample7FromLine301() {
+    func testExample7FromLine305() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("--\n**\n__\n")), "<p>--\n**\n__</p>\n", "Source:\n\n--\n**\n__\n\n")
     }
 
 
-    func testExample8FromLine313() {
+    func testExample8FromLine317() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" ***\n  ***\n   ***\n")), "<hr />\n<hr />\n<hr />\n", "Source:\n\n ***\n  ***\n   ***\n\n")
     }
 
 
-    func testExample9FromLine325() {
+    func testExample9FromLine329() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    ***\n")), "<pre><code>***\n</code></pre>\n", "Source:\n\n    ***\n\n")
     }
 
 
-    func testExample10FromLine332() {
+    func testExample10FromLine336() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n    ***\n")), "<p>Foo\n***</p>\n", "Source:\n\nFoo\n    ***\n\n")
     }
 
 
-    func testExample11FromLine342() {
+    func testExample11FromLine346() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_____________________________________\n")), "<hr />\n", "Source:\n\n_____________________________________\n\n")
     }
 
 
-    func testExample12FromLine350() {
+    func testExample12FromLine354() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" - - -\n")), "<hr />\n", "Source:\n\n - - -\n\n")
     }
 
 
-    func testExample13FromLine356() {
+    func testExample13FromLine360() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" **  * ** * ** * **\n")), "<hr />\n", "Source:\n\n **  * ** * ** * **\n\n")
     }
 
 
-    func testExample14FromLine362() {
+    func testExample14FromLine366() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("-     -      -      -\n")), "<hr />\n", "Source:\n\n-     -      -      -\n\n")
     }
 
 
-    func testExample15FromLine370() {
+    func testExample15FromLine374() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- - - -    \n")), "<hr />\n", "Source:\n\n- - - -    \n\n")
     }
 
 
-    func testExample16FromLine379() {
+    func testExample16FromLine383() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_ _ _ _ a\n\na------\n")), "<p>_ _ _ _ a</p>\n<p>a------</p>\n", "Source:\n\n_ _ _ _ a\n\na------\n\n")
     }
 
 
-    func testExample17FromLine391() {
+    func testExample17FromLine395() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" *-*\n")), "<p><em>-</em></p>\n", "Source:\n\n *-*\n\n")
     }
 
 
-    func testExample18FromLine399() {
+    func testExample18FromLine403() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n***\n- bar\n")), "<ul>\n<li>foo</li>\n</ul>\n<hr />\n<ul>\n<li>bar</li>\n</ul>\n", "Source:\n\n- foo\n***\n- bar\n\n")
     }
 
 
-    func testExample19FromLine415() {
+    func testExample19FromLine419() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n***\nbar\n")), "<p>Foo</p>\n<hr />\n<p>bar</p>\n", "Source:\n\nFoo\n***\nbar\n\n")
     }
 
 
-    func testExample20FromLine428() {
+    func testExample20FromLine432() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n---\nbar\n")), "<h2>Foo</h2>\n<p>bar</p>\n", "Source:\n\nFoo\n---\nbar\n\n")
     }
 
 
-    func testExample21FromLine440() {
+    func testExample21FromLine444() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("* Foo\n* * *\n* Bar\n")), "<ul>\n<li>Foo</li>\n</ul>\n<hr />\n<ul>\n<li>Bar</li>\n</ul>\n", "Source:\n\n* Foo\n* * *\n* Bar\n\n")
     }
 
 
-    func testExample22FromLine456() {
+    func testExample22FromLine460() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- Foo\n- * * *\n")), "<ul>\n<li>Foo</li>\n<li><hr /></li>\n</ul>\n", "Source:\n\n- Foo\n- * * *\n\n")
     }
 
@@ -156,87 +156,87 @@ class Section_4_1_Horizontal_rules : XCTestCase {
 
 class Section_4_2_ATX_headers : XCTestCase {
 
-    func testExample23FromLine481() {
+    func testExample23FromLine485() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("# foo\n## foo\n### foo\n#### foo\n##### foo\n###### foo\n")), "<h1>foo</h1>\n<h2>foo</h2>\n<h3>foo</h3>\n<h4>foo</h4>\n<h5>foo</h5>\n<h6>foo</h6>\n", "Source:\n\n# foo\n## foo\n### foo\n#### foo\n##### foo\n###### foo\n\n")
     }
 
 
-    func testExample24FromLine499() {
+    func testExample24FromLine503() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("####### foo\n")), "<p>####### foo</p>\n", "Source:\n\n####### foo\n\n")
     }
 
 
-    func testExample25FromLine511() {
+    func testExample25FromLine515() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("#5 bolt\n")), "<p>#5 bolt</p>\n", "Source:\n\n#5 bolt\n\n")
     }
 
 
-    func testExample26FromLine519() {
+    func testExample26FromLine523() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\\## foo\n")), "<p>## foo</p>\n", "Source:\n\n\\## foo\n\n")
     }
 
 
-    func testExample27FromLine527() {
+    func testExample27FromLine531() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("# foo *bar* \\*baz\\*\n")), "<h1>foo <em>bar</em> *baz*</h1>\n", "Source:\n\n# foo *bar* \\*baz\\*\n\n")
     }
 
 
-    func testExample28FromLine535() {
+    func testExample28FromLine539() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("#                  foo                     \n")), "<h1>foo</h1>\n", "Source:\n\n#                  foo                     \n\n")
     }
 
 
-    func testExample29FromLine543() {
+    func testExample29FromLine547() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" ### foo\n  ## foo\n   # foo\n")), "<h3>foo</h3>\n<h2>foo</h2>\n<h1>foo</h1>\n", "Source:\n\n ### foo\n  ## foo\n   # foo\n\n")
     }
 
 
-    func testExample30FromLine555() {
+    func testExample30FromLine559() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    # foo\n")), "<pre><code># foo\n</code></pre>\n", "Source:\n\n    # foo\n\n")
     }
 
 
-    func testExample31FromLine562() {
+    func testExample31FromLine566() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\n    # bar\n")), "<p>foo\n# bar</p>\n", "Source:\n\nfoo\n    # bar\n\n")
     }
 
 
-    func testExample32FromLine572() {
+    func testExample32FromLine576() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("## foo ##\n  ###   bar    ###\n")), "<h2>foo</h2>\n<h3>bar</h3>\n", "Source:\n\n## foo ##\n  ###   bar    ###\n\n")
     }
 
 
-    func testExample33FromLine582() {
+    func testExample33FromLine586() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("# foo ##################################\n##### foo ##\n")), "<h1>foo</h1>\n<h5>foo</h5>\n", "Source:\n\n# foo ##################################\n##### foo ##\n\n")
     }
 
 
-    func testExample34FromLine592() {
+    func testExample34FromLine596() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("### foo ###     \n")), "<h3>foo</h3>\n", "Source:\n\n### foo ###     \n\n")
     }
 
 
-    func testExample35FromLine602() {
+    func testExample35FromLine606() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("### foo ### b\n")), "<h3>foo ### b</h3>\n", "Source:\n\n### foo ### b\n\n")
     }
 
 
-    func testExample36FromLine611() {
+    func testExample36FromLine615() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("### foo \\###\n## foo \\#\\##\n# foo \\#\n")), "<h3>foo #</h3>\n<h2>foo ##</h2>\n<h1>foo #</h1>\n", "Source:\n\n### foo \\###\n## foo \\#\\##\n# foo \\#\n\n")
     }
 
 
-    func testExample37FromLine624() {
+    func testExample37FromLine628() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("****\n## foo\n****\n")), "<hr />\n<h2>foo</h2>\n<hr />\n", "Source:\n\n****\n## foo\n****\n\n")
     }
 
 
-    func testExample38FromLine634() {
+    func testExample38FromLine638() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo bar\n# baz\nBar foo\n")), "<p>Foo bar</p>\n<h1>baz</h1>\n<p>Bar foo</p>\n", "Source:\n\nFoo bar\n# baz\nBar foo\n\n")
     }
 
 
-    func testExample39FromLine646() {
+    func testExample39FromLine650() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("## \n#\n### ###\n")), "<h2></h2>\n<h1></h1>\n<h3></h3>\n", "Source:\n\n## \n#\n### ###\n\n")
     }
 
@@ -245,72 +245,72 @@ class Section_4_2_ATX_headers : XCTestCase {
 
 class Section_4_3_Setext_headers : XCTestCase {
 
-    func testExample40FromLine676() {
+    func testExample40FromLine680() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo *bar*\n=========\n\nFoo *bar*\n---------\n")), "<h1>Foo <em>bar</em></h1>\n<h2>Foo <em>bar</em></h2>\n", "Source:\n\nFoo *bar*\n=========\n\nFoo *bar*\n---------\n\n")
     }
 
 
-    func testExample41FromLine689() {
+    func testExample41FromLine693() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n-------------------------\n\nFoo\n=\n")), "<h2>Foo</h2>\n<h1>Foo</h1>\n", "Source:\n\nFoo\n-------------------------\n\nFoo\n=\n\n")
     }
 
 
-    func testExample42FromLine703() {
+    func testExample42FromLine707() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("   Foo\n---\n\n  Foo\n-----\n\n  Foo\n  ===\n")), "<h2>Foo</h2>\n<h2>Foo</h2>\n<h1>Foo</h1>\n", "Source:\n\n   Foo\n---\n\n  Foo\n-----\n\n  Foo\n  ===\n\n")
     }
 
 
-    func testExample43FromLine720() {
+    func testExample43FromLine724() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    Foo\n    ---\n\n    Foo\n---\n")), "<pre><code>Foo\n---\n\nFoo\n</code></pre>\n<hr />\n", "Source:\n\n    Foo\n    ---\n\n    Foo\n---\n\n")
     }
 
 
-    func testExample44FromLine738() {
+    func testExample44FromLine742() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n   ----      \n")), "<h2>Foo</h2>\n", "Source:\n\nFoo\n   ----      \n\n")
     }
 
 
-    func testExample45FromLine747() {
+    func testExample45FromLine751() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n     ---\n")), "<p>Foo\n---</p>\n", "Source:\n\nFoo\n     ---\n\n")
     }
 
 
-    func testExample46FromLine757() {
+    func testExample46FromLine761() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n= =\n\nFoo\n--- -\n")), "<p>Foo\n= =</p>\n<p>Foo</p>\n<hr />\n", "Source:\n\nFoo\n= =\n\nFoo\n--- -\n\n")
     }
 
 
-    func testExample47FromLine772() {
+    func testExample47FromLine776() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo  \n-----\n")), "<h2>Foo</h2>\n", "Source:\n\nFoo  \n-----\n\n")
     }
 
 
-    func testExample48FromLine781() {
+    func testExample48FromLine785() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\\\n----\n")), "<h2>Foo\\</h2>\n", "Source:\n\nFoo\\\n----\n\n")
     }
 
 
-    func testExample49FromLine791() {
+    func testExample49FromLine795() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`Foo\n----\n`\n\n<a title=\"a lot\n---\nof dashes\"/>\n")), "<h2>`Foo</h2>\n<p>`</p>\n<h2>&lt;a title=&quot;a lot</h2>\n<p>of dashes&quot;/&gt;</p>\n", "Source:\n\n`Foo\n----\n`\n\n<a title=\"a lot\n---\nof dashes\"/>\n\n")
     }
 
 
-    func testExample50FromLine808() {
+    func testExample50FromLine812() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> Foo\n---\n")), "<blockquote>\n<p>Foo</p>\n</blockquote>\n<hr />\n", "Source:\n\n> Foo\n---\n\n")
     }
 
 
-    func testExample51FromLine820() {
+    func testExample51FromLine824() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\nBar\n---\n\nFoo\nBar\n===\n")), "<p>Foo\nBar</p>\n<hr />\n<p>Foo\nBar\n===</p>\n", "Source:\n\nFoo\nBar\n---\n\nFoo\nBar\n===\n\n")
     }
 
 
-    func testExample52FromLine839() {
+    func testExample52FromLine843() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("---\nFoo\n---\nBar\n---\nBaz\n")), "<hr />\n<h2>Foo</h2>\n<h2>Bar</h2>\n<p>Baz</p>\n", "Source:\n\n---\nFoo\n---\nBar\n---\nBaz\n\n")
     }
 
 
-    func testExample53FromLine855() {
+    func testExample53FromLine859() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\n====\n")), "<p>====</p>\n", "Source:\n\n\n====\n\n")
     }
 
@@ -319,52 +319,52 @@ class Section_4_3_Setext_headers : XCTestCase {
 
 class Section_4_4_Indented_code_blocks : XCTestCase {
 
-    func testExample54FromLine877() {
+    func testExample54FromLine881() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    a simple\n      indented code block\n")), "<pre><code>a simple\n  indented code block\n</code></pre>\n", "Source:\n\n    a simple\n      indented code block\n\n")
     }
 
 
-    func testExample55FromLine888() {
+    func testExample55FromLine892() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    <a/>\n    *hi*\n\n    - one\n")), "<pre><code>&lt;a/&gt;\n*hi*\n\n- one\n</code></pre>\n", "Source:\n\n    <a/>\n    *hi*\n\n    - one\n\n")
     }
 
 
-    func testExample56FromLine903() {
+    func testExample56FromLine907() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    chunk1\n\n    chunk2\n  \n \n \n    chunk3\n")), "<pre><code>chunk1\n\nchunk2\n\n\n\nchunk3\n</code></pre>\n", "Source:\n\n    chunk1\n\n    chunk2\n  \n \n \n    chunk3\n\n")
     }
 
 
-    func testExample57FromLine925() {
+    func testExample57FromLine929() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    chunk1\n      \n      chunk2\n")), "<pre><code>chunk1\n  \n  chunk2\n</code></pre>\n", "Source:\n\n    chunk1\n      \n      chunk2\n\n")
     }
 
 
-    func testExample58FromLine939() {
+    func testExample58FromLine943() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n    bar\n\n")), "<p>Foo\nbar</p>\n", "Source:\n\nFoo\n    bar\n\n\n")
     }
 
 
-    func testExample59FromLine952() {
+    func testExample59FromLine956() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    foo\nbar\n")), "<pre><code>foo\n</code></pre>\n<p>bar</p>\n", "Source:\n\n    foo\nbar\n\n")
     }
 
 
-    func testExample60FromLine964() {
+    func testExample60FromLine968() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("# Header\n    foo\nHeader\n------\n    foo\n----\n")), "<h1>Header</h1>\n<pre><code>foo\n</code></pre>\n<h2>Header</h2>\n<pre><code>foo\n</code></pre>\n<hr />\n", "Source:\n\n# Header\n    foo\nHeader\n------\n    foo\n----\n\n")
     }
 
 
-    func testExample61FromLine983() {
+    func testExample61FromLine987() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("        foo\n    bar\n")), "<pre><code>    foo\nbar\n</code></pre>\n", "Source:\n\n        foo\n    bar\n\n")
     }
 
 
-    func testExample62FromLine995() {
+    func testExample62FromLine999() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\n    \n    foo\n    \n\n")), "<pre><code>foo\n</code></pre>\n", "Source:\n\n\n    \n    foo\n    \n\n\n")
     }
 
 
-    func testExample63FromLine1008() {
+    func testExample63FromLine1012() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    foo  \n")), "<pre><code>foo  \n</code></pre>\n", "Source:\n\n    foo  \n\n")
     }
 
@@ -373,117 +373,117 @@ class Section_4_4_Indented_code_blocks : XCTestCase {
 
 class Section_4_5_Fenced_code_blocks : XCTestCase {
 
-    func testExample64FromLine1062() {
+    func testExample64FromLine1066() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("```\n<\n >\n```\n")), "<pre><code>&lt;\n &gt;\n</code></pre>\n", "Source:\n\n```\n<\n >\n```\n\n")
     }
 
 
-    func testExample65FromLine1075() {
+    func testExample65FromLine1079() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("~~~\n<\n >\n~~~\n")), "<pre><code>&lt;\n &gt;\n</code></pre>\n", "Source:\n\n~~~\n<\n >\n~~~\n\n")
     }
 
 
-    func testExample66FromLine1089() {
+    func testExample66FromLine1093() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("```\naaa\n~~~\n```\n")), "<pre><code>aaa\n~~~\n</code></pre>\n", "Source:\n\n```\naaa\n~~~\n```\n\n")
     }
 
 
-    func testExample67FromLine1100() {
+    func testExample67FromLine1104() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("~~~\naaa\n```\n~~~\n")), "<pre><code>aaa\n```\n</code></pre>\n", "Source:\n\n~~~\naaa\n```\n~~~\n\n")
     }
 
 
-    func testExample68FromLine1113() {
+    func testExample68FromLine1117() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("````\naaa\n```\n``````\n")), "<pre><code>aaa\n```\n</code></pre>\n", "Source:\n\n````\naaa\n```\n``````\n\n")
     }
 
 
-    func testExample69FromLine1124() {
+    func testExample69FromLine1128() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("~~~~\naaa\n~~~\n~~~~\n")), "<pre><code>aaa\n~~~\n</code></pre>\n", "Source:\n\n~~~~\naaa\n~~~\n~~~~\n\n")
     }
 
 
-    func testExample70FromLine1137() {
+    func testExample70FromLine1141() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("```\n")), "<pre><code></code></pre>\n", "Source:\n\n```\n\n")
     }
 
 
-    func testExample71FromLine1143() {
+    func testExample71FromLine1147() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`````\n\n```\naaa\n")), "<pre><code>\n```\naaa\n</code></pre>\n", "Source:\n\n`````\n\n```\naaa\n\n")
     }
 
 
-    func testExample72FromLine1157() {
+    func testExample72FromLine1161() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("```\n\n  \n```\n")), "<pre><code>\n  \n</code></pre>\n", "Source:\n\n```\n\n  \n```\n\n")
     }
 
 
-    func testExample73FromLine1170() {
+    func testExample73FromLine1174() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("```\n```\n")), "<pre><code></code></pre>\n", "Source:\n\n```\n```\n\n")
     }
 
 
-    func testExample74FromLine1181() {
+    func testExample74FromLine1185() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" ```\n aaa\naaa\n```\n")), "<pre><code>aaa\naaa\n</code></pre>\n", "Source:\n\n ```\n aaa\naaa\n```\n\n")
     }
 
 
-    func testExample75FromLine1192() {
+    func testExample75FromLine1196() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("  ```\naaa\n  aaa\naaa\n  ```\n")), "<pre><code>aaa\naaa\naaa\n</code></pre>\n", "Source:\n\n  ```\naaa\n  aaa\naaa\n  ```\n\n")
     }
 
 
-    func testExample76FromLine1205() {
+    func testExample76FromLine1209() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("   ```\n   aaa\n    aaa\n  aaa\n   ```\n")), "<pre><code>aaa\n aaa\naaa\n</code></pre>\n", "Source:\n\n   ```\n   aaa\n    aaa\n  aaa\n   ```\n\n")
     }
 
 
-    func testExample77FromLine1220() {
+    func testExample77FromLine1224() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    ```\n    aaa\n    ```\n")), "<pre><code>```\naaa\n```\n</code></pre>\n", "Source:\n\n    ```\n    aaa\n    ```\n\n")
     }
 
 
-    func testExample78FromLine1233() {
+    func testExample78FromLine1237() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("``` ```\naaa\n")), "<p><code></code>\naaa</p>\n", "Source:\n\n``` ```\naaa\n\n")
     }
 
 
-    func testExample79FromLine1241() {
+    func testExample79FromLine1245() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("~~~~~~\naaa\n~~~ ~~\n")), "<pre><code>aaa\n~~~ ~~\n</code></pre>\n", "Source:\n\n~~~~~~\naaa\n~~~ ~~\n\n")
     }
 
 
-    func testExample80FromLine1254() {
+    func testExample80FromLine1258() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\n```\nbar\n```\nbaz\n")), "<p>foo</p>\n<pre><code>bar\n</code></pre>\n<p>baz</p>\n", "Source:\n\nfoo\n```\nbar\n```\nbaz\n\n")
     }
 
 
-    func testExample81FromLine1270() {
+    func testExample81FromLine1274() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\n---\n~~~\nbar\n~~~\n# baz\n")), "<h2>foo</h2>\n<pre><code>bar\n</code></pre>\n<h1>baz</h1>\n", "Source:\n\nfoo\n---\n~~~\nbar\n~~~\n# baz\n\n")
     }
 
 
-    func testExample82FromLine1289() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("```ruby\ndef foo(x)\n  return 3\nend\n```\n")), "<pre class=\"ruby\"><code>def foo(x)\n  return 3\nend\n</code></pre>\n", "Source:\n\n```ruby\ndef foo(x)\n  return 3\nend\n```\n\n")
+    func testExample82FromLine1293() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("```ruby\ndef foo(x)\n  return 3\nend\n```\n")), "<pre><code class=\"language-ruby\">def foo(x)\n  return 3\nend\n</code></pre>\n", "Source:\n\n```ruby\ndef foo(x)\n  return 3\nend\n```\n\n")
     }
 
 
-    func testExample83FromLine1302() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("~~~~    ruby startline=3 $%@#$\ndef foo(x)\n  return 3\nend\n~~~~~~~\n")), "<pre class=\"ruby\"><code>def foo(x)\n  return 3\nend\n</code></pre>\n", "Source:\n\n~~~~    ruby startline=3 $%@#$\ndef foo(x)\n  return 3\nend\n~~~~~~~\n\n")
+    func testExample83FromLine1306() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("~~~~    ruby startline=3 $%@#$\ndef foo(x)\n  return 3\nend\n~~~~~~~\n")), "<pre><code class=\"language-ruby\">def foo(x)\n  return 3\nend\n</code></pre>\n", "Source:\n\n~~~~    ruby startline=3 $%@#$\ndef foo(x)\n  return 3\nend\n~~~~~~~\n\n")
     }
 
 
-    func testExample84FromLine1315() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("````;\n````\n")), "<pre class=\";\"><code></code></pre>\n", "Source:\n\n````;\n````\n\n")
+    func testExample84FromLine1319() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("````;\n````\n")), "<pre><code class=\"language-;\"></code></pre>\n", "Source:\n\n````;\n````\n\n")
     }
 
 
-    func testExample85FromLine1324() {
+    func testExample85FromLine1328() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("``` aa ```\nfoo\n")), "<p><code>aa</code>\nfoo</p>\n", "Source:\n\n``` aa ```\nfoo\n\n")
     }
 
 
-    func testExample86FromLine1334() {
+    func testExample86FromLine1338() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("```\n``` aaa\n```\n")), "<pre><code>``` aaa\n</code></pre>\n", "Source:\n\n```\n``` aaa\n```\n\n")
     }
 
@@ -492,72 +492,72 @@ class Section_4_5_Fenced_code_blocks : XCTestCase {
 
 class Section_4_6_HTML_blocks : XCTestCase {
 
-    func testExample87FromLine1369() {
+    func testExample87FromLine1373() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<table>\n  <tr>\n    <td>\n           hi\n    </td>\n  </tr>\n</table>\n\nokay.\n")), "<table>\n  <tr>\n    <td>\n           hi\n    </td>\n  </tr>\n</table>\n<p>okay.</p>\n", "Source:\n\n<table>\n  <tr>\n    <td>\n           hi\n    </td>\n  </tr>\n</table>\n\nokay.\n\n")
     }
 
 
-    func testExample88FromLine1390() {
+    func testExample88FromLine1394() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" <div>\n  *hello*\n         <foo><a>\n")), " <div>\n  *hello*\n         <foo><a>\n", "Source:\n\n <div>\n  *hello*\n         <foo><a>\n\n")
     }
 
 
-    func testExample89FromLine1402() {
+    func testExample89FromLine1406() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<DIV CLASS=\"foo\">\n\n*Markdown*\n\n</DIV>\n")), "<DIV CLASS=\"foo\">\n<p><em>Markdown</em></p>\n</DIV>\n", "Source:\n\n<DIV CLASS=\"foo\">\n\n*Markdown*\n\n</DIV>\n\n")
     }
 
 
-    func testExample90FromLine1418() {
+    func testExample90FromLine1422() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<div></div>\n``` c\nint x = 33;\n```\n")), "<div></div>\n``` c\nint x = 33;\n```\n", "Source:\n\n<div></div>\n``` c\nint x = 33;\n```\n\n")
     }
 
 
-    func testExample91FromLine1432() {
+    func testExample91FromLine1436() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<!-- Foo\nbar\n   baz -->\n")), "<!-- Foo\nbar\n   baz -->\n", "Source:\n\n<!-- Foo\nbar\n   baz -->\n\n")
     }
 
 
-    func testExample92FromLine1444() {
+    func testExample92FromLine1448() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<?php\n  echo 'foo'\n?>\n")), "<?php\n  echo 'foo'\n?>\n", "Source:\n\n<?php\n  echo 'foo'\n?>\n\n")
     }
 
 
-    func testExample93FromLine1456() {
+    func testExample93FromLine1460() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<![CDATA[\nfunction matchwo(a,b)\n{\nif (a < b && a < 0) then\n  {\n  return 1;\n  }\nelse\n  {\n  return 0;\n  }\n}\n]]>\n")), "<![CDATA[\nfunction matchwo(a,b)\n{\nif (a < b && a < 0) then\n  {\n  return 1;\n  }\nelse\n  {\n  return 0;\n  }\n}\n]]>\n", "Source:\n\n<![CDATA[\nfunction matchwo(a,b)\n{\nif (a < b && a < 0) then\n  {\n  return 1;\n  }\nelse\n  {\n  return 0;\n  }\n}\n]]>\n\n")
     }
 
 
-    func testExample94FromLine1488() {
+    func testExample94FromLine1492() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("  <!-- foo -->\n\n    <!-- foo -->\n")), "  <!-- foo -->\n<pre><code>&lt;!-- foo --&gt;\n</code></pre>\n", "Source:\n\n  <!-- foo -->\n\n    <!-- foo -->\n\n")
     }
 
 
-    func testExample95FromLine1501() {
+    func testExample95FromLine1505() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n<div>\nbar\n</div>\n")), "<p>Foo</p>\n<div>\nbar\n</div>\n", "Source:\n\nFoo\n<div>\nbar\n</div>\n\n")
     }
 
 
-    func testExample96FromLine1516() {
+    func testExample96FromLine1520() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<div>\nbar\n</div>\n*foo*\n")), "<div>\nbar\n</div>\n*foo*\n", "Source:\n\n<div>\nbar\n</div>\n*foo*\n\n")
     }
 
 
-    func testExample97FromLine1530() {
+    func testExample97FromLine1534() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<div class\nfoo\n")), "<div class\nfoo\n", "Source:\n\n<div class\nfoo\n\n")
     }
 
 
-    func testExample98FromLine1566() {
+    func testExample98FromLine1570() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<div>\n\n*Emphasized* text.\n\n</div>\n")), "<div>\n<p><em>Emphasized</em> text.</p>\n</div>\n", "Source:\n\n<div>\n\n*Emphasized* text.\n\n</div>\n\n")
     }
 
 
-    func testExample99FromLine1580() {
+    func testExample99FromLine1584() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<div>\n*Emphasized* text.\n</div>\n")), "<div>\n*Emphasized* text.\n</div>\n", "Source:\n\n<div>\n*Emphasized* text.\n</div>\n\n")
     }
 
 
-    func testExample100FromLine1601() {
+    func testExample100FromLine1605() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<table>\n\n<tr>\n\n<td>\nHi\n</td>\n\n</tr>\n\n</table>\n")), "<table>\n<tr>\n<td>\nHi\n</td>\n</tr>\n</table>\n", "Source:\n\n<table>\n\n<tr>\n\n<td>\nHi\n</td>\n\n</tr>\n\n</table>\n\n")
     }
 
@@ -566,92 +566,92 @@ class Section_4_6_HTML_blocks : XCTestCase {
 
 class Section_4_7_Link_reference_definitions : XCTestCase {
 
-    func testExample101FromLine1648() {
+    func testExample101FromLine1652() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]: /url \"title\"\n\n[foo]\n")), "<p><a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n[foo]: /url \"title\"\n\n[foo]\n\n")
     }
 
 
-    func testExample102FromLine1656() {
+    func testExample102FromLine1660() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("   [foo]: \n      /url  \n           'the title'  \n\n[foo]\n")), "<p><a href=\"/url\" title=\"the title\">foo</a></p>\n", "Source:\n\n   [foo]: \n      /url  \n           'the title'  \n\n[foo]\n\n")
     }
 
 
-    func testExample103FromLine1666() {
+    func testExample103FromLine1670() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[Foo*bar\\]]:my_(url) 'title (with parens)'\n\n[Foo*bar\\]]\n")), "<p><a href=\"my_(url)\" title=\"title (with parens)\">Foo*bar]</a></p>\n", "Source:\n\n[Foo*bar\\]]:my_(url) 'title (with parens)'\n\n[Foo*bar\\]]\n\n")
     }
 
 
-    func testExample104FromLine1674() {
+    func testExample104FromLine1678() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[Foo bar]:\n<my url>\n'title'\n\n[Foo bar]\n")), "<p><a href=\"my url\" title=\"title\">Foo bar</a></p>\n", "Source:\n\n[Foo bar]:\n<my url>\n'title'\n\n[Foo bar]\n\n")
     }
 
 
-    func testExample105FromLine1686() {
+    func testExample105FromLine1690() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]:\n/url\n\n[foo]\n")), "<p><a href=\"/url\">foo</a></p>\n", "Source:\n\n[foo]:\n/url\n\n[foo]\n\n")
     }
 
 
-    func testExample106FromLine1697() {
+    func testExample106FromLine1701() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]:\n\n[foo]\n")), "<p>[foo]:</p>\n<p>[foo]</p>\n", "Source:\n\n[foo]:\n\n[foo]\n\n")
     }
 
 
-    func testExample107FromLine1708() {
+    func testExample107FromLine1712() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]\n\n[foo]: url\n")), "<p><a href=\"url\">foo</a></p>\n", "Source:\n\n[foo]\n\n[foo]: url\n\n")
     }
 
 
-    func testExample108FromLine1719() {
+    func testExample108FromLine1723() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]\n\n[foo]: first\n[foo]: second\n")), "<p><a href=\"first\">foo</a></p>\n", "Source:\n\n[foo]\n\n[foo]: first\n[foo]: second\n\n")
     }
 
 
-    func testExample109FromLine1731() {
+    func testExample109FromLine1735() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[FOO]: /url\n\n[Foo]\n")), "<p><a href=\"/url\">Foo</a></p>\n", "Source:\n\n[FOO]: /url\n\n[Foo]\n\n")
     }
 
 
-    func testExample110FromLine1739() {
+    func testExample110FromLine1743() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[ΑΓΩ]: /φου\n\n[αγω]\n")), "<p><a href=\"/φου\">αγω</a></p>\n", "Source:\n\n[ΑΓΩ]: /φου\n\n[αγω]\n\n")
     }
 
 
-    func testExample111FromLine1750() {
+    func testExample111FromLine1754() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]: /url\n")), "", "Source:\n\n[foo]: /url\n\n")
     }
 
 
-    func testExample112FromLine1758() {
+    func testExample112FromLine1762() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]: /url \"title\" ok\n")), "<p>[foo]: /url &quot;title&quot; ok</p>\n", "Source:\n\n[foo]: /url \"title\" ok\n\n")
     }
 
 
-    func testExample113FromLine1767() {
+    func testExample113FromLine1771() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    [foo]: /url \"title\"\n\n[foo]\n")), "<pre><code>[foo]: /url &quot;title&quot;\n</code></pre>\n<p>[foo]</p>\n", "Source:\n\n    [foo]: /url \"title\"\n\n[foo]\n\n")
     }
 
 
-    func testExample114FromLine1780() {
+    func testExample114FromLine1784() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("```\n[foo]: /url\n```\n\n[foo]\n")), "<pre><code>[foo]: /url\n</code></pre>\n<p>[foo]</p>\n", "Source:\n\n```\n[foo]: /url\n```\n\n[foo]\n\n")
     }
 
 
-    func testExample115FromLine1795() {
+    func testExample115FromLine1799() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo\n[bar]: /baz\n\n[bar]\n")), "<p>Foo\n[bar]: /baz</p>\n<p>[bar]</p>\n", "Source:\n\nFoo\n[bar]: /baz\n\n[bar]\n\n")
     }
 
 
-    func testExample116FromLine1809() {
+    func testExample116FromLine1813() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("# [Foo]\n[foo]: /url\n> bar\n")), "<h1><a href=\"/url\">Foo</a></h1>\n<blockquote>\n<p>bar</p>\n</blockquote>\n", "Source:\n\n# [Foo]\n[foo]: /url\n> bar\n\n")
     }
 
 
-    func testExample117FromLine1823() {
+    func testExample117FromLine1827() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]: /foo-url \"foo\"\n[bar]: /bar-url\n  \"bar\"\n[baz]: /baz-url\n\n[foo],\n[bar],\n[baz]\n")), "<p><a href=\"/foo-url\" title=\"foo\">foo</a>,\n<a href=\"/bar-url\" title=\"bar\">bar</a>,\n<a href=\"/baz-url\">baz</a></p>\n", "Source:\n\n[foo]: /foo-url \"foo\"\n[bar]: /bar-url\n  \"bar\"\n[baz]: /baz-url\n\n[foo],\n[bar],\n[baz]\n\n")
     }
 
 
-    func testExample118FromLine1843() {
+    func testExample118FromLine1847() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]\n\n> [foo]: /url\n")), "<p><a href=\"/url\">foo</a></p>\n<blockquote>\n</blockquote>\n", "Source:\n\n[foo]\n\n> [foo]: /url\n\n")
     }
 
@@ -660,42 +660,42 @@ class Section_4_7_Link_reference_definitions : XCTestCase {
 
 class Section_4_8_Paragraphs : XCTestCase {
 
-    func testExample119FromLine1865() {
+    func testExample119FromLine1869() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("aaa\n\nbbb\n")), "<p>aaa</p>\n<p>bbb</p>\n", "Source:\n\naaa\n\nbbb\n\n")
     }
 
 
-    func testExample120FromLine1876() {
+    func testExample120FromLine1880() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("aaa\nbbb\n\nccc\nddd\n")), "<p>aaa\nbbb</p>\n<p>ccc\nddd</p>\n", "Source:\n\naaa\nbbb\n\nccc\nddd\n\n")
     }
 
 
-    func testExample121FromLine1891() {
+    func testExample121FromLine1895() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("aaa\n\n\nbbb\n")), "<p>aaa</p>\n<p>bbb</p>\n", "Source:\n\naaa\n\n\nbbb\n\n")
     }
 
 
-    func testExample122FromLine1903() {
+    func testExample122FromLine1907() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("  aaa\n bbb\n")), "<p>aaa\nbbb</p>\n", "Source:\n\n  aaa\n bbb\n\n")
     }
 
 
-    func testExample123FromLine1914() {
+    func testExample123FromLine1918() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("aaa\n             bbb\n                                       ccc\n")), "<p>aaa\nbbb\nccc</p>\n", "Source:\n\naaa\n             bbb\n                                       ccc\n\n")
     }
 
 
-    func testExample124FromLine1927() {
+    func testExample124FromLine1931() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("   aaa\nbbb\n")), "<p>aaa\nbbb</p>\n", "Source:\n\n   aaa\nbbb\n\n")
     }
 
 
-    func testExample125FromLine1935() {
+    func testExample125FromLine1939() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    aaa\nbbb\n")), "<pre><code>aaa\n</code></pre>\n<p>bbb</p>\n", "Source:\n\n    aaa\nbbb\n\n")
     }
 
 
-    func testExample126FromLine1948() {
+    func testExample126FromLine1952() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("aaa     \nbbb     \n")), "<p>aaa<br />\nbbb</p>\n", "Source:\n\naaa     \nbbb     \n\n")
     }
 
@@ -704,7 +704,7 @@ class Section_4_8_Paragraphs : XCTestCase {
 
 class Section_4_9_Blank_lines : XCTestCase {
 
-    func testExample127FromLine1964() {
+    func testExample127FromLine1968() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("  \n\naaa\n  \n\n# aaa\n\n  \n")), "<p>aaa</p>\n<h1>aaa</h1>\n", "Source:\n\n  \n\naaa\n  \n\n# aaa\n\n  \n\n")
     }
 
@@ -717,122 +717,122 @@ class Section_5_Container_blocks : XCTestCase {
 
 class Section_5_1_Block_quotes : XCTestCase {
 
-    func testExample128FromLine2032() {
+    func testExample128FromLine2036() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> # Foo\n> bar\n> baz\n")), "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n", "Source:\n\n> # Foo\n> bar\n> baz\n\n")
     }
 
 
-    func testExample129FromLine2046() {
+    func testExample129FromLine2050() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("># Foo\n>bar\n> baz\n")), "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n", "Source:\n\n># Foo\n>bar\n> baz\n\n")
     }
 
 
-    func testExample130FromLine2060() {
+    func testExample130FromLine2064() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("   > # Foo\n   > bar\n > baz\n")), "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n", "Source:\n\n   > # Foo\n   > bar\n > baz\n\n")
     }
 
 
-    func testExample131FromLine2074() {
+    func testExample131FromLine2078() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    > # Foo\n    > bar\n    > baz\n")), "<pre><code>&gt; # Foo\n&gt; bar\n&gt; baz\n</code></pre>\n", "Source:\n\n    > # Foo\n    > bar\n    > baz\n\n")
     }
 
 
-    func testExample132FromLine2088() {
+    func testExample132FromLine2092() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> # Foo\n> bar\nbaz\n")), "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n", "Source:\n\n> # Foo\n> bar\nbaz\n\n")
     }
 
 
-    func testExample133FromLine2103() {
+    func testExample133FromLine2107() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> bar\nbaz\n> foo\n")), "<blockquote>\n<p>bar\nbaz\nfoo</p>\n</blockquote>\n", "Source:\n\n> bar\nbaz\n> foo\n\n")
     }
 
 
-    func testExample134FromLine2119() {
+    func testExample134FromLine2123() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> foo\n---\n")), "<blockquote>\n<p>foo</p>\n</blockquote>\n<hr />\n", "Source:\n\n> foo\n---\n\n")
     }
 
 
-    func testExample135FromLine2129() {
+    func testExample135FromLine2133() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> - foo\n- bar\n")), "<blockquote>\n<ul>\n<li>foo</li>\n</ul>\n</blockquote>\n<ul>\n<li>bar</li>\n</ul>\n", "Source:\n\n> - foo\n- bar\n\n")
     }
 
 
-    func testExample136FromLine2143() {
+    func testExample136FromLine2147() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(">     foo\n    bar\n")), "<blockquote>\n<pre><code>foo\n</code></pre>\n</blockquote>\n<pre><code>bar\n</code></pre>\n", "Source:\n\n>     foo\n    bar\n\n")
     }
 
 
-    func testExample137FromLine2155() {
+    func testExample137FromLine2159() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> ```\nfoo\n```\n")), "<blockquote>\n<pre><code></code></pre>\n</blockquote>\n<p>foo</p>\n<pre><code></code></pre>\n", "Source:\n\n> ```\nfoo\n```\n\n")
     }
 
 
-    func testExample138FromLine2169() {
+    func testExample138FromLine2173() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(">\n")), "<blockquote>\n</blockquote>\n", "Source:\n\n>\n\n")
     }
 
 
-    func testExample139FromLine2176() {
+    func testExample139FromLine2180() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(">\n>  \n> \n")), "<blockquote>\n</blockquote>\n", "Source:\n\n>\n>  \n> \n\n")
     }
 
 
-    func testExample140FromLine2187() {
+    func testExample140FromLine2191() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(">\n> foo\n>  \n")), "<blockquote>\n<p>foo</p>\n</blockquote>\n", "Source:\n\n>\n> foo\n>  \n\n")
     }
 
 
-    func testExample141FromLine2199() {
+    func testExample141FromLine2203() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> foo\n\n> bar\n")), "<blockquote>\n<p>foo</p>\n</blockquote>\n<blockquote>\n<p>bar</p>\n</blockquote>\n", "Source:\n\n> foo\n\n> bar\n\n")
     }
 
 
-    func testExample142FromLine2220() {
+    func testExample142FromLine2224() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> foo\n> bar\n")), "<blockquote>\n<p>foo\nbar</p>\n</blockquote>\n", "Source:\n\n> foo\n> bar\n\n")
     }
 
 
-    func testExample143FromLine2232() {
+    func testExample143FromLine2236() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> foo\n>\n> bar\n")), "<blockquote>\n<p>foo</p>\n<p>bar</p>\n</blockquote>\n", "Source:\n\n> foo\n>\n> bar\n\n")
     }
 
 
-    func testExample144FromLine2245() {
+    func testExample144FromLine2249() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\n> bar\n")), "<p>foo</p>\n<blockquote>\n<p>bar</p>\n</blockquote>\n", "Source:\n\nfoo\n> bar\n\n")
     }
 
 
-    func testExample145FromLine2258() {
+    func testExample145FromLine2262() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> aaa\n***\n> bbb\n")), "<blockquote>\n<p>aaa</p>\n</blockquote>\n<hr />\n<blockquote>\n<p>bbb</p>\n</blockquote>\n", "Source:\n\n> aaa\n***\n> bbb\n\n")
     }
 
 
-    func testExample146FromLine2275() {
+    func testExample146FromLine2279() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> bar\nbaz\n")), "<blockquote>\n<p>bar\nbaz</p>\n</blockquote>\n", "Source:\n\n> bar\nbaz\n\n")
     }
 
 
-    func testExample147FromLine2285() {
+    func testExample147FromLine2289() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> bar\n\nbaz\n")), "<blockquote>\n<p>bar</p>\n</blockquote>\n<p>baz</p>\n", "Source:\n\n> bar\n\nbaz\n\n")
     }
 
 
-    func testExample148FromLine2296() {
+    func testExample148FromLine2300() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> bar\n>\nbaz\n")), "<blockquote>\n<p>bar</p>\n</blockquote>\n<p>baz</p>\n", "Source:\n\n> bar\n>\nbaz\n\n")
     }
 
 
-    func testExample149FromLine2311() {
+    func testExample149FromLine2315() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> > > foo\nbar\n")), "<blockquote>\n<blockquote>\n<blockquote>\n<p>foo\nbar</p>\n</blockquote>\n</blockquote>\n</blockquote>\n", "Source:\n\n> > > foo\nbar\n\n")
     }
 
 
-    func testExample150FromLine2325() {
+    func testExample150FromLine2329() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(">>> foo\n> bar\n>>baz\n")), "<blockquote>\n<blockquote>\n<blockquote>\n<p>foo\nbar\nbaz</p>\n</blockquote>\n</blockquote>\n</blockquote>\n", "Source:\n\n>>> foo\n> bar\n>>baz\n\n")
     }
 
 
-    func testExample151FromLine2346() {
+    func testExample151FromLine2350() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(">     code\n\n>    not code\n")), "<blockquote>\n<pre><code>code\n</code></pre>\n</blockquote>\n<blockquote>\n<p>not code</p>\n</blockquote>\n", "Source:\n\n>     code\n\n>    not code\n\n")
     }
 
@@ -841,171 +841,172 @@ class Section_5_1_Block_quotes : XCTestCase {
 
 class Section_5_2_List_items : XCTestCase {
 
-    func testExample152FromLine2389() {
+    func testExample152FromLine2393() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("A paragraph\nwith two lines.\n\n    indented code\n\n> A block quote.\n")), "<p>A paragraph\nwith two lines.</p>\n<pre><code>indented code\n</code></pre>\n<blockquote>\n<p>A block quote.</p>\n</blockquote>\n", "Source:\n\nA paragraph\nwith two lines.\n\n    indented code\n\n> A block quote.\n\n")
     }
 
-    func testExample153FromLine2410() {
+
+    func testExample153FromLine2414() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("1.  A paragraph\n    with two lines.\n\n        indented code\n\n    > A block quote.\n")), "<ol>\n<li><p>A paragraph\nwith two lines.</p>\n<pre><code>indented code\n</code></pre>\n<blockquote>\n<p>A block quote.</p>\n</blockquote></li>\n</ol>\n", "Source:\n\n1.  A paragraph\n    with two lines.\n\n        indented code\n\n    > A block quote.\n\n")
     }
 
 
-    func testExample154FromLine2440() {
+    func testExample154FromLine2444() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- one\n\n two\n")), "<ul>\n<li>one</li>\n</ul>\n<p>two</p>\n", "Source:\n\n- one\n\n two\n\n")
     }
 
 
-    func testExample155FromLine2451() {
+    func testExample155FromLine2455() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- one\n\n  two\n")), "<ul>\n<li><p>one</p>\n<p>two</p></li>\n</ul>\n", "Source:\n\n- one\n\n  two\n\n")
     }
 
 
-    func testExample156FromLine2462() {
+    func testExample156FromLine2466() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" -    one\n\n     two\n")), "<ul>\n<li>one</li>\n</ul>\n<pre><code> two\n</code></pre>\n", "Source:\n\n -    one\n\n     two\n\n")
     }
 
 
-    func testExample157FromLine2474() {
+    func testExample157FromLine2478() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" -    one\n\n      two\n")), "<ul>\n<li><p>one</p>\n<p>two</p></li>\n</ul>\n", "Source:\n\n -    one\n\n      two\n\n")
     }
 
 
-    func testExample158FromLine2493() {
+    func testExample158FromLine2497() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("   > > 1.  one\n>>\n>>     two\n")), "<blockquote>\n<blockquote>\n<ol>\n<li><p>one</p>\n<p>two</p></li>\n</ol>\n</blockquote>\n</blockquote>\n", "Source:\n\n   > > 1.  one\n>>\n>>     two\n\n")
     }
 
 
-    func testExample159FromLine2517() {
+    func testExample159FromLine2521() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(">>- one\n>>\n  >  > two\n")), "<blockquote>\n<blockquote>\n<ul>\n<li>one</li>\n</ul>\n<p>two</p>\n</blockquote>\n</blockquote>\n", "Source:\n\n>>- one\n>>\n  >  > two\n\n")
     }
 
 
-    func testExample160FromLine2536() {
+    func testExample160FromLine2540() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n\n  bar\n\n- foo\n\n\n  bar\n\n- ```\n  foo\n\n\n  bar\n  ```\n")), "<ul>\n<li><p>foo</p>\n<p>bar</p></li>\n<li><p>foo</p></li>\n</ul>\n<p>bar</p>\n<ul>\n<li><pre><code>foo\n\n\nbar\n</code></pre></li>\n</ul>\n", "Source:\n\n- foo\n\n  bar\n\n- foo\n\n\n  bar\n\n- ```\n  foo\n\n\n  bar\n  ```\n\n")
     }
 
 
-    func testExample161FromLine2570() {
+    func testExample161FromLine2574() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("1.  foo\n\n    ```\n    bar\n    ```\n\n    baz\n\n    > bam\n")), "<ol>\n<li><p>foo</p>\n<pre><code>bar\n</code></pre>\n<p>baz</p>\n<blockquote>\n<p>bam</p>\n</blockquote></li>\n</ol>\n", "Source:\n\n1.  foo\n\n    ```\n    bar\n    ```\n\n    baz\n\n    > bam\n\n")
     }
 
 
-    func testExample162FromLine2608() {
+    func testExample162FromLine2612() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n\n      bar\n")), "<ul>\n<li><p>foo</p>\n<pre><code>bar\n</code></pre></li>\n</ul>\n", "Source:\n\n- foo\n\n      bar\n\n")
     }
 
 
-    func testExample163FromLine2622() {
+    func testExample163FromLine2626() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("  10.  foo\n\n           bar\n")), "<ol start=\"10\">\n<li><p>foo</p>\n<pre><code>bar\n</code></pre></li>\n</ol>\n", "Source:\n\n  10.  foo\n\n           bar\n\n")
     }
 
 
-    func testExample164FromLine2638() {
+    func testExample164FromLine2642() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    indented code\n\nparagraph\n\n    more code\n")), "<pre><code>indented code\n</code></pre>\n<p>paragraph</p>\n<pre><code>more code\n</code></pre>\n", "Source:\n\n    indented code\n\nparagraph\n\n    more code\n\n")
     }
 
 
-    func testExample165FromLine2652() {
+    func testExample165FromLine2656() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("1.     indented code\n\n   paragraph\n\n       more code\n")), "<ol>\n<li><pre><code>indented code\n</code></pre>\n<p>paragraph</p>\n<pre><code>more code\n</code></pre></li>\n</ol>\n", "Source:\n\n1.     indented code\n\n   paragraph\n\n       more code\n\n")
     }
 
 
-    func testExample166FromLine2671() {
+    func testExample166FromLine2675() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("1.      indented code\n\n   paragraph\n\n       more code\n")), "<ol>\n<li><pre><code> indented code\n</code></pre>\n<p>paragraph</p>\n<pre><code>more code\n</code></pre></li>\n</ol>\n", "Source:\n\n1.      indented code\n\n   paragraph\n\n       more code\n\n")
     }
 
 
-    func testExample167FromLine2694() {
+    func testExample167FromLine2698() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("   foo\n\nbar\n")), "<p>foo</p>\n<p>bar</p>\n", "Source:\n\n   foo\n\nbar\n\n")
     }
 
 
-    func testExample168FromLine2703() {
+    func testExample168FromLine2707() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("-    foo\n\n  bar\n")), "<ul>\n<li>foo</li>\n</ul>\n<p>bar</p>\n", "Source:\n\n-    foo\n\n  bar\n\n")
     }
 
 
-    func testExample169FromLine2719() {
+    func testExample169FromLine2723() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("-  foo\n\n   bar\n")), "<ul>\n<li><p>foo</p>\n<p>bar</p></li>\n</ul>\n", "Source:\n\n-  foo\n\n   bar\n\n")
     }
 
 
-    func testExample170FromLine2739() {
+    func testExample170FromLine2743() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse(" 1.  A paragraph\n     with two lines.\n\n         indented code\n\n     > A block quote.\n")), "<ol>\n<li><p>A paragraph\nwith two lines.</p>\n<pre><code>indented code\n</code></pre>\n<blockquote>\n<p>A block quote.</p>\n</blockquote></li>\n</ol>\n", "Source:\n\n 1.  A paragraph\n     with two lines.\n\n         indented code\n\n     > A block quote.\n\n")
     }
 
 
-    func testExample171FromLine2760() {
+    func testExample171FromLine2764() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("  1.  A paragraph\n      with two lines.\n\n          indented code\n\n      > A block quote.\n")), "<ol>\n<li><p>A paragraph\nwith two lines.</p>\n<pre><code>indented code\n</code></pre>\n<blockquote>\n<p>A block quote.</p>\n</blockquote></li>\n</ol>\n", "Source:\n\n  1.  A paragraph\n      with two lines.\n\n          indented code\n\n      > A block quote.\n\n")
     }
 
 
-    func testExample172FromLine2781() {
+    func testExample172FromLine2785() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("   1.  A paragraph\n       with two lines.\n\n           indented code\n\n       > A block quote.\n")), "<ol>\n<li><p>A paragraph\nwith two lines.</p>\n<pre><code>indented code\n</code></pre>\n<blockquote>\n<p>A block quote.</p>\n</blockquote></li>\n</ol>\n", "Source:\n\n   1.  A paragraph\n       with two lines.\n\n           indented code\n\n       > A block quote.\n\n")
     }
 
 
-    func testExample173FromLine2802() {
+    func testExample173FromLine2806() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    1.  A paragraph\n        with two lines.\n\n            indented code\n\n        > A block quote.\n")), "<pre><code>1.  A paragraph\n    with two lines.\n\n        indented code\n\n    &gt; A block quote.\n</code></pre>\n", "Source:\n\n    1.  A paragraph\n        with two lines.\n\n            indented code\n\n        > A block quote.\n\n")
     }
 
 
-    func testExample174FromLine2829() {
+    func testExample174FromLine2833() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("  1.  A paragraph\nwith two lines.\n\n          indented code\n\n      > A block quote.\n")), "<ol>\n<li><p>A paragraph\nwith two lines.</p>\n<pre><code>indented code\n</code></pre>\n<blockquote>\n<p>A block quote.</p>\n</blockquote></li>\n</ol>\n", "Source:\n\n  1.  A paragraph\nwith two lines.\n\n          indented code\n\n      > A block quote.\n\n")
     }
 
 
-    func testExample175FromLine2850() {
+    func testExample175FromLine2854() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("  1.  A paragraph\n    with two lines.\n")), "<ol>\n<li>A paragraph\nwith two lines.</li>\n</ol>\n", "Source:\n\n  1.  A paragraph\n    with two lines.\n\n")
     }
 
 
-    func testExample176FromLine2862() {
+    func testExample176FromLine2866() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> 1. > Blockquote\ncontinued here.\n")), "<blockquote>\n<ol>\n<li><blockquote>\n<p>Blockquote\ncontinued here.</p>\n</blockquote></li>\n</ol>\n</blockquote>\n", "Source:\n\n> 1. > Blockquote\ncontinued here.\n\n")
     }
 
 
-    func testExample177FromLine2876() {
+    func testExample177FromLine2880() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("> 1. > Blockquote\n> continued here.\n")), "<blockquote>\n<ol>\n<li><blockquote>\n<p>Blockquote\ncontinued here.</p>\n</blockquote></li>\n</ol>\n</blockquote>\n", "Source:\n\n> 1. > Blockquote\n> continued here.\n\n")
     }
 
 
-    func testExample178FromLine2900() {
+    func testExample178FromLine2904() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n  - bar\n    - baz\n")), "<ul>\n<li>foo\n<ul>\n<li>bar\n<ul>\n<li>baz</li>\n</ul></li>\n</ul></li>\n</ul>\n", "Source:\n\n- foo\n  - bar\n    - baz\n\n")
     }
 
 
-    func testExample179FromLine2918() {
+    func testExample179FromLine2922() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n - bar\n  - baz\n")), "<ul>\n<li>foo</li>\n<li>bar</li>\n<li>baz</li>\n</ul>\n", "Source:\n\n- foo\n - bar\n  - baz\n\n")
     }
 
 
-    func testExample180FromLine2932() {
+    func testExample180FromLine2936() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("10) foo\n    - bar\n")), "<ol start=\"10\">\n<li>foo\n<ul>\n<li>bar</li>\n</ul></li>\n</ol>\n", "Source:\n\n10) foo\n    - bar\n\n")
     }
 
 
-    func testExample181FromLine2946() {
+    func testExample181FromLine2950() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("10) foo\n   - bar\n")), "<ol start=\"10\">\n<li>foo</li>\n</ol>\n<ul>\n<li>bar</li>\n</ul>\n", "Source:\n\n10) foo\n   - bar\n\n")
     }
 
 
-    func testExample182FromLine2960() {
+    func testExample182FromLine2964() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- - foo\n")), "<ul>\n<li><ul>\n<li>foo</li>\n</ul></li>\n</ul>\n", "Source:\n\n- - foo\n\n")
     }
 
 
-    func testExample183FromLine2970() {
+    func testExample183FromLine2974() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("1. - 2. foo\n")), "<ol>\n<li><ul>\n<li><ol start=\"2\">\n<li>foo</li>\n</ol></li>\n</ul></li>\n</ol>\n", "Source:\n\n1. - 2. foo\n\n")
     }
 
 
-    func testExample184FromLine2984() {
+    func testExample184FromLine2988() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n-\n- bar\n")), "<ul>\n<li>foo</li>\n<li></li>\n<li>bar</li>\n</ul>\n", "Source:\n\n- foo\n-\n- bar\n\n")
     }
 
 
-    func testExample185FromLine2996() {
+    func testExample185FromLine3000() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("-\n")), "<ul>\n<li></li>\n</ul>\n", "Source:\n\n-\n\n")
     }
 
@@ -1018,102 +1019,102 @@ class Section_5_2_1_Motivation : XCTestCase {
 
 class Section_5_3_Lists : XCTestCase {
 
-    func testExample186FromLine3218() {
+    func testExample186FromLine3222() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n- bar\n+ baz\n")), "<ul>\n<li>foo</li>\n<li>bar</li>\n</ul>\n<ul>\n<li>baz</li>\n</ul>\n", "Source:\n\n- foo\n- bar\n+ baz\n\n")
     }
 
 
-    func testExample187FromLine3232() {
+    func testExample187FromLine3236() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("1. foo\n2. bar\n3) baz\n")), "<ol>\n<li>foo</li>\n<li>bar</li>\n</ol>\n<ol start=\"3\">\n<li>baz</li>\n</ol>\n", "Source:\n\n1. foo\n2. bar\n3) baz\n\n")
     }
 
 
-    func testExample188FromLine3249() {
+    func testExample188FromLine3253() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n\n- bar\n\n\n- baz\n")), "<ul>\n<li><p>foo</p></li>\n<li><p>bar</p></li>\n</ul>\n<ul>\n<li>baz</li>\n</ul>\n", "Source:\n\n- foo\n\n- bar\n\n\n- baz\n\n")
     }
 
 
-    func testExample189FromLine3270() {
+    func testExample189FromLine3274() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n\n\n  bar\n- baz\n")), "<ul>\n<li>foo</li>\n</ul>\n<p>bar</p>\n<ul>\n<li>baz</li>\n</ul>\n", "Source:\n\n- foo\n\n\n  bar\n- baz\n\n")
     }
 
 
-    func testExample190FromLine3288() {
+    func testExample190FromLine3292() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n  - bar\n    - baz\n\n\n      bim\n")), "<ul>\n<li>foo\n<ul>\n<li>bar\n<ul>\n<li>baz</li>\n</ul></li>\n</ul></li>\n</ul>\n<pre><code>  bim\n</code></pre>\n", "Source:\n\n- foo\n  - bar\n    - baz\n\n\n      bim\n\n")
     }
 
 
-    func testExample191FromLine3314() {
+    func testExample191FromLine3318() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- foo\n- bar\n\n\n- baz\n- bim\n")), "<ul>\n<li>foo</li>\n<li>bar</li>\n</ul>\n<ul>\n<li>baz</li>\n<li>bim</li>\n</ul>\n", "Source:\n\n- foo\n- bar\n\n\n- baz\n- bim\n\n")
     }
 
 
-    func testExample192FromLine3332() {
+    func testExample192FromLine3336() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("-   foo\n\n    notcode\n\n-   foo\n\n\n    code\n")), "<ul>\n<li><p>foo</p>\n<p>notcode</p></li>\n<li><p>foo</p></li>\n</ul>\n<pre><code>code\n</code></pre>\n", "Source:\n\n-   foo\n\n    notcode\n\n-   foo\n\n\n    code\n\n")
     }
 
 
-    func testExample193FromLine3356() {
+    func testExample193FromLine3360() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n - b\n  - c\n   - d\n  - e\n - f\n- g\n")), "<ul>\n<li>a</li>\n<li>b</li>\n<li>c</li>\n<li>d</li>\n<li>e</li>\n<li>f</li>\n<li>g</li>\n</ul>\n", "Source:\n\n- a\n - b\n  - c\n   - d\n  - e\n - f\n- g\n\n")
     }
 
 
-    func testExample194FromLine3379() {
+    func testExample194FromLine3383() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n- b\n\n- c\n")), "<ul>\n<li><p>a</p></li>\n<li><p>b</p></li>\n<li><p>c</p></li>\n</ul>\n", "Source:\n\n- a\n- b\n\n- c\n\n")
     }
 
 
-    func testExample195FromLine3394() {
+    func testExample195FromLine3398() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("* a\n*\n\n* c\n")), "<ul>\n<li><p>a</p></li>\n<li></li>\n<li><p>c</p></li>\n</ul>\n", "Source:\n\n* a\n*\n\n* c\n\n")
     }
 
 
-    func testExample196FromLine3411() {
+    func testExample196FromLine3415() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n- b\n\n  c\n- d\n")), "<ul>\n<li><p>a</p></li>\n<li><p>b</p>\n<p>c</p></li>\n<li><p>d</p></li>\n</ul>\n", "Source:\n\n- a\n- b\n\n  c\n- d\n\n")
     }
 
 
-    func testExample197FromLine3426() {
+    func testExample197FromLine3430() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n- b\n\n  [ref]: /url\n- d\n")), "<ul>\n<li><p>a</p></li>\n<li><p>b</p></li>\n<li><p>d</p></li>\n</ul>\n", "Source:\n\n- a\n- b\n\n  [ref]: /url\n- d\n\n")
     }
 
 
-    func testExample198FromLine3442() {
+    func testExample198FromLine3446() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n- ```\n  b\n\n\n  ```\n- c\n")), "<ul>\n<li>a</li>\n<li><pre><code>b\n\n\n</code></pre></li>\n<li>c</li>\n</ul>\n", "Source:\n\n- a\n- ```\n  b\n\n\n  ```\n- c\n\n")
     }
 
 
-    func testExample199FromLine3465() {
+    func testExample199FromLine3469() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n  - b\n\n    c\n- d\n")), "<ul>\n<li>a\n<ul>\n<li><p>b</p>\n<p>c</p></li>\n</ul></li>\n<li>d</li>\n</ul>\n", "Source:\n\n- a\n  - b\n\n    c\n- d\n\n")
     }
 
 
-    func testExample200FromLine3485() {
+    func testExample200FromLine3489() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("* a\n  > b\n  >\n* c\n")), "<ul>\n<li>a\n<blockquote>\n<p>b</p>\n</blockquote></li>\n<li>c</li>\n</ul>\n", "Source:\n\n* a\n  > b\n  >\n* c\n\n")
     }
 
 
-    func testExample201FromLine3503() {
+    func testExample201FromLine3507() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n  > b\n  ```\n  c\n  ```\n- d\n")), "<ul>\n<li>a\n<blockquote>\n<p>b</p>\n</blockquote>\n<pre><code>c\n</code></pre></li>\n<li>d</li>\n</ul>\n", "Source:\n\n- a\n  > b\n  ```\n  c\n  ```\n- d\n\n")
     }
 
 
-    func testExample202FromLine3524() {
+    func testExample202FromLine3528() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n")), "<ul>\n<li>a</li>\n</ul>\n", "Source:\n\n- a\n\n")
     }
 
 
-    func testExample203FromLine3532() {
+    func testExample203FromLine3536() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n  - b\n")), "<ul>\n<li>a\n<ul>\n<li>b</li>\n</ul></li>\n</ul>\n", "Source:\n\n- a\n  - b\n\n")
     }
 
 
-    func testExample204FromLine3546() {
+    func testExample204FromLine3550() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("* foo\n  * bar\n\n  baz\n")), "<ul>\n<li><p>foo</p>\n<ul>\n<li>bar</li>\n</ul>\n<p>baz</p></li>\n</ul>\n", "Source:\n\n* foo\n  * bar\n\n  baz\n\n")
     }
 
 
-    func testExample205FromLine3561() {
+    func testExample205FromLine3565() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("- a\n  - b\n  - c\n\n- d\n  - e\n  - f\n")), "<ul>\n<li><p>a</p>\n<ul>\n<li>b</li>\n<li>c</li>\n</ul></li>\n<li><p>d</p>\n<ul>\n<li>e</li>\n<li>f</li>\n</ul></li>\n</ul>\n", "Source:\n\n- a\n  - b\n  - c\n\n- d\n  - e\n  - f\n\n")
     }
 
@@ -1122,7 +1123,7 @@ class Section_5_3_Lists : XCTestCase {
 
 class Section_6_Inlines : XCTestCase {
 
-    func testExample206FromLine3590() {
+    func testExample206FromLine3594() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`hi`lo`\n")), "<p><code>hi</code>lo`</p>\n", "Source:\n\n`hi`lo`\n\n")
     }
 
@@ -1131,68 +1132,68 @@ class Section_6_Inlines : XCTestCase {
 
 class Section_6_1_Backslash_escapes : XCTestCase {
 
-    func testExample207FromLine3603() {
+    func testExample207FromLine3607() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n")), "<p>!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~</p>\n", "Source:\n\n\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n\n")
     }
 
 
-    func testExample208FromLine3612() {
+    func testExample208FromLine3616() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\\\t\\A\\a\\ \\3\\φ\\«\n")), "<p>\\   \\A\\a\\ \\3\\φ\\«</p>\n", "Source:\n\n\\\t\\A\\a\\ \\3\\φ\\«\n\n")
     }
 
 
-    func testExample209FromLine3621() {
+    func testExample209FromLine3625() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\\*not emphasized*\n\\<br/> not a tag\n\\[not a link](/foo)\n\\`not code`\n1\\. not a list\n\\* not a list\n\\# not a header\n\\[foo]: /url \"not a reference\"\n")), "<p>*not emphasized*\n&lt;br/&gt; not a tag\n[not a link](/foo)\n`not code`\n1. not a list\n* not a list\n# not a header\n[foo]: /url &quot;not a reference&quot;</p>\n", "Source:\n\n\\*not emphasized*\n\\<br/> not a tag\n\\[not a link](/foo)\n\\`not code`\n1\\. not a list\n\\* not a list\n\\# not a header\n\\[foo]: /url \"not a reference\"\n\n")
     }
 
 
-    func testExample210FromLine3643() {
+    func testExample210FromLine3647() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\\\\*emphasis*\n")), "<p>\\<em>emphasis</em></p>\n", "Source:\n\n\\\\*emphasis*\n\n")
     }
 
 
-    func testExample211FromLine3651() {
+    func testExample211FromLine3655() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\\\nbar\n")), "<p>foo<br />\nbar</p>\n", "Source:\n\nfoo\\\nbar\n\n")
     }
 
 
-    func testExample212FromLine3662() {
+    func testExample212FromLine3666() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`` \\[\\` ``\n")), "<p><code>\\[\\`</code></p>\n", "Source:\n\n`` \\[\\` ``\n\n")
     }
 
 
-    func testExample213FromLine3668() {
+    func testExample213FromLine3672() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    \\[\\]\n")), "<pre><code>\\[\\]\n</code></pre>\n", "Source:\n\n    \\[\\]\n\n")
     }
 
 
-    func testExample214FromLine3675() {
+    func testExample214FromLine3679() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("~~~\n\\[\\]\n~~~\n")), "<pre><code>\\[\\]\n</code></pre>\n", "Source:\n\n~~~\n\\[\\]\n~~~\n\n")
     }
 
 
-    func testExample215FromLine3684() {
+    func testExample215FromLine3688() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<http://google.com?find=\\*>\n")), "<p><a href=\"http://google.com?find=\\*\">http://google.com?find=\\*</a></p>\n", "Source:\n\n<http://google.com?find=\\*>\n\n")
     }
 
 
-    func testExample216FromLine3690() {
+    func testExample216FromLine3694() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"/bar\\/)\">\n")), "<p><a href=\"/bar\\/)\"></p>\n", "Source:\n\n<a href=\"/bar\\/)\">\n\n")
     }
 
 
-    func testExample217FromLine3700() {
+    func testExample217FromLine3704() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo](/bar\\* \"ti\\*tle\")\n")), "<p><a href=\"/bar*\" title=\"ti*tle\">foo</a></p>\n", "Source:\n\n[foo](/bar\\* \"ti\\*tle\")\n\n")
     }
 
 
-    func testExample218FromLine3706() {
+    func testExample218FromLine3710() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]\n\n[foo]: /bar\\* \"ti\\*tle\"\n")), "<p><a href=\"/bar*\" title=\"ti*tle\">foo</a></p>\n", "Source:\n\n[foo]\n\n[foo]: /bar\\* \"ti\\*tle\"\n\n")
     }
 
 
-    func testExample219FromLine3714() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("``` foo\\+bar\nfoo\n```\n")), "<pre class=\"foo+bar\"><code>foo\n</code></pre>\n", "Source:\n\n``` foo\\+bar\nfoo\n```\n\n")
+    func testExample219FromLine3718() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("``` foo\\+bar\nfoo\n```\n")), "<pre><code class=\"language-foo+bar\">foo\n</code></pre>\n", "Source:\n\n``` foo\\+bar\nfoo\n```\n\n")
     }
 
 }
@@ -1200,62 +1201,62 @@ class Section_6_1_Backslash_escapes : XCTestCase {
 
 class Section_6_2_Entities : XCTestCase {
 
-    func testExample220FromLine3732() {
+    func testExample220FromLine3736() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("&nbsp; &amp; &copy; &AElig; &Dcaron; &frac34; &HilbertSpace; &DifferentialD; &ClockwiseContourIntegral;\n")), "<p>&nbsp; &amp; &copy; &AElig; &Dcaron; &frac34; &HilbertSpace; &DifferentialD; &ClockwiseContourIntegral;</p>\n", "Source:\n\n&nbsp; &amp; &copy; &AElig; &Dcaron; &frac34; &HilbertSpace; &DifferentialD; &ClockwiseContourIntegral;\n\n")
     }
 
 
-    func testExample221FromLine3741() {
+    func testExample221FromLine3745() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("&#1; &#35; &#1234; &#992; &#98765432;\n")), "<p>&#1; &#35; &#1234; &#992; &#98765432;</p>\n", "Source:\n\n&#1; &#35; &#1234; &#992; &#98765432;\n\n")
     }
 
 
-    func testExample222FromLine3751() {
+    func testExample222FromLine3755() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("&#x1; &#X22; &#XD06; &#xcab;\n")), "<p>&#x1; &#X22; &#XD06; &#xcab;</p>\n", "Source:\n\n&#x1; &#X22; &#XD06; &#xcab;\n\n")
     }
 
 
-    func testExample223FromLine3759() {
+    func testExample223FromLine3763() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("&nbsp &x; &#; &#x; &#123456789; &ThisIsWayTooLongToBeAnEntityIsntIt; &hi?;\n")), "<p>&amp;nbsp &amp;x; &amp;#; &amp;#x; &amp;#123456789; &amp;ThisIsWayTooLongToBeAnEntityIsntIt; &amp;hi?;</p>\n", "Source:\n\n&nbsp &x; &#; &#x; &#123456789; &ThisIsWayTooLongToBeAnEntityIsntIt; &hi?;\n\n")
     }
 
 
-    func testExample224FromLine3768() {
+    func testExample224FromLine3772() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("&copy\n")), "<p>&amp;copy</p>\n", "Source:\n\n&copy\n\n")
     }
 
 
-    func testExample225FromLine3777() {
+    func testExample225FromLine3781() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("&MadeUpEntity;\n")), "<p>&MadeUpEntity;</p>\n", "Source:\n\n&MadeUpEntity;\n\n")
     }
 
 
-    func testExample226FromLine3787() {
+    func testExample226FromLine3791() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"&ouml;&ouml;.html\">\n")), "<p><a href=\"&ouml;&ouml;.html\"></p>\n", "Source:\n\n<a href=\"&ouml;&ouml;.html\">\n\n")
     }
 
 
-    func testExample227FromLine3793() {
+    func testExample227FromLine3797() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo](/f&ouml;&ouml; \"f&ouml;&ouml;\")\n")), "<p><a href=\"/f&ouml;&ouml;\" title=\"f&ouml;&ouml;\">foo</a></p>\n", "Source:\n\n[foo](/f&ouml;&ouml; \"f&ouml;&ouml;\")\n\n")
     }
 
 
-    func testExample228FromLine3799() {
+    func testExample228FromLine3803() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]\n\n[foo]: /f&ouml;&ouml; \"f&ouml;&ouml;\"\n")), "<p><a href=\"/f&ouml;&ouml;\" title=\"f&ouml;&ouml;\">foo</a></p>\n", "Source:\n\n[foo]\n\n[foo]: /f&ouml;&ouml; \"f&ouml;&ouml;\"\n\n")
     }
 
 
-    func testExample229FromLine3807() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("``` f&ouml;&ouml;\nfoo\n```\n")), "<pre class=\"f&ouml;&ouml;\"><code>foo\n</code></pre>\n", "Source:\n\n``` f&ouml;&ouml;\nfoo\n```\n\n")
+    func testExample229FromLine3811() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("``` f&ouml;&ouml;\nfoo\n```\n")), "<pre><code class=\"language-f&ouml;&ouml;\">foo\n</code></pre>\n", "Source:\n\n``` f&ouml;&ouml;\nfoo\n```\n\n")
     }
 
 
-    func testExample230FromLine3818() {
+    func testExample230FromLine3822() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`f&ouml;&ouml;`\n")), "<p><code>f&amp;ouml;&amp;ouml;</code></p>\n", "Source:\n\n`f&ouml;&ouml;`\n\n")
     }
 
 
-    func testExample231FromLine3824() {
+    func testExample231FromLine3828() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("    f&ouml;f&ouml;\n")), "<pre><code>f&amp;ouml;f&amp;ouml;\n</code></pre>\n", "Source:\n\n    f&ouml;f&ouml;\n\n")
     }
 
@@ -1264,67 +1265,67 @@ class Section_6_2_Entities : XCTestCase {
 
 class Section_6_3_Code_span : XCTestCase {
 
-    func testExample232FromLine3845() {
+    func testExample232FromLine3849() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`foo`\n")), "<p><code>foo</code></p>\n", "Source:\n\n`foo`\n\n")
     }
 
 
-    func testExample233FromLine3854() {
+    func testExample233FromLine3858() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`` foo ` bar  ``\n")), "<p><code>foo ` bar</code></p>\n", "Source:\n\n`` foo ` bar  ``\n\n")
     }
 
 
-    func testExample234FromLine3863() {
+    func testExample234FromLine3867() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("` `` `\n")), "<p><code>``</code></p>\n", "Source:\n\n` `` `\n\n")
     }
 
 
-    func testExample235FromLine3871() {
+    func testExample235FromLine3875() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("``\nfoo\n``\n")), "<p><code>foo</code></p>\n", "Source:\n\n``\nfoo\n``\n\n")
     }
 
 
-    func testExample236FromLine3882() {
+    func testExample236FromLine3886() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`foo   bar\n  baz`\n")), "<p><code>foo bar baz</code></p>\n", "Source:\n\n`foo   bar\n  baz`\n\n")
     }
 
 
-    func testExample237FromLine3902() {
+    func testExample237FromLine3906() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`foo `` bar`\n")), "<p><code>foo `` bar</code></p>\n", "Source:\n\n`foo `` bar`\n\n")
     }
 
 
-    func testExample238FromLine3911() {
+    func testExample238FromLine3915() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`foo\\`bar`\n")), "<p><code>foo\\</code>bar`</p>\n", "Source:\n\n`foo\\`bar`\n\n")
     }
 
 
-    func testExample239FromLine3926() {
+    func testExample239FromLine3930() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo`*`\n")), "<p>*foo<code>*</code></p>\n", "Source:\n\n*foo`*`\n\n")
     }
 
 
-    func testExample240FromLine3934() {
+    func testExample240FromLine3938() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[not a `link](/foo`)\n")), "<p>[not a <code>link](/foo</code>)</p>\n", "Source:\n\n[not a `link](/foo`)\n\n")
     }
 
 
-    func testExample241FromLine3942() {
+    func testExample241FromLine3946() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<http://foo.bar.`baz>`\n")), "<p><a href=\"http://foo.bar.`baz\">http://foo.bar.`baz</a>`</p>\n", "Source:\n\n<http://foo.bar.`baz>`\n\n")
     }
 
 
-    func testExample242FromLine3950() {
+    func testExample242FromLine3954() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"`\">`\n")), "<p><a href=\"`\">`</p>\n", "Source:\n\n<a href=\"`\">`\n\n")
     }
 
 
-    func testExample243FromLine3959() {
+    func testExample243FromLine3963() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("```foo``\n")), "<p>```foo``</p>\n", "Source:\n\n```foo``\n\n")
     }
 
 
-    func testExample244FromLine3965() {
+    func testExample244FromLine3969() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`foo\n")), "<p>`foo</p>\n", "Source:\n\n`foo\n\n")
     }
 
@@ -1333,402 +1334,412 @@ class Section_6_3_Code_span : XCTestCase {
 
 class Section_6_4_Emphasis_and_strong_emphasis : XCTestCase {
 
-    func testExample245FromLine4091() {
+    func testExample245FromLine4095() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo bar*\n")), "<p><em>foo bar</em></p>\n", "Source:\n\n*foo bar*\n\n")
     }
 
 
-    func testExample246FromLine4097() {
+    func testExample246FromLine4101() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo bar_\n")), "<p><em>foo bar</em></p>\n", "Source:\n\n_foo bar_\n\n")
     }
 
 
-    func testExample247FromLine4105() {
+    func testExample247FromLine4109() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo bar**\n")), "<p><strong>foo bar</strong></p>\n", "Source:\n\n**foo bar**\n\n")
     }
 
 
-    func testExample248FromLine4111() {
+    func testExample248FromLine4115() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__foo bar__\n")), "<p><strong>foo bar</strong></p>\n", "Source:\n\n__foo bar__\n\n")
     }
 
 
-    func testExample249FromLine4119() {
+    func testExample249FromLine4123() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo\nbar*\n")), "<p><em>foo\nbar</em></p>\n", "Source:\n\n*foo\nbar*\n\n")
     }
 
 
-    func testExample250FromLine4127() {
+    func testExample250FromLine4131() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo\nbar_\n")), "<p><em>foo\nbar</em></p>\n", "Source:\n\n_foo\nbar_\n\n")
     }
 
 
-    func testExample251FromLine4135() {
+    func testExample251FromLine4139() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo\nbar**\n")), "<p><strong>foo\nbar</strong></p>\n", "Source:\n\n**foo\nbar**\n\n")
     }
 
 
-    func testExample252FromLine4143() {
+    func testExample252FromLine4147() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__foo\nbar__\n")), "<p><strong>foo\nbar</strong></p>\n", "Source:\n\n__foo\nbar__\n\n")
     }
 
 
-    func testExample253FromLine4153() {
+    func testExample253FromLine4157() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo [bar](/url)*\n")), "<p><em>foo <a href=\"/url\">bar</a></em></p>\n", "Source:\n\n*foo [bar](/url)*\n\n")
     }
 
 
-    func testExample254FromLine4159() {
+    func testExample254FromLine4163() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo [bar](/url)_\n")), "<p><em>foo <a href=\"/url\">bar</a></em></p>\n", "Source:\n\n_foo [bar](/url)_\n\n")
     }
 
 
-    func testExample255FromLine4165() {
+    func testExample255FromLine4169() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo [bar](/url)**\n")), "<p><strong>foo <a href=\"/url\">bar</a></strong></p>\n", "Source:\n\n**foo [bar](/url)**\n\n")
     }
 
 
-    func testExample256FromLine4171() {
+    func testExample256FromLine4175() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__foo [bar](/url)__\n")), "<p><strong>foo <a href=\"/url\">bar</a></strong></p>\n", "Source:\n\n__foo [bar](/url)__\n\n")
     }
 
 
-    func testExample257FromLine4180() {
+    func testExample257FromLine4184() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo [bar*](/url)\n")), "<p>*foo <a href=\"/url\">bar*</a></p>\n", "Source:\n\n*foo [bar*](/url)\n\n")
     }
 
 
-    func testExample258FromLine4186() {
+    func testExample258FromLine4190() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo [bar_](/url)\n")), "<p>_foo <a href=\"/url\">bar_</a></p>\n", "Source:\n\n_foo [bar_](/url)\n\n")
     }
 
 
-    func testExample259FromLine4192() {
+    func testExample259FromLine4196() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**<a href=\"**\">\n")), "<p>**<a href=\"**\"></p>\n", "Source:\n\n**<a href=\"**\">\n\n")
     }
 
 
-    func testExample260FromLine4198() {
+    func testExample260FromLine4202() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__<a href=\"__\">\n")), "<p>__<a href=\"__\"></p>\n", "Source:\n\n__<a href=\"__\">\n\n")
     }
 
 
-    func testExample261FromLine4204() {
+    func testExample261FromLine4208() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*a `*`*\n")), "<p><em>a <code>*</code></em></p>\n", "Source:\n\n*a `*`*\n\n")
     }
 
 
-    func testExample262FromLine4210() {
+    func testExample262FromLine4214() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_a `_`_\n")), "<p><em>a <code>_</code></em></p>\n", "Source:\n\n_a `_`_\n\n")
     }
 
 
-    func testExample263FromLine4216() {
+    func testExample263FromLine4220() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**a<http://foo.bar?q=**>\n")), "<p>**a<a href=\"http://foo.bar?q=**\">http://foo.bar?q=**</a></p>\n", "Source:\n\n**a<http://foo.bar?q=**>\n\n")
     }
 
 
-    func testExample264FromLine4222() {
+    func testExample264FromLine4226() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__a<http://foo.bar?q=__>\n")), "<p>__a<a href=\"http://foo.bar?q=__\">http://foo.bar?q=__</a></p>\n", "Source:\n\n__a<http://foo.bar?q=__>\n\n")
     }
 
 
-    func testExample265FromLine4231() {
+    func testExample265FromLine4235() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("and * foo bar*\n")), "<p>and * foo bar*</p>\n", "Source:\n\nand * foo bar*\n\n")
     }
 
 
-    func testExample266FromLine4237() {
+    func testExample266FromLine4241() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_ foo bar_\n")), "<p>_ foo bar_</p>\n", "Source:\n\n_ foo bar_\n\n")
     }
 
 
-    func testExample267FromLine4243() {
+    func testExample267FromLine4247() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("and ** foo bar**\n")), "<p>and ** foo bar**</p>\n", "Source:\n\nand ** foo bar**\n\n")
     }
 
 
-    func testExample268FromLine4249() {
+    func testExample268FromLine4253() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__ foo bar__\n")), "<p>__ foo bar__</p>\n", "Source:\n\n__ foo bar__\n\n")
     }
 
 
-    func testExample269FromLine4258() {
+    func testExample269FromLine4262() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("and *foo bar *\n")), "<p>and *foo bar *</p>\n", "Source:\n\nand *foo bar *\n\n")
     }
 
 
-    func testExample270FromLine4264() {
+    func testExample270FromLine4268() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("and _foo bar _\n")), "<p>and _foo bar _</p>\n", "Source:\n\nand _foo bar _\n\n")
     }
 
 
-    func testExample271FromLine4270() {
+    func testExample271FromLine4274() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("and **foo bar **\n")), "<p>and **foo bar **</p>\n", "Source:\n\nand **foo bar **\n\n")
     }
 
 
-    func testExample272FromLine4276() {
+    func testExample272FromLine4280() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("and __foo bar __\n")), "<p>and __foo bar __</p>\n", "Source:\n\nand __foo bar __\n\n")
     }
 
 
-    func testExample273FromLine4285() {
+    func testExample273FromLine4289() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("****hi****\n")), "<p>****hi****</p>\n", "Source:\n\n****hi****\n\n")
     }
 
 
-    func testExample274FromLine4291() {
+    func testExample274FromLine4295() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_____hi_____\n")), "<p>_____hi_____</p>\n", "Source:\n\n_____hi_____\n\n")
     }
 
 
-    func testExample275FromLine4297() {
+    func testExample275FromLine4301() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Sign here: _________\n")), "<p>Sign here: _________</p>\n", "Source:\n\nSign here: _________\n\n")
     }
 
 
-    func testExample276FromLine4306() {
+    func testExample276FromLine4310() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("** is not an empty emphasis\n")), "<p>** is not an empty emphasis</p>\n", "Source:\n\n** is not an empty emphasis\n\n")
     }
 
 
-    func testExample277FromLine4312() {
+    func testExample277FromLine4316() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**** is not an empty strong emphasis\n")), "<p>**** is not an empty strong emphasis</p>\n", "Source:\n\n**** is not an empty strong emphasis\n\n")
     }
 
 
-    func testExample278FromLine4321() {
+    func testExample278FromLine4325() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*here is a \\**\n")), "<p><em>here is a *</em></p>\n", "Source:\n\n*here is a \\**\n\n")
     }
 
 
-    func testExample279FromLine4327() {
+    func testExample279FromLine4331() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__this is a double underscore (`__`)__\n")), "<p><strong>this is a double underscore (<code>__</code>)</strong></p>\n", "Source:\n\n__this is a double underscore (`__`)__\n\n")
     }
 
 
-    func testExample280FromLine4335() {
+    func testExample280FromLine4339() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo*bar*baz\n")), "<p>foo<em>bar</em>baz</p>\n", "Source:\n\nfoo*bar*baz\n\n")
     }
 
 
-    func testExample281FromLine4341() {
+    func testExample281FromLine4345() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo_bar_baz\n")), "<p>foo_bar_baz</p>\n", "Source:\n\nfoo_bar_baz\n\n")
     }
 
 
-    func testExample282FromLine4347() {
+    func testExample282FromLine4351() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo__bar__baz\n")), "<p>foo__bar__baz</p>\n", "Source:\n\nfoo__bar__baz\n\n")
     }
 
 
-    func testExample283FromLine4353() {
+    func testExample283FromLine4357() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo_bar_baz_\n")), "<p><em>foo_bar_baz</em></p>\n", "Source:\n\n_foo_bar_baz_\n\n")
     }
 
 
-    func testExample284FromLine4359() {
+    func testExample284FromLine4363() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("11*15*32\n")), "<p>11<em>15</em>32</p>\n", "Source:\n\n11*15*32\n\n")
     }
 
 
-    func testExample285FromLine4365() {
+    func testExample285FromLine4369() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("11_15_32\n")), "<p>11_15_32</p>\n", "Source:\n\n11_15_32\n\n")
     }
 
 
-    func testExample286FromLine4374() {
+    func testExample286FromLine4378() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo_bar_baz_\n")), "<p><em>foo_bar_baz</em></p>\n", "Source:\n\n_foo_bar_baz_\n\n")
     }
 
 
-    func testExample287FromLine4380() {
+    func testExample287FromLine4384() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__foo__bar__baz__\n")), "<p><strong>foo__bar__baz</strong></p>\n", "Source:\n\n__foo__bar__baz__\n\n")
     }
 
 
-    func testExample288FromLine4388() {
+    func testExample288FromLine4392() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("***foo bar***\n")), "<p><strong><em>foo bar</em></strong></p>\n", "Source:\n\n***foo bar***\n\n")
     }
 
 
-    func testExample289FromLine4394() {
+    func testExample289FromLine4398() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("___foo bar___\n")), "<p><strong><em>foo bar</em></strong></p>\n", "Source:\n\n___foo bar___\n\n")
     }
 
 
-    func testExample290FromLine4400() {
+    func testExample290FromLine4404() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("***foo** bar*\n")), "<p><em><strong>foo</strong> bar</em></p>\n", "Source:\n\n***foo** bar*\n\n")
     }
 
 
-    func testExample291FromLine4406() {
+    func testExample291FromLine4410() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("___foo__ bar_\n")), "<p><em><strong>foo</strong> bar</em></p>\n", "Source:\n\n___foo__ bar_\n\n")
     }
 
 
-    func testExample292FromLine4412() {
+    func testExample292FromLine4416() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("***foo* bar**\n")), "<p><strong><em>foo</em> bar</strong></p>\n", "Source:\n\n***foo* bar**\n\n")
     }
 
 
-    func testExample293FromLine4418() {
+    func testExample293FromLine4422() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("___foo_ bar__\n")), "<p><strong><em>foo</em> bar</strong></p>\n", "Source:\n\n___foo_ bar__\n\n")
     }
 
 
-    func testExample294FromLine4424() {
+    func testExample294FromLine4428() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo **bar***\n")), "<p><em>foo <strong>bar</strong></em></p>\n", "Source:\n\n*foo **bar***\n\n")
     }
 
 
-    func testExample295FromLine4430() {
+    func testExample295FromLine4434() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo __bar___\n")), "<p><em>foo <strong>bar</strong></em></p>\n", "Source:\n\n_foo __bar___\n\n")
     }
 
 
-    func testExample296FromLine4436() {
+    func testExample296FromLine4440() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo *bar***\n")), "<p><strong>foo <em>bar</em></strong></p>\n", "Source:\n\n**foo *bar***\n\n")
     }
 
 
-    func testExample297FromLine4442() {
+    func testExample297FromLine4446() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__foo _bar___\n")), "<p><strong>foo <em>bar</em></strong></p>\n", "Source:\n\n__foo _bar___\n\n")
     }
 
 
-    func testExample298FromLine4448() {
+    func testExample298FromLine4452() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo **bar***\n")), "<p><em>foo <strong>bar</strong></em></p>\n", "Source:\n\n*foo **bar***\n\n")
     }
 
 
-    func testExample299FromLine4454() {
+    func testExample299FromLine4458() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo __bar___\n")), "<p><em>foo <strong>bar</strong></em></p>\n", "Source:\n\n_foo __bar___\n\n")
     }
 
 
-    func testExample300FromLine4460() {
+    func testExample300FromLine4464() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo *bar* baz*\n")), "<p><em>foo <em>bar</em> baz</em></p>\n", "Source:\n\n*foo *bar* baz*\n\n")
     }
 
 
-    func testExample301FromLine4466() {
+    func testExample301FromLine4470() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo _bar_ baz_\n")), "<p><em>foo <em>bar</em> baz</em></p>\n", "Source:\n\n_foo _bar_ baz_\n\n")
     }
 
 
-    func testExample302FromLine4472() {
+    func testExample302FromLine4476() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo **bar** baz**\n")), "<p><strong>foo <strong>bar</strong> baz</strong></p>\n", "Source:\n\n**foo **bar** baz**\n\n")
     }
 
 
-    func testExample303FromLine4478() {
+    func testExample303FromLine4482() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__foo __bar__ baz__\n")), "<p><strong>foo <strong>bar</strong> baz</strong></p>\n", "Source:\n\n__foo __bar__ baz__\n\n")
     }
 
 
-    func testExample304FromLine4484() {
+    func testExample304FromLine4488() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo **bar** baz*\n")), "<p><em>foo <strong>bar</strong> baz</em></p>\n", "Source:\n\n*foo **bar** baz*\n\n")
     }
 
 
-    func testExample305FromLine4490() {
+    func testExample305FromLine4494() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("_foo __bar__ baz_\n")), "<p><em>foo <strong>bar</strong> baz</em></p>\n", "Source:\n\n_foo __bar__ baz_\n\n")
     }
 
 
-    func testExample306FromLine4496() {
+    func testExample306FromLine4500() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo *bar* baz**\n")), "<p><strong>foo <em>bar</em> baz</strong></p>\n", "Source:\n\n**foo *bar* baz**\n\n")
     }
 
 
-    func testExample307FromLine4502() {
+    func testExample307FromLine4506() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("__foo _bar_ baz__\n")), "<p><strong>foo <em>bar</em> baz</strong></p>\n", "Source:\n\n__foo _bar_ baz__\n\n")
     }
 
 
-    func testExample308FromLine4512() {
+    func testExample308FromLine4516() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo**\n")), "<p><strong>foo</strong></p>\n", "Source:\n\n**foo**\n\n")
     }
 
 
-    func testExample309FromLine4518() {
+    func testExample309FromLine4522() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("****foo****\n")), "<p>****foo****</p>\n", "Source:\n\n****foo****\n\n")
     }
 
 
-    func testExample310FromLine4526() {
+    func testExample310FromLine4530() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*_foo_*\n")), "<p><em><em>foo</em></em></p>\n", "Source:\n\n*_foo_*\n\n")
     }
 
 
-    func testExample311FromLine4532() {
+    func testExample311FromLine4536() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**__foo__**\n")), "<p><strong><strong>foo</strong></strong></p>\n", "Source:\n\n**__foo__**\n\n")
     }
 
 
-    func testExample312FromLine4542() {
+    func testExample312FromLine4546() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo**\n")), "<p><em>foo</em>*</p>\n", "Source:\n\n*foo**\n\n")
     }
 
 
-    func testExample313FromLine4548() {
+    func testExample313FromLine4552() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo *bar**\n")), "<p><em>foo <em>bar</em></em></p>\n", "Source:\n\n*foo *bar**\n\n")
     }
 
 
-    func testExample314FromLine4554() {
+    func testExample314FromLine4558() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo***\n")), "<p><strong>foo</strong>*</p>\n", "Source:\n\n**foo***\n\n")
     }
 
 
-    func testExample315FromLine4563() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo**bar***\n")), "<p><em>foo</em><em>bar</em>**</p>\n", "Source:\n\n*foo**bar***\n\n")
+    func testExample315FromLine4564() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("***foo* bar***\n")), "<p><strong><em>foo</em> bar</strong>*</p>\n", "Source:\n\n***foo* bar***\n\n")
     }
 
 
-    func testExample316FromLine4571() {
-        XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo****\n")), "<p>*foo****</p>\n", "Source:\n\n*foo****\n\n")
+    func testExample316FromLine4570() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("***foo** bar***\n")), "<p><em><strong>foo</strong> bar</em>**</p>\n", "Source:\n\n***foo** bar***\n\n")
     }
 
 
     func testExample317FromLine4579() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo**bar***\n")), "<p><em>foo</em><em>bar</em>**</p>\n", "Source:\n\n*foo**bar***\n\n")
+    }
+
+
+    func testExample318FromLine4587() {
+        XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo****\n")), "<p>*foo****</p>\n", "Source:\n\n*foo****\n\n")
+    }
+
+
+    func testExample319FromLine4595() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo**\n\n**foo*\n")), "<p><em>foo</em>*</p>\n<p>**foo*</p>\n", "Source:\n\n*foo**\n\n**foo*\n\n")
     }
 
 
-    func testExample318FromLine4588() {
+    func testExample320FromLine4604() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo *bar**\n\n**foo* bar*\n")), "<p><em>foo <em>bar</em></em></p>\n<p>**foo* bar*</p>\n", "Source:\n\n*foo *bar**\n\n**foo* bar*\n\n")
     }
 
 
-    func testExample319FromLine4599() {
+    func testExample321FromLine4615() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**foo* bar*\n")), "<p>**foo* bar*</p>\n", "Source:\n\n**foo* bar*\n\n")
     }
 
 
-    func testExample320FromLine4605() {
+    func testExample322FromLine4621() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*bar***\n")), "<p><em>bar</em>**</p>\n", "Source:\n\n*bar***\n\n")
     }
 
 
-    func testExample321FromLine4611() {
+    func testExample323FromLine4627() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("***foo*\n")), "<p>***foo*</p>\n", "Source:\n\n***foo*\n\n")
     }
 
 
-    func testExample322FromLine4617() {
+    func testExample324FromLine4633() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("**bar***\n")), "<p><strong>bar</strong>*</p>\n", "Source:\n\n**bar***\n\n")
     }
 
 
-    func testExample323FromLine4623() {
+    func testExample325FromLine4639() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("***foo**\n")), "<p>***foo**</p>\n", "Source:\n\n***foo**\n\n")
     }
 
 
-    func testExample324FromLine4629() {
+    func testExample326FromLine4645() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("***foo *bar*\n")), "<p>***foo <em>bar</em></p>\n", "Source:\n\n***foo *bar*\n\n")
     }
 
@@ -1737,242 +1748,242 @@ class Section_6_4_Emphasis_and_strong_emphasis : XCTestCase {
 
 class Section_6_5_Links : XCTestCase {
 
-    func testExample325FromLine4701() {
+    func testExample327FromLine4717() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](/uri \"title\")\n")), "<p><a href=\"/uri\" title=\"title\">link</a></p>\n", "Source:\n\n[link](/uri \"title\")\n\n")
     }
 
 
-    func testExample326FromLine4709() {
+    func testExample328FromLine4725() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](/uri)\n")), "<p><a href=\"/uri\">link</a></p>\n", "Source:\n\n[link](/uri)\n\n")
     }
 
 
-    func testExample327FromLine4717() {
+    func testExample329FromLine4733() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link]()\n")), "<p><a href=\"\">link</a></p>\n", "Source:\n\n[link]()\n\n")
     }
 
 
-    func testExample328FromLine4723() {
+    func testExample330FromLine4739() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](<>)\n")), "<p><a href=\"\">link</a></p>\n", "Source:\n\n[link](<>)\n\n")
     }
 
 
-    func testExample329FromLine4733() {
+    func testExample331FromLine4749() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](/my uri)\n")), "<p>[link](/my uri)</p>\n", "Source:\n\n[link](/my uri)\n\n")
     }
 
 
-    func testExample330FromLine4739() {
+    func testExample332FromLine4755() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](</my uri>)\n")), "<p><a href=\"/my uri\">link</a></p>\n", "Source:\n\n[link](</my uri>)\n\n")
     }
 
 
-    func testExample331FromLine4747() {
+    func testExample333FromLine4763() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](foo\nbar)\n")), "<p>[link](foo\nbar)</p>\n", "Source:\n\n[link](foo\nbar)\n\n")
     }
 
 
-    func testExample332FromLine4757() {
+    func testExample334FromLine4773() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link]((foo)and(bar))\n")), "<p><a href=\"(foo)and(bar)\">link</a></p>\n", "Source:\n\n[link]((foo)and(bar))\n\n")
     }
 
 
-    func testExample333FromLine4766() {
+    func testExample335FromLine4782() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](foo(and(bar)))\n")), "<p>[link](foo(and(bar)))</p>\n", "Source:\n\n[link](foo(and(bar)))\n\n")
     }
 
 
-    func testExample334FromLine4772() {
+    func testExample336FromLine4788() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](foo(and\\(bar\\)))\n")), "<p><a href=\"foo(and(bar))\">link</a></p>\n", "Source:\n\n[link](foo(and\\(bar\\)))\n\n")
     }
 
 
-    func testExample335FromLine4778() {
+    func testExample337FromLine4794() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](<foo(and(bar))>)\n")), "<p><a href=\"foo(and(bar))\">link</a></p>\n", "Source:\n\n[link](<foo(and(bar))>)\n\n")
     }
 
 
-    func testExample336FromLine4787() {
+    func testExample338FromLine4803() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](foo\\)\\:)\n")), "<p><a href=\"foo):\">link</a></p>\n", "Source:\n\n[link](foo\\)\\:)\n\n")
     }
 
 
-    func testExample337FromLine4795() {
+    func testExample339FromLine4811() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](foo%20b&auml;)\n")), "<p><a href=\"foo%20b&auml;\">link</a></p>\n", "Source:\n\n[link](foo%20b&auml;)\n\n")
     }
 
 
-    func testExample338FromLine4805() {
+    func testExample340FromLine4821() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](\"title\")\n")), "<p><a href=\"&quot;title&quot;\">link</a></p>\n", "Source:\n\n[link](\"title\")\n\n")
     }
 
 
-    func testExample339FromLine4813() {
+    func testExample341FromLine4829() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](/url \"title\")\n[link](/url 'title')\n[link](/url (title))\n")), "<p><a href=\"/url\" title=\"title\">link</a>\n<a href=\"/url\" title=\"title\">link</a>\n<a href=\"/url\" title=\"title\">link</a></p>\n", "Source:\n\n[link](/url \"title\")\n[link](/url 'title')\n[link](/url (title))\n\n")
     }
 
 
-    func testExample340FromLine4825() {
+    func testExample342FromLine4841() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](/url \"title \\\"&quot;\")\n")), "<p><a href=\"/url\" title=\"title &quot;&quot;\">link</a></p>\n", "Source:\n\n[link](/url \"title \\\"&quot;\")\n\n")
     }
 
 
-    func testExample341FromLine4833() {
+    func testExample343FromLine4849() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](/url \"title \"and\" title\")\n")), "<p>[link](/url &quot;title &quot;and&quot; title&quot;)</p>\n", "Source:\n\n[link](/url \"title \"and\" title\")\n\n")
     }
 
 
-    func testExample342FromLine4841() {
+    func testExample344FromLine4857() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](/url 'title \"and\" title')\n")), "<p><a href=\"/url\" title=\"title &quot;and&quot; title\">link</a></p>\n", "Source:\n\n[link](/url 'title \"and\" title')\n\n")
     }
 
 
-    func testExample343FromLine4863() {
+    func testExample345FromLine4879() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link](   /uri\n  \"title\"  )\n")), "<p><a href=\"/uri\" title=\"title\">link</a></p>\n", "Source:\n\n[link](   /uri\n  \"title\"  )\n\n")
     }
 
 
-    func testExample344FromLine4873() {
+    func testExample346FromLine4889() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[link] (/uri)\n")), "<p>[link] (/uri)</p>\n", "Source:\n\n[link] (/uri)\n\n")
     }
 
 
-    func testExample345FromLine4882() {
+    func testExample347FromLine4898() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo <bar attr=\"](baz)\">\n")), "<p>[foo <bar attr=\"](baz)\"></p>\n", "Source:\n\n[foo <bar attr=\"](baz)\">\n\n")
     }
 
 
-    func testExample346FromLine4911() {
+    func testExample348FromLine4927() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo][bar]\n\n[bar]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n[foo][bar]\n\n[bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample347FromLine4921() {
+    func testExample349FromLine4937() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[*foo\\!*][bar]\n\n[bar]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\"><em>foo!</em></a></p>\n", "Source:\n\n[*foo\\!*][bar]\n\n[bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample348FromLine4931() {
+    func testExample350FromLine4947() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo][BaR]\n\n[bar]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n[foo][BaR]\n\n[bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample349FromLine4941() {
+    func testExample351FromLine4957() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[Толпой][Толпой] is a Russian word.\n\n[ТОЛПОЙ]: /url\n")), "<p><a href=\"/url\">Толпой</a> is a Russian word.</p>\n", "Source:\n\n[Толпой][Толпой] is a Russian word.\n\n[ТОЛПОЙ]: /url\n\n")
     }
 
 
-    func testExample350FromLine4952() {
+    func testExample352FromLine4968() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[Foo\n  bar]: /url\n\n[Baz][Foo bar]\n")), "<p><a href=\"/url\">Baz</a></p>\n", "Source:\n\n[Foo\n  bar]: /url\n\n[Baz][Foo bar]\n\n")
     }
 
 
-    func testExample351FromLine4963() {
+    func testExample353FromLine4979() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo] [bar]\n\n[bar]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n[foo] [bar]\n\n[bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample352FromLine4971() {
+    func testExample354FromLine4987() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]\n[bar]\n\n[bar]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n[foo]\n[bar]\n\n[bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample353FromLine4983() {
+    func testExample355FromLine4999() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]: /url1\n\n[foo]: /url2\n\n[bar][foo]\n")), "<p><a href=\"/url1\">bar</a></p>\n", "Source:\n\n[foo]: /url1\n\n[foo]: /url2\n\n[bar][foo]\n\n")
     }
 
 
-    func testExample354FromLine4997() {
+    func testExample356FromLine5013() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[bar][foo\\!]\n\n[foo!]: /url\n")), "<p>[bar][foo!]</p>\n", "Source:\n\n[bar][foo\\!]\n\n[foo!]: /url\n\n")
     }
 
 
-    func testExample355FromLine5014() {
+    func testExample357FromLine5030() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo][]\n\n[foo]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n[foo][]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample356FromLine5022() {
+    func testExample358FromLine5038() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\"><em>foo</em> bar</a></p>\n", "Source:\n\n[*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample357FromLine5032() {
+    func testExample359FromLine5048() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[Foo][]\n\n[foo]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">Foo</a></p>\n", "Source:\n\n[Foo][]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample358FromLine5044() {
+    func testExample360FromLine5060() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo] \n[]\n\n[foo]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n[foo] \n[]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample359FromLine5063() {
+    func testExample361FromLine5079() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo]\n\n[foo]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n[foo]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample360FromLine5071() {
+    func testExample362FromLine5087() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[*foo* bar]\n\n[*foo* bar]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\"><em>foo</em> bar</a></p>\n", "Source:\n\n[*foo* bar]\n\n[*foo* bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample361FromLine5079() {
+    func testExample363FromLine5095() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[[*foo* bar]]\n\n[*foo* bar]: /url \"title\"\n")), "<p>[<a href=\"/url\" title=\"title\"><em>foo</em> bar</a>]</p>\n", "Source:\n\n[[*foo* bar]]\n\n[*foo* bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample362FromLine5089() {
+    func testExample364FromLine5105() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[Foo]\n\n[foo]: /url \"title\"\n")), "<p><a href=\"/url\" title=\"title\">Foo</a></p>\n", "Source:\n\n[Foo]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample363FromLine5100() {
+    func testExample365FromLine5116() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\\[foo]\n\n[foo]: /url \"title\"\n")), "<p>[foo]</p>\n", "Source:\n\n\\[foo]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample364FromLine5111() {
+    func testExample366FromLine5127() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo*]: /url\n\n*[foo*]\n")), "<p>*<a href=\"/url\">foo*</a></p>\n", "Source:\n\n[foo*]: /url\n\n*[foo*]\n\n")
     }
 
 
-    func testExample365FromLine5122() {
+    func testExample367FromLine5138() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo`]: /url\n\n[foo`]`\n")), "<p>[foo<code>]</code></p>\n", "Source:\n\n[foo`]: /url\n\n[foo`]`\n\n")
     }
 
 
-    func testExample366FromLine5132() {
+    func testExample368FromLine5148() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[[[foo]]]\n\n[[[foo]]]: /url\n")), "<p><a href=\"/url\">[[foo]]</a></p>\n", "Source:\n\n[[[foo]]]\n\n[[[foo]]]: /url\n\n")
     }
 
 
-    func testExample367FromLine5140() {
+    func testExample369FromLine5156() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[[[foo]]]\n\n[[[foo]]]: /url1\n[foo]: /url2\n")), "<p><a href=\"/url1\">[[foo]]</a></p>\n", "Source:\n\n[[[foo]]]\n\n[[[foo]]]: /url1\n[foo]: /url2\n\n")
     }
 
 
-    func testExample368FromLine5151() {
+    func testExample370FromLine5167() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[\\[foo]\n\n[\\[foo]: /url\n")), "<p><a href=\"/url\">[foo</a></p>\n", "Source:\n\n[\\[foo]\n\n[\\[foo]: /url\n\n")
     }
 
 
-    func testExample369FromLine5161() {
+    func testExample371FromLine5177() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo][bar]\n\n[foo]: /url1\n[bar]: /url2\n")), "<p><a href=\"/url2\">foo</a></p>\n", "Source:\n\n[foo][bar]\n\n[foo]: /url1\n[bar]: /url2\n\n")
     }
 
 
-    func testExample370FromLine5173() {
+    func testExample372FromLine5189() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo][bar][baz]\n\n[baz]: /url\n")), "<p>[foo]<a href=\"/url\">bar</a></p>\n", "Source:\n\n[foo][bar][baz]\n\n[baz]: /url\n\n")
     }
 
 
-    func testExample371FromLine5184() {
+    func testExample373FromLine5200() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo][bar][baz]\n\n[baz]: /url1\n[bar]: /url2\n")), "<p><a href=\"/url2\">foo</a><a href=\"/url1\">baz</a></p>\n", "Source:\n\n[foo][bar][baz]\n\n[baz]: /url1\n[bar]: /url2\n\n")
     }
 
 
-    func testExample372FromLine5196() {
+    func testExample374FromLine5212() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("[foo][bar][baz]\n\n[baz]: /url1\n[foo]: /url2\n")), "<p>[foo]<a href=\"/url1\">bar</a></p>\n", "Source:\n\n[foo][bar][baz]\n\n[baz]: /url1\n[foo]: /url2\n\n")
     }
 
@@ -1981,102 +1992,102 @@ class Section_6_5_Links : XCTestCase {
 
 class Section_6_6_Images : XCTestCase {
 
-    func testExample373FromLine5213() {
+    func testExample375FromLine5229() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo](/url \"title\")\n")), "<p><img src=\"/url\" alt=\"foo\" title=\"title\" /></p>\n", "Source:\n\n![foo](/url \"title\")\n\n")
     }
 
 
-    func testExample374FromLine5219() {
+    func testExample376FromLine5235() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo *bar*]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n")), "<p><img src=\"train.jpg\" alt=\"foo &lt;em&gt;bar&lt;/em&gt;\" title=\"train &amp; tracks\" /></p>\n", "Source:\n\n![foo *bar*]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n\n")
     }
 
 
-    func testExample375FromLine5227() {
+    func testExample377FromLine5243() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo *bar*][]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n")), "<p><img src=\"train.jpg\" alt=\"foo &lt;em&gt;bar&lt;/em&gt;\" title=\"train &amp; tracks\" /></p>\n", "Source:\n\n![foo *bar*][]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n\n")
     }
 
 
-    func testExample376FromLine5235() {
+    func testExample378FromLine5251() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo *bar*][foobar]\n\n[FOOBAR]: train.jpg \"train & tracks\"\n")), "<p><img src=\"train.jpg\" alt=\"foo &lt;em&gt;bar&lt;/em&gt;\" title=\"train &amp; tracks\" /></p>\n", "Source:\n\n![foo *bar*][foobar]\n\n[FOOBAR]: train.jpg \"train & tracks\"\n\n")
     }
 
 
-    func testExample377FromLine5243() {
+    func testExample379FromLine5259() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo](train.jpg)\n")), "<p><img src=\"train.jpg\" alt=\"foo\" /></p>\n", "Source:\n\n![foo](train.jpg)\n\n")
     }
 
 
-    func testExample378FromLine5249() {
+    func testExample380FromLine5265() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("My ![foo bar](/path/to/train.jpg  \"title\"   )\n")), "<p>My <img src=\"/path/to/train.jpg\" alt=\"foo bar\" title=\"title\" /></p>\n", "Source:\n\nMy ![foo bar](/path/to/train.jpg  \"title\"   )\n\n")
     }
 
 
-    func testExample379FromLine5255() {
+    func testExample381FromLine5271() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo](<url>)\n")), "<p><img src=\"url\" alt=\"foo\" /></p>\n", "Source:\n\n![foo](<url>)\n\n")
     }
 
 
-    func testExample380FromLine5261() {
+    func testExample382FromLine5277() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![](/url)\n")), "<p><img src=\"/url\" alt=\"\" /></p>\n", "Source:\n\n![](/url)\n\n")
     }
 
 
-    func testExample381FromLine5269() {
+    func testExample383FromLine5285() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo] [bar]\n\n[bar]: /url\n")), "<p><img src=\"/url\" alt=\"foo\" /></p>\n", "Source:\n\n![foo] [bar]\n\n[bar]: /url\n\n")
     }
 
 
-    func testExample382FromLine5277() {
+    func testExample384FromLine5293() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo] [bar]\n\n[BAR]: /url\n")), "<p><img src=\"/url\" alt=\"foo\" /></p>\n", "Source:\n\n![foo] [bar]\n\n[BAR]: /url\n\n")
     }
 
 
-    func testExample383FromLine5287() {
+    func testExample385FromLine5303() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo][]\n\n[foo]: /url \"title\"\n")), "<p><img src=\"/url\" alt=\"foo\" title=\"title\" /></p>\n", "Source:\n\n![foo][]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample384FromLine5295() {
+    func testExample386FromLine5311() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n")), "<p><img src=\"/url\" alt=\"&lt;em&gt;foo&lt;/em&gt; bar\" title=\"title\" /></p>\n", "Source:\n\n![*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample385FromLine5305() {
+    func testExample387FromLine5321() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![Foo][]\n\n[foo]: /url \"title\"\n")), "<p><img src=\"/url\" alt=\"Foo\" title=\"title\" /></p>\n", "Source:\n\n![Foo][]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample386FromLine5316() {
+    func testExample388FromLine5332() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo] \n[]\n\n[foo]: /url \"title\"\n")), "<p><img src=\"/url\" alt=\"foo\" title=\"title\" /></p>\n", "Source:\n\n![foo] \n[]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample387FromLine5327() {
+    func testExample389FromLine5343() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![foo]\n\n[foo]: /url \"title\"\n")), "<p><img src=\"/url\" alt=\"foo\" title=\"title\" /></p>\n", "Source:\n\n![foo]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample388FromLine5335() {
+    func testExample390FromLine5351() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![*foo* bar]\n\n[*foo* bar]: /url \"title\"\n")), "<p><img src=\"/url\" alt=\"&lt;em&gt;foo&lt;/em&gt; bar\" title=\"title\" /></p>\n", "Source:\n\n![*foo* bar]\n\n[*foo* bar]: /url \"title\"\n\n")
     }
 
 
-    func testExample389FromLine5343() {
+    func testExample391FromLine5359() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![[foo]]\n\n[[foo]]: /url \"title\"\n")), "<p><img src=\"/url\" alt=\"[foo]\" title=\"title\" /></p>\n", "Source:\n\n![[foo]]\n\n[[foo]]: /url \"title\"\n\n")
     }
 
 
-    func testExample390FromLine5353() {
+    func testExample392FromLine5369() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("![Foo]\n\n[foo]: /url \"title\"\n")), "<p><img src=\"/url\" alt=\"Foo\" title=\"title\" /></p>\n", "Source:\n\n![Foo]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample391FromLine5364() {
+    func testExample393FromLine5380() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\\!\\[foo]\n\n[foo]: /url \"title\"\n")), "<p>![foo]</p>\n", "Source:\n\n\\!\\[foo]\n\n[foo]: /url \"title\"\n\n")
     }
 
 
-    func testExample392FromLine5375() {
+    func testExample394FromLine5391() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("\\![foo]\n\n[foo]: /url \"title\"\n")), "<p>!<a href=\"/url\" title=\"title\">foo</a></p>\n", "Source:\n\n\\![foo]\n\n[foo]: /url \"title\"\n\n")
     }
 
@@ -2085,72 +2096,72 @@ class Section_6_6_Images : XCTestCase {
 
 class Section_6_7_Autolinks : XCTestCase {
 
-    func testExample393FromLine5428() {
+    func testExample395FromLine5444() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<http://foo.bar.baz>\n")), "<p><a href=\"http://foo.bar.baz\">http://foo.bar.baz</a></p>\n", "Source:\n\n<http://foo.bar.baz>\n\n")
     }
 
 
-    func testExample394FromLine5434() {
+    func testExample396FromLine5450() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<http://foo.bar.baz?q=hello&id=22&boolean>\n")), "<p><a href=\"http://foo.bar.baz?q=hello&amp;id=22&amp;boolean\">http://foo.bar.baz?q=hello&amp;id=22&amp;boolean</a></p>\n", "Source:\n\n<http://foo.bar.baz?q=hello&id=22&boolean>\n\n")
     }
 
 
-    func testExample395FromLine5440() {
+    func testExample397FromLine5456() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<irc://foo.bar:2233/baz>\n")), "<p><a href=\"irc://foo.bar:2233/baz\">irc://foo.bar:2233/baz</a></p>\n", "Source:\n\n<irc://foo.bar:2233/baz>\n\n")
     }
 
 
-    func testExample396FromLine5448() {
+    func testExample398FromLine5464() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<MAILTO:FOO@BAR.BAZ>\n")), "<p><a href=\"MAILTO:FOO@BAR.BAZ\">MAILTO:FOO@BAR.BAZ</a></p>\n", "Source:\n\n<MAILTO:FOO@BAR.BAZ>\n\n")
     }
 
 
-    func testExample397FromLine5456() {
+    func testExample399FromLine5472() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<http://foo.bar/baz bim>\n")), "<p>&lt;http://foo.bar/baz bim&gt;</p>\n", "Source:\n\n<http://foo.bar/baz bim>\n\n")
     }
 
 
-    func testExample398FromLine5477() {
+    func testExample400FromLine5493() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<foo@bar.baz.com>\n")), "<p><a href=\"mailto:foo@bar.baz.com\">foo@bar.baz.com</a></p>\n", "Source:\n\n<foo@bar.baz.com>\n\n")
     }
 
 
-    func testExample399FromLine5483() {
+    func testExample401FromLine5499() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<foo+special@Bar.baz-bar0.com>\n")), "<p><a href=\"mailto:foo+special@Bar.baz-bar0.com\">foo+special@Bar.baz-bar0.com</a></p>\n", "Source:\n\n<foo+special@Bar.baz-bar0.com>\n\n")
     }
 
 
-    func testExample400FromLine5491() {
+    func testExample402FromLine5507() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<>\n")), "<p>&lt;&gt;</p>\n", "Source:\n\n<>\n\n")
     }
 
 
-    func testExample401FromLine5497() {
+    func testExample403FromLine5513() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<heck://bing.bong>\n")), "<p>&lt;heck://bing.bong&gt;</p>\n", "Source:\n\n<heck://bing.bong>\n\n")
     }
 
 
-    func testExample402FromLine5503() {
+    func testExample404FromLine5519() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("< http://foo.bar >\n")), "<p>&lt; http://foo.bar &gt;</p>\n", "Source:\n\n< http://foo.bar >\n\n")
     }
 
 
-    func testExample403FromLine5509() {
+    func testExample405FromLine5525() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<foo.bar.baz>\n")), "<p>&lt;foo.bar.baz&gt;</p>\n", "Source:\n\n<foo.bar.baz>\n\n")
     }
 
 
-    func testExample404FromLine5515() {
+    func testExample406FromLine5531() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<localhost:5001/foo>\n")), "<p>&lt;localhost:5001/foo&gt;</p>\n", "Source:\n\n<localhost:5001/foo>\n\n")
     }
 
 
-    func testExample405FromLine5521() {
+    func testExample407FromLine5537() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("http://google.com\n")), "<p>http://google.com</p>\n", "Source:\n\nhttp://google.com\n\n")
     }
 
 
-    func testExample406FromLine5527() {
+    func testExample408FromLine5543() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo@bar.baz.com\n")), "<p>foo@bar.baz.com</p>\n", "Source:\n\nfoo@bar.baz.com\n\n")
     }
 
@@ -2159,97 +2170,97 @@ class Section_6_7_Autolinks : XCTestCase {
 
 class Section_6_8_Raw_HTML : XCTestCase {
 
-    func testExample407FromLine5611() {
+    func testExample409FromLine5627() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a><bab><c2c>\n")), "<p><a><bab><c2c></p>\n", "Source:\n\n<a><bab><c2c>\n\n")
     }
 
 
-    func testExample408FromLine5619() {
+    func testExample410FromLine5635() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a/><b2/>\n")), "<p><a/><b2/></p>\n", "Source:\n\n<a/><b2/>\n\n")
     }
 
 
-    func testExample409FromLine5627() {
+    func testExample411FromLine5643() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a  /><b2\ndata=\"foo\" >\n")), "<p><a  /><b2\ndata=\"foo\" ></p>\n", "Source:\n\n<a  /><b2\ndata=\"foo\" >\n\n")
     }
 
 
-    func testExample410FromLine5637() {
+    func testExample412FromLine5653() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a foo=\"bar\" bam = 'baz <em>\"</em>'\n_boolean zoop:33=zoop:33 />\n")), "<p><a foo=\"bar\" bam = 'baz <em>\"</em>'\n_boolean zoop:33=zoop:33 /></p>\n", "Source:\n\n<a foo=\"bar\" bam = 'baz <em>\"</em>'\n_boolean zoop:33=zoop:33 />\n\n")
     }
 
 
-    func testExample411FromLine5647() {
+    func testExample413FromLine5663() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<33> <__>\n")), "<p>&lt;33&gt; &lt;__&gt;</p>\n", "Source:\n\n<33> <__>\n\n")
     }
 
 
-    func testExample412FromLine5655() {
+    func testExample414FromLine5671() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a h*#ref=\"hi\">\n")), "<p>&lt;a h*#ref=&quot;hi&quot;&gt;</p>\n", "Source:\n\n<a h*#ref=\"hi\">\n\n")
     }
 
 
-    func testExample413FromLine5663() {
+    func testExample415FromLine5679() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"hi'> <a href=hi'>\n")), "<p>&lt;a href=&quot;hi'&gt; &lt;a href=hi'&gt;</p>\n", "Source:\n\n<a href=\"hi'> <a href=hi'>\n\n")
     }
 
 
-    func testExample414FromLine5671() {
+    func testExample416FromLine5687() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("< a><\nfoo><bar/ >\n")), "<p>&lt; a&gt;&lt;\nfoo&gt;&lt;bar/ &gt;</p>\n", "Source:\n\n< a><\nfoo><bar/ >\n\n")
     }
 
 
-    func testExample415FromLine5681() {
+    func testExample417FromLine5697() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href='bar'title=title>\n")), "<p>&lt;a href='bar'title=title&gt;</p>\n", "Source:\n\n<a href='bar'title=title>\n\n")
     }
 
 
-    func testExample416FromLine5689() {
+    func testExample418FromLine5705() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("</a>\n</foo >\n")), "<p></a>\n</foo ></p>\n", "Source:\n\n</a>\n</foo >\n\n")
     }
 
 
-    func testExample417FromLine5699() {
+    func testExample419FromLine5715() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("</a href=\"foo\">\n")), "<p>&lt;/a href=&quot;foo&quot;&gt;</p>\n", "Source:\n\n</a href=\"foo\">\n\n")
     }
 
 
-    func testExample418FromLine5707() {
+    func testExample420FromLine5723() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo <!-- this is a\ncomment - with hyphen -->\n")), "<p>foo <!-- this is a\ncomment - with hyphen --></p>\n", "Source:\n\nfoo <!-- this is a\ncomment - with hyphen -->\n\n")
     }
 
 
-    func testExample419FromLine5715() {
+    func testExample421FromLine5731() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo <!-- not a comment -- two hyphens -->\n")), "<p>foo &lt;!-- not a comment -- two hyphens --&gt;</p>\n", "Source:\n\nfoo <!-- not a comment -- two hyphens -->\n\n")
     }
 
 
-    func testExample420FromLine5723() {
+    func testExample422FromLine5739() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo <?php echo $a; ?>\n")), "<p>foo <?php echo $a; ?></p>\n", "Source:\n\nfoo <?php echo $a; ?>\n\n")
     }
 
 
-    func testExample421FromLine5731() {
+    func testExample423FromLine5747() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo <!ELEMENT br EMPTY>\n")), "<p>foo <!ELEMENT br EMPTY></p>\n", "Source:\n\nfoo <!ELEMENT br EMPTY>\n\n")
     }
 
 
-    func testExample422FromLine5739() {
+    func testExample424FromLine5755() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo <![CDATA[>&<]]>\n")), "<p>foo <![CDATA[>&<]]></p>\n", "Source:\n\nfoo <![CDATA[>&<]]>\n\n")
     }
 
 
-    func testExample423FromLine5747() {
+    func testExample425FromLine5763() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"&ouml;\">\n")), "<p><a href=\"&ouml;\"></p>\n", "Source:\n\n<a href=\"&ouml;\">\n\n")
     }
 
 
-    func testExample424FromLine5755() {
+    func testExample426FromLine5771() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"\\*\">\n")), "<p><a href=\"\\*\"></p>\n", "Source:\n\n<a href=\"\\*\">\n\n")
     }
 
 
-    func testExample425FromLine5761() {
+    func testExample427FromLine5777() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"\\\"\">\n")), "<p>&lt;a href=&quot;&quot;&quot;&gt;</p>\n", "Source:\n\n<a href=\"\\\"\">\n\n")
     }
 
@@ -2258,57 +2269,57 @@ class Section_6_8_Raw_HTML : XCTestCase {
 
 class Section_6_9_Hard_line_breaks : XCTestCase {
 
-    func testExample426FromLine5773() {
+    func testExample428FromLine5789() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo  \nbaz\n")), "<p>foo<br />\nbaz</p>\n", "Source:\n\nfoo  \nbaz\n\n")
     }
 
 
-    func testExample427FromLine5784() {
+    func testExample429FromLine5800() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\\\nbaz\n")), "<p>foo<br />\nbaz</p>\n", "Source:\n\nfoo\\\nbaz\n\n")
     }
 
 
-    func testExample428FromLine5794() {
+    func testExample430FromLine5810() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo       \nbaz\n")), "<p>foo<br />\nbaz</p>\n", "Source:\n\nfoo       \nbaz\n\n")
     }
 
 
-    func testExample429FromLine5804() {
+    func testExample431FromLine5820() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo  \n     bar\n")), "<p>foo<br />\nbar</p>\n", "Source:\n\nfoo  \n     bar\n\n")
     }
 
 
-    func testExample430FromLine5812() {
+    func testExample432FromLine5828() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\\\n     bar\n")), "<p>foo<br />\nbar</p>\n", "Source:\n\nfoo\\\n     bar\n\n")
     }
 
 
-    func testExample431FromLine5823() {
+    func testExample433FromLine5839() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo  \nbar*\n")), "<p><em>foo<br />\nbar</em></p>\n", "Source:\n\n*foo  \nbar*\n\n")
     }
 
 
-    func testExample432FromLine5831() {
+    func testExample434FromLine5847() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("*foo\\\nbar*\n")), "<p><em>foo<br />\nbar</em></p>\n", "Source:\n\n*foo\\\nbar*\n\n")
     }
 
 
-    func testExample433FromLine5841() {
+    func testExample435FromLine5857() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`code  \nspan`\n")), "<p><code>code span</code></p>\n", "Source:\n\n`code  \nspan`\n\n")
     }
 
 
-    func testExample434FromLine5848() {
+    func testExample436FromLine5864() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("`code\\\nspan`\n")), "<p><code>code\\ span</code></p>\n", "Source:\n\n`code\\\nspan`\n\n")
     }
 
 
-    func testExample435FromLine5857() {
+    func testExample437FromLine5873() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"foo  \nbar\">\n")), "<p><a href=\"foo  \nbar\"></p>\n", "Source:\n\n<a href=\"foo  \nbar\">\n\n")
     }
 
 
-    func testExample436FromLine5865() {
+    func testExample438FromLine5881() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("<a href=\"foo\\\nbar\">\n")), "<p><a href=\"foo\\\nbar\"></p>\n", "Source:\n\n<a href=\"foo\\\nbar\">\n\n")
     }
 
@@ -2317,12 +2328,12 @@ class Section_6_9_Hard_line_breaks : XCTestCase {
 
 class Section_6_10_Soft_line_breaks : XCTestCase {
 
-    func testExample437FromLine5881() {
+    func testExample439FromLine5897() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo\nbaz\n")), "<p>foo\nbaz</p>\n", "Source:\n\nfoo\nbaz\n\n")
     }
 
 
-    func testExample438FromLine5892() {
+    func testExample440FromLine5908() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("foo \n baz\n")), "<p>foo\nbaz</p>\n", "Source:\n\nfoo \n baz\n\n")
     }
 
@@ -2331,17 +2342,17 @@ class Section_6_10_Soft_line_breaks : XCTestCase {
 
 class Section_6_11_Strings : XCTestCase {
 
-    func testExample439FromLine5911() {
+    func testExample441FromLine5927() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("hello $.;'there\n")), "<p>hello $.;'there</p>\n", "Source:\n\nhello $.;'there\n\n")
     }
 
 
-    func testExample440FromLine5917() {
+    func testExample442FromLine5933() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Foo χρῆν\n")), "<p>Foo χρῆν</p>\n", "Source:\n\nFoo χρῆν\n\n")
     }
 
 
-    func testExample441FromLine5925() {
+    func testExample443FromLine5941() {
         XCTAssertEqual(HTMLRenderer().renderBlock(parse("Multiple     spaces\n")), "<p>Multiple     spaces</p>\n", "Source:\n\nMultiple     spaces\n\n")
     }
 
