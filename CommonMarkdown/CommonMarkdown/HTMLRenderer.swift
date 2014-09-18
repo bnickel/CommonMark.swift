@@ -21,14 +21,14 @@ public class HTMLRenderer {
     // Render a single block element.
     public func renderBlock(block:Block, inTightList:Bool = false) -> String {
         
-        switch block.tag {
+        switch block.type {
             
-        case "Document":
+        case .Document:
             
             let wholeDoc = renderBlocks(block.children, inTightList:false)
             return wholeDoc.isEmpty ? wholeDoc : (wholeDoc + "\n")
             
-        case "Paragraph":
+        case .Paragraph:
             
             if inTightList {
                 return renderInlines(block.inlineContent)
@@ -36,16 +36,16 @@ public class HTMLRenderer {
                 return inTags("p", contents: renderInlines(block.inlineContent))
             }
             
-        case "BlockQuote":
+        case .BlockQuote:
             
             let filling = renderBlocks(block.children, inTightList: false)
             return inTags("blockquote", contents: filling.isEmpty ? innerSeparator : (innerSeparator + filling + innerSeparator))
             
-        case "ListItem":
+        case .ListItem:
             
             return inTags("li", contents: trim(renderBlocks(block.children, inTightList: inTightList)))
             
-        case "List":
+        case .List:
             
             var tag:String
             var attributes = [String: String]()
@@ -63,16 +63,16 @@ public class HTMLRenderer {
             
             return inTags(tag, attributes: attributes, contents: innerSeparator + renderBlocks(block.children, inTightList: block.tight) + innerSeparator)
             
-        case "ATXHeader":    fallthrough
-        case "SetextHeader":
+        case .ATXHeader:    fallthrough
+        case .SetextHeader:
             
             return inTags("h\(block.level)", contents: renderInlines(block.inlineContent))
                 
-        case "IndentedCode":
+        case .IndentedCode:
             
             return inTags("pre", contents: inTags("code", contents: escape(block.stringContent)))
             
-        case "FencedCode":
+        case .FencedCode:
             
             var attributes = [String: String]()
             let infoWords = split(block.info, { $0 == " " }, maxSplit: 1, allowEmptySlices: true)
@@ -82,25 +82,22 @@ public class HTMLRenderer {
             
             return inTags("pre", attributes: attributes, contents: inTags("code", contents: escape(block.stringContent)))
         
-        case "HtmlBlock":
+        case .HtmlBlock:
             
             return block.stringContent
             
-        case "ReferenceDef":
+        case .ReferenceDef:
             
             return ""
         
-        case "HorizontalRule":
+        case .HorizontalRule:
             
             return inTags("hr", selfClosing: true)
-            
-        default:
-            assert(false, "Unknown block type \(block.tag)")
         }
     }
     
     func renderBlocks(blocks:[Block], inTightList:Bool) -> String {
-        return join(blockSeparator, map(filter(blocks) { $0.tag != "ReferenceDef" }, { self.renderBlock($0, inTightList: inTightList) }))
+        return join(blockSeparator, map(filter(blocks) { $0.type != .ReferenceDef }, { self.renderBlock($0, inTightList: inTightList) }))
     }
     
     func renderInline(inline:Inline) -> String {

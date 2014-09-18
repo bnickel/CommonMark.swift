@@ -37,7 +37,7 @@ public func parse(markdown:String) -> Block {
 
 public class DocumentParser {
     
-    let doc = Block(tag: "Document", startLine: 1, startColumn: 1)
+    let doc = Block(type: .Document, startLine: 1, startColumn: 1)
     var tip: Block!
     let inlineParser = InlineParser()
     
@@ -82,8 +82,8 @@ public class DocumentParser {
             
             let indent = distance(offset, firstNonspace)
             
-            switch container.tag {
-            case "BlockQuote":
+            switch container.type {
+            case .BlockQuote:
                 
                 if indent <= 3 && !blank && line[firstNonspace] == ">" {
                     offset = advance(firstNonspace, 1)
@@ -94,7 +94,7 @@ public class DocumentParser {
                     allMatched = false
                 }
                 
-            case "ListItem":
+            case .ListItem:
                 
                 if indent >= container.listData.markerOffset + container.listData.padding {
                     offset = advance(offset, container.listData.markerOffset + container.listData.padding)
@@ -104,7 +104,7 @@ public class DocumentParser {
                     allMatched = false
                 }
                 
-            case "IndentedCode":
+            case .IndentedCode:
                 
                 if indent >= CODE_INDENT {
                     offset = advance(offset, CODE_INDENT)
@@ -114,17 +114,17 @@ public class DocumentParser {
                     allMatched = false
                 }
                 
-            case "ATXHeader":
+            case .ATXHeader:
                 fallthrough
                 
-            case "SetextHeader":
+            case .SetextHeader:
                 fallthrough
                 
-            case "HorizontalRule":
+            case .HorizontalRule:
                 // a header can never container > 1 line, so fail to match:
                 allMatched = false
                 
-            case "FencedCode":
+            case .FencedCode:
                 
                 // skip optional spaces of fence offset
                 var index = container.fenceOffset!
@@ -133,13 +133,13 @@ public class DocumentParser {
                     index -= 1
                 }
                 
-            case "HtmlBlock":
+            case .HtmlBlock:
                 if (blank) {
                     allMatched = false
                 }
                 
                 
-            case "Paragraph":
+            case .Paragraph:
                 if (blank) {
                     container.lastLineBlank = true
                     allMatched = false
@@ -179,7 +179,7 @@ public class DocumentParser {
         
         // Unless last matched container is a code block, try new container starts,
         // adding children to the last matched container:
-        while !contains(["FencedCode", "IndentedCode", "HtmlBlock"], container.tag) && line.rangeOfFirstMatch(regex("^[ #`~*+_=<>0-9-]"), options: nil, from: offset) != nil {
+        while !contains([.FencedCode, .IndentedCode, .HtmlBlock], container.type) && line.rangeOfFirstMatch(regex("^[ #`~*+_=<>0-9-]"), options: nil, from: offset) != nil {
             
             
             var firstNonspace: String.Index
@@ -197,10 +197,10 @@ public class DocumentParser {
             if indent >= CODE_INDENT {
                 
                 // indented code
-                if tip.tag != "Paragraph" && !blank {
+                if tip.type != .Paragraph && !blank {
                     offset = advance(offset, CODE_INDENT)
                     closeUnmatchedBlocks()
-                    container = addChild("IndentedCode", lineNumber, distance(line.startIndex, offset))
+                    container = addChild(.IndentedCode, lineNumber, distance(line.startIndex, offset))
                 } else { // indent > 4 in a lazy paragraph continuation
                     break
                 }
@@ -214,13 +214,13 @@ public class DocumentParser {
                     offset = advance(offset, 1)
                 }
                 closeUnmatchedBlocks()
-                container = addChild("BlockQuote", lineNumber, distance(line.startIndex, offset))
+                container = addChild(.BlockQuote, lineNumber, distance(line.startIndex, offset))
                 
             } else if let match = line.substringFromIndex(firstNonspace).firstMatch(regex("^#{1,6}(?: +|$)"))?.text {
                 // ATX header
                 offset = advance(firstNonspace, countElements(match))
                 closeUnmatchedBlocks()
-                container = addChild("ATXHeader", lineNumber, distance(line.startIndex, firstNonspace))
+                container = addChild(.ATXHeader, lineNumber, distance(line.startIndex, firstNonspace))
                 container.level = countElements(trim(match)) // number of #s
                 // remove trailing ###s:
                 container.strings = [line.substringFromIndex(offset).stringByReplacingFirst(regex("(?:(\\\\#) *#*| *#+) *$"), withTemplate: "$1")]
@@ -231,7 +231,7 @@ public class DocumentParser {
                 // fenced code block
                 let fenceLength = countElements(match)
                 closeUnmatchedBlocks()
-                container = addChild("FencedCode", lineNumber, distance(line.startIndex, firstNonspace))
+                container = addChild(.FencedCode, lineNumber, distance(line.startIndex, firstNonspace))
                 container.fenceLength = fenceLength
                 container.fenceOffset = distance(offset, firstNonspace)
                 container.fenceCharacter = match[match.startIndex]
@@ -242,23 +242,23 @@ public class DocumentParser {
                 
                 // html block
                 closeUnmatchedBlocks()
-                container = addChild("HtmlBlock", lineNumber, distance(line.startIndex, firstNonspace))
+                container = addChild(.HtmlBlock, lineNumber, distance(line.startIndex, firstNonspace))
                 // note, we don't adjust offset because the tag is part of the text
                 break
                 
-            } else if container.tag == "Paragraph" && container.strings.count == 1 && line.substringFromIndex(firstNonspace).firstMatch(regex("^(?:=+|-+) *$")) != nil {
+            } else if container.type == .Paragraph && container.strings.count == 1 && line.substringFromIndex(firstNonspace).firstMatch(regex("^(?:=+|-+) *$")) != nil {
                 let match = line.substringFromIndex(firstNonspace).firstMatch(regex("^(?:=+|-+) *$"))!.text
                 
                 // setext header line
                 closeUnmatchedBlocks()
-                container.tag = "SetextHeader" // convert Paragraph to SetextHeader
+                container.type = .SetextHeader // convert Paragraph to SetextHeader
                 container.level = match.hasPrefix("=") ? 1 : 2
                 offset = line.endIndex
                 
             } else if line.firstMatch(reHrule, options: nil, from: firstNonspace) != nil {
                 // hrule
                 closeUnmatchedBlocks()
-                container = addChild("HorizontalRule", lineNumber, distance(line.startIndex, firstNonspace));
+                container = addChild(.HorizontalRule, lineNumber, distance(line.startIndex, firstNonspace));
                 offset = line.endIndex
                 break
                 
@@ -274,13 +274,13 @@ public class DocumentParser {
                 }
             
                 // add the list if needed
-                if container.tag != "List" || container.listData.type != data.type {
-                    container = addChild("List", lineNumber, distance(line.startIndex, firstNonspace))
+                if container.type != .List || container.listData.type != data.type {
+                    container = addChild(.List, lineNumber, distance(line.startIndex, firstNonspace))
                     container.listData = data
                 }
                 
                 // add the list item
-                container = addChild("ListItem", lineNumber, distance(line.startIndex, firstNonspace))
+                container = addChild(.ListItem, lineNumber, distance(line.startIndex, firstNonspace))
                 container.listData = data
                 
             } else {
@@ -289,7 +289,7 @@ public class DocumentParser {
                 
             }
             
-            if acceptsLines(container.tag) {
+            if acceptsLines(container.type) {
                 // if it's a line container, it can't contain other containers
                 break
             }
@@ -312,7 +312,7 @@ public class DocumentParser {
         let indent = distance(offset, firstNonspace)
         
         // First check for a lazy paragraph continuation:
-        if tip !== lastMatchedContainer && !blank && tip.tag == "Paragraph" && tip.strings.count > 0 {
+        if tip !== lastMatchedContainer && !blank && tip.type == .Paragraph && tip.strings.count > 0 {
             
             tip.lastLineBlank = false // TODO: Possible bug in stmd.js?
             let result = addLine(line, offset: offset)
@@ -330,30 +330,27 @@ public class DocumentParser {
             // lists or breaking out of lists.  We also don't set last_line_blank
             // on an empty list item.
             container.lastLineBlank = blank &&
-                !(container.tag == "BlockQuote" ||
-                    container.tag == "FencedCode" ||
-                        (container.tag == "ListItem" &&
+                !(container.type == .BlockQuote ||
+                    container.type == .FencedCode ||
+                        (container.type == .ListItem &&
                             container.children.count == 0 &&
                             container.startLine == lineNumber))
             
             var parent = container.parent
             while let c = parent {
-                if c.lastLineBlank {
-                    println("Removing last line on \(c.tag)")
-                }
                 c.lastLineBlank = false
                 parent = c.parent
             }
             
-            switch container.tag {
+            switch container.type {
                 
-            case "IndentedCode":
+            case .IndentedCode:
                 fallthrough
                 
-            case "HtmlBlock":
+            case .HtmlBlock:
                 addLine(line, offset: offset)
                 
-            case "FencedCode":
+            case .FencedCode:
                 
                 var matched = false
                 
@@ -372,28 +369,28 @@ public class DocumentParser {
                     addLine(line, offset: offset)
                 }
                 
-            case "ATXHeader":
+            case .ATXHeader:
                 fallthrough
                 
-            case "SetextHeader":
+            case .SetextHeader:
                 fallthrough
                 
-            case "HorizontalRule":
+            case .HorizontalRule:
                 // nothing to do; we already added the contents.
                 break
                 
             default:
                 
-                if acceptsLines(container.tag) {
+                if acceptsLines(container.type) {
                     addLine(line, offset: firstNonspace)
                 } else if blank {
                     // do nothing
-                } else if container.tag != "HorizontalRule" && container.tag != "SetextHeader" {
+                } else if container.type != .HorizontalRule && container.type != .SetextHeader {
                     // create paragraph container for line
-                    container = addChild("Paragraph", lineNumber, distance(line.startIndex, firstNonspace))
+                    container = addChild(.Paragraph, lineNumber, distance(line.startIndex, firstNonspace))
                     addLine(line, offset: firstNonspace)
                 } else {
-                    return .Error("Line \(lineNumber) with container type \(container.tag) did not match any condition.")
+                    return .Error("Line \(lineNumber) with container type \(container.type) did not match any condition.")
                 }
                 
             }
@@ -404,7 +401,7 @@ public class DocumentParser {
     
     func breakOutOfLists(var block:Block, lineNumber:Int) {
         
-        if let lastList = block.highestBlockWithTag("List") {
+        if let lastList = block.highestBlockWithType(.List) {
 
             while block !== lastList {
                 finalize(block, lineNumber: lineNumber)
@@ -419,13 +416,13 @@ public class DocumentParser {
     // Add block of type tag as a child of the tip.  If the tip can't
     // accept children, close and finalize it and try its parent,
     // and so on til we find a block that can accept children.
-    func addChild(tag:String, _ lineNumber:Int, _ offset:Int) -> Block {
-        while (!parentType(tip.tag, canContain:tag)) {
+    func addChild(type:BlockType, _ lineNumber:Int, _ offset:Int) -> Block {
+        while (!parentType(tip.type, canContain:type)) {
             finalize(tip, lineNumber: lineNumber)
         }
         
         let columnNumber = offset + 1 // offset 0 = column 1
-        let newBlock = Block(tag: tag, startLine: lineNumber, startColumn: columnNumber)
+        let newBlock = Block(type: type, startLine: lineNumber, startColumn: columnNumber)
         tip.children += [newBlock]
         newBlock.parent = tip
         tip = newBlock
@@ -433,13 +430,13 @@ public class DocumentParser {
     };
     
     // Returns true if parent block can contain child block.
-    func parentType(parentType:String, canContain childType:String) -> Bool {
-        return contains(["Document", "BlockQuote", "ListItem"], parentType) || (parentType == "List" && childType == "ListItem")
+    func parentType(parentType:BlockType, canContain childType:BlockType) -> Bool {
+        return contains([.Document, .BlockQuote, .ListItem], parentType) || (parentType == .List && childType == .ListItem)
     };
     
     // Returns true if block type can accept lines of text.
-    func acceptsLines(type:String) -> Bool {
-        return contains(["Paragraph", "IndentedCode", "FencedCode"], type)
+    func acceptsLines(type:BlockType) -> Bool {
+        return contains([.Paragraph, .IndentedCode, .FencedCode], type)
     };
     
     func addLine(line:String, offset:String.Index) -> IncorporationResult {
@@ -480,31 +477,31 @@ public class DocumentParser {
             block.endLine = lineNumber // TODO: Possible bug in stmd.js
         }
         
-        switch block.tag {
+        switch block.type {
             
-        case "Paragraph":
+        case .Paragraph:
             
             block.stringContent = join("\n", block.strings).stringByReplacingAll(regex("^ *", options: .AnchorsMatchLines), withTemplate: "")
             
             // try parsing the beginning as link reference definitions:
             while block.stringContent.hasPrefix("[") && inlineParser.parseReference(&(block.stringContent)) {
                 if block.stringContent.matches(regex("^\\s*$")) {
-                    block.tag = "ReferenceDef"
+                    block.type = .ReferenceDef
                     break
                 }
             }
         
-        case "ATXHeader":    fallthrough
-        case "SetextHeader": fallthrough
-        case "HtmlBlock":
+        case .ATXHeader:    fallthrough
+        case .SetextHeader: fallthrough
+        case .HtmlBlock:
             
             block.stringContent = join("\n", block.strings)
             
-        case "IndentedCode":
+        case .IndentedCode:
             
             block.stringContent = join("\n", block.strings).stringByReplacingFirst(regex("(\n *)*$"), withTemplate: "\n")
             
-        case "FencedCode":
+        case .FencedCode:
             
             // first line becomes info string
             block.info = unescape(trim(block.strings[0]))
@@ -514,7 +511,7 @@ public class DocumentParser {
                 block.stringContent = join("\n", block.strings[1..<block.strings.endIndex]) + "\n"
             }
             
-        case "List":
+        case .List:
             
             block.tight = true // tight by default
             
@@ -550,10 +547,10 @@ public class DocumentParser {
     // into inline content where appropriate.
     func processInlines(block:Block) {
         
-        switch block.tag {
-        case "Paragraph":    fallthrough
-        case "SetextHeader": fallthrough
-        case "ATXHeader":
+        switch block.type {
+        case .Paragraph:    fallthrough
+        case .SetextHeader: fallthrough
+        case .ATXHeader:
             
             block.inlineContent = inlineParser.parse(trim(block.stringContent))
             block.stringContent = ""
@@ -565,7 +562,6 @@ public class DocumentParser {
         
         for child in block.children {
             processInlines(child)
-            
         }
     }
 }

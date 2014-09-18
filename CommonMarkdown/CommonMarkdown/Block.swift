@@ -6,8 +6,65 @@
 //  Copyright (c) 2014 Brian Nickel. All rights reserved.
 //
 
+enum BlockType {
+    case Document
+    case List
+    case ListItem
+    case Paragraph
+    case BlockQuote
+    case ATXHeader
+    case SetextHeader
+    case IndentedCode
+    case FencedCode
+    case HtmlBlock
+    case ReferenceDef
+    case HorizontalRule
+}
+
+extension BlockType : Printable {
+    
+    var description:String {
+        
+        switch self {
+        case .Document: return "Document"
+        case .List: return "List"
+        case .ListItem: return "ListItem"
+        case .Paragraph: return "Paragraph"
+        case .BlockQuote: return "BlockQuote"
+        case .ATXHeader: return "ATXHeader"
+        case .SetextHeader: return "SetextHeader"
+        case .IndentedCode: return "IndentedCode"
+        case .FencedCode: return "FencedCode"
+        case .HtmlBlock: return "HtmlBlock"
+        case .ReferenceDef: return "ReferenceDef"
+        case .HorizontalRule: return "HorizontalRule"
+        }
+    }
+}
+
+extension BlockType : Equatable {}
+
+func == (lhs: BlockType, rhs:BlockType) -> Bool {
+    
+    switch (lhs, rhs) {
+    case (.Document, .Document):             return true
+    case (.List, .List):                     return true
+    case (.ListItem, .ListItem):             return true
+    case (.Paragraph, .Paragraph):           return true
+    case (.BlockQuote, .BlockQuote):         return true
+    case (.ATXHeader, .ATXHeader):           return true
+    case (.SetextHeader, .SetextHeader):     return true
+    case (.IndentedCode, .IndentedCode):     return true
+    case (.FencedCode, .FencedCode):         return true
+    case (.HtmlBlock, .HtmlBlock):           return true
+    case (.ReferenceDef, .ReferenceDef):     return true
+    case (.HorizontalRule, .HorizontalRule): return true
+    default:                                 return false
+    }
+}
+
 public class Block {
-    var tag:String
+    var type:BlockType
     let startLine:Int
     let startColumn:Int
     
@@ -20,8 +77,8 @@ public class Block {
     var strings = [String]()
     var inlineContent = [Inline]()
     
-    init(tag:String, startLine:Int, startColumn:Int) {
-        self.tag = tag
+    init(type:BlockType, startLine:Int, startColumn:Int) {
+        self.type = type
         self.startLine = startLine
         self.startColumn = startColumn
         self.endLine = startLine
@@ -39,8 +96,12 @@ public class Block {
 
 extension Block {
 
-    func highestBlockWithTag(tag:String) -> Block? {
-        return self.parent?.highestBlockWithTag(tag) ?? ( self.tag == tag ? self : nil)
+    func highestBlockWithType(type:BlockType) -> Block? {
+        if let block = parent?.highestBlockWithType(type) {
+            return block
+        }
+        
+        return self.type == type ? self : nil
     }
     
     var endsWithBlankLine:Bool {
@@ -48,13 +109,14 @@ extension Block {
             return true
         }
         
-        if (tag == "List" || tag == "ListItem") && children.count > 0 {
-            return children.last!.endsWithBlankLine
-        } else {
+        switch type {
+        case .List: fallthrough
+        case .ListItem:
+            return children.count > 0 && children.last!.endsWithBlankLine
+        default:
             return false
         }
     }
-
 }
 
 extension Block : Printable {
@@ -63,7 +125,7 @@ extension Block : Printable {
         
         if children.count > 0 {
             
-            var description = "\(tag) (\(children.count) children)\n"
+            var description = "\(type) (\(children.count) children)\n"
             
             for child in children {
                 description += join("\n", split(child.description, { $0 == "\n" }, maxSplit: .max, allowEmptySlices: true).map({ "  \($0)"})) + "\n\n"
@@ -74,7 +136,7 @@ extension Block : Printable {
         
         if inlineContent.count > 0 {
             
-            var description = "\(tag) (\(children.count) inlines)\n"
+            var description = "\(type) (\(children.count) inlines)\n"
             
             for inline in inlineContent {
                 description += "\(inline)\n\n"
@@ -84,7 +146,7 @@ extension Block : Printable {
             
         }
         
-        return "\(tag) \(stringContent)"
+        return "\(type) \(stringContent)"
     }
 }
 

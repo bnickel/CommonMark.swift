@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		EB40449D19C2648400B8C9AE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40449C19C2648400B8C9AE /* main.swift */; };
 		EB4044B019C2648400B8C9AE /* stmd_wrappedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4044AF19C2648400B8C9AE /* stmd_wrappedTests.swift */; };
-		EB4044BA19C26A6100B8C9AE /* CommonMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB4044B919C26A6100B8C9AE /* CommonMarkdown.framework */; };
-		EB4044BE19C2753D00B8C9AE /* CommonMarkdown.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = EB4044B919C26A6100B8C9AE /* CommonMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EBBAEBAC19CA9DA5007B39A6 /* CommonMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBBAEBAB19CA9DA5007B39A6 /* CommonMark.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +29,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EB4044BE19C2753D00B8C9AE /* CommonMarkdown.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,7 +41,7 @@
 		EB4044A919C2648400B8C9AE /* stmd-wrappedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "stmd-wrappedTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4044AE19C2648400B8C9AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB4044AF19C2648400B8C9AE /* stmd_wrappedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stmd_wrappedTests.swift; sourceTree = "<group>"; };
-		EB4044B919C26A6100B8C9AE /* CommonMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonMarkdown.framework; path = "../../../../Library/Developer/Xcode/DerivedData/CommonMarkdown.swift-agyuunbnvpycnofajbovljavukwc/Build/Products/Debug/CommonMarkdown.framework"; sourceTree = "<group>"; };
+		EBBAEBAB19CA9DA5007B39A6 /* CommonMark.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonMark.framework; path = "../../../../Library/Developer/Xcode/DerivedData/CommonMarkdown.swift-agyuunbnvpycnofajbovljavukwc/Build/Products/Debug/CommonMark.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB4044BA19C26A6100B8C9AE /* CommonMarkdown.framework in Frameworks */,
+				EBBAEBAC19CA9DA5007B39A6 /* CommonMark.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +66,7 @@
 		EB40448E19C2648400B8C9AE = {
 			isa = PBXGroup;
 			children = (
-				EB4044B919C26A6100B8C9AE /* CommonMarkdown.framework */,
+				EBBAEBAB19CA9DA5007B39A6 /* CommonMark.framework */,
 				EB40449919C2648400B8C9AE /* stmd-wrapped */,
 				EB4044AC19C2648400B8C9AE /* stmd-wrappedTests */,
 				EB40449819C2648400B8C9AE /* Products */,
@@ -401,6 +399,7 @@
 				EB4044B519C2648400B8C9AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB4044B619C2648400B8C9AE /* Build configuration list for PBXNativeTarget "stmd-wrappedTests" */ = {
 			isa = XCConfigurationList;
@@ -409,6 +408,7 @@
 				EB4044B819C2648400B8C9AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
