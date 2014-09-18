@@ -35,7 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EB40449719C2648400B8C9AE /* stmd-wrapped.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "stmd-wrapped.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB40449719C2648400B8C9AE /* stmd-wrapped.package */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "stmd-wrapped.package"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB40449B19C2648400B8C9AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB40449C19C2648400B8C9AE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		EB4044A919C2648400B8C9AE /* stmd-wrappedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "stmd-wrappedTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +76,7 @@
 		EB40449819C2648400B8C9AE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EB40449719C2648400B8C9AE /* stmd-wrapped.app */,
+				EB40449719C2648400B8C9AE /* stmd-wrapped.package */,
 				EB4044A919C2648400B8C9AE /* stmd-wrappedTests.xctest */,
 			);
 			name = Products;
@@ -134,7 +134,7 @@
 			);
 			name = "stmd-wrapped";
 			productName = "stmd-wrapped";
-			productReference = EB40449719C2648400B8C9AE /* stmd-wrapped.app */;
+			productReference = EB40449719C2648400B8C9AE /* stmd-wrapped.package */;
 			productType = "com.apple.product-type.application";
 		};
 		EB4044A819C2648400B8C9AE /* stmd-wrappedTests */ = {
@@ -326,6 +326,7 @@
 				INFOPLIST_FILE = "stmd-wrapped/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = package;
 			};
 			name = Debug;
 		};
@@ -341,6 +342,7 @@
 				INFOPLIST_FILE = "stmd-wrapped/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = package;
 			};
 			name = Release;
 		};

@@ -72,7 +72,11 @@ func readLine(file:UnsafeMutablePointer<FILE>) -> String? {
 
 func readFile(file:UnsafeMutablePointer<FILE>) -> IncorporationResult {
     
-    while let line = readLine(file) {
+    while var line = readLine(file) {
+        
+        if line.hasSuffix("\n") {
+            line.removeAtIndex(advance(line.endIndex, -1))
+        }
         
         switch parser.incorporateLine(line, lineNumber) {
             

@@ -10,6 +10,8 @@
 		EB4044BC19C26B7000B8C9AE /* HTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4044BB19C26B7000B8C9AE /* HTMLRenderer.swift */; };
 		EB4044C019C3693600B8C9AE /* InlineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4044BF19C3693600B8C9AE /* InlineParser.swift */; };
 		EBBAEBAD19CA9DBF007B39A6 /* CommonMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDDF16719BA1BD8005F2E06 /* CommonMark.framework */; };
+		EBBF7BC919CB5D00004B694A /* BlockType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBF7BC819CB5D00004B694A /* BlockType.swift */; };
+		EBBF7BCB19CB5D35004B694A /* Inline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBF7BCA19CB5D35004B694A /* Inline.swift */; };
 		EBC258EB19BE225E00F9D653 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC258EA19BE225E00F9D653 /* Block.swift */; };
 		EBC258ED19BE534800F9D653 /* RegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC258EC19BE534800F9D653 /* RegularExpression.swift */; };
 		EBDDF16D19BA1BD8005F2E06 /* CommonMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = EBDDF16C19BA1BD8005F2E06 /* CommonMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,6 +33,8 @@
 /* Begin PBXFileReference section */
 		EB4044BB19C26B7000B8C9AE /* HTMLRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLRenderer.swift; sourceTree = "<group>"; };
 		EB4044BF19C3693600B8C9AE /* InlineParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineParser.swift; sourceTree = "<group>"; };
+		EBBF7BC819CB5D00004B694A /* BlockType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockType.swift; sourceTree = "<group>"; };
+		EBBF7BCA19CB5D35004B694A /* Inline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inline.swift; sourceTree = "<group>"; };
 		EBC258EA19BE225E00F9D653 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		EBC258EC19BE534800F9D653 /* RegularExpression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpression.swift; sourceTree = "<group>"; };
 		EBDDF16719BA1BD8005F2E06 /* CommonMark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonMark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +87,8 @@
 		EBDDF16919BA1BD8005F2E06 /* CommonMarkdown */ = {
 			isa = PBXGroup;
 			children = (
+				EBBF7BC819CB5D00004B694A /* BlockType.swift */,
+				EBBF7BCA19CB5D35004B694A /* Inline.swift */,
 				EBDDF16C19BA1BD8005F2E06 /* CommonMarkdown.h */,
 				EBDDF16A19BA1BD8005F2E06 /* Supporting Files */,
 				EBDDF18219BA1C7E005F2E06 /* DocumentParser.swift */,
@@ -228,10 +234,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBC258ED19BE534800F9D653 /* RegularExpression.swift in Sources */,
+				EBBF7BC919CB5D00004B694A /* BlockType.swift in Sources */,
 				EBC258EB19BE225E00F9D653 /* Block.swift in Sources */,
 				EBDDF18519BA20D9005F2E06 /* text.swift in Sources */,
 				EB4044C019C3693600B8C9AE /* InlineParser.swift in Sources */,
 				EBDDF18319BA1C7E005F2E06 /* DocumentParser.swift in Sources */,
+				EBBF7BCB19CB5D35004B694A /* Inline.swift in Sources */,
 				EB4044BC19C26B7000B8C9AE /* HTMLRenderer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

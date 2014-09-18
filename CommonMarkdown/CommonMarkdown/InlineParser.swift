@@ -6,19 +6,6 @@
 //  Copyright (c) 2014 Brian Nickel. All rights reserved.
 //
 
-enum Inline {
-    case Entity(String)
-    case Str(String)
-    case HTML(String)
-    case Code(String)
-    case Hardbreak
-    case Softbreak
-    case Emphasis([Inline])
-    case Strong([Inline])
-    case Link(destination:String, title:String, label:[Inline])
-    case Image(destination:String, title:String, label:[Inline])
-}
-
 struct Text {
     let string:String
     var position:String.Index

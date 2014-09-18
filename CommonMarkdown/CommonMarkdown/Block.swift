@@ -6,86 +6,6 @@
 //  Copyright (c) 2014 Brian Nickel. All rights reserved.
 //
 
-enum BlockType {
-    case Document
-    case List(data:ListData, tight:Bool)
-    case ListItem(ListData)
-    case Paragraph
-    case BlockQuote
-    case ATXHeader(Int)
-    case SetextHeader(Int)
-    case IndentedCode
-    case FencedCode(offset:Int, length:Int, character:Character, info:String)
-    case HtmlBlock
-    case ReferenceDef
-    case HorizontalRule
-}
-
-extension BlockType : Printable {
-    
-    var description:String {
-        
-        switch self {
-        case .Document: return "Document"
-        case .List: return "List"
-        case .ListItem: return "ListItem"
-        case .Paragraph: return "Paragraph"
-        case .BlockQuote: return "BlockQuote"
-        case .ATXHeader(let level): return "ATXHeader(level:\(level))"
-        case .SetextHeader(let level): return "SetextHeader(level:\(level))"
-        case .IndentedCode: return "IndentedCode"
-        case .FencedCode(let offset, let length, let character, let info): return ("FencedCode(offset:\(offset), length:\(length), character:\(character), info:\(info))")
-        case .HtmlBlock: return "HtmlBlock"
-        case .ReferenceDef: return "ReferenceDef"
-        case .HorizontalRule: return "HorizontalRule"
-        }
-    }
-}
-
-extension BlockType {
-    
-    // Returns true if parent block can contain child block.
-    func canContain(childType:BlockType) -> Bool {
-        switch self {
-        case .Document: return true
-        case .BlockQuote: return true
-        case .ListItem: return true
-        case .List:
-            switch childType {
-            case .ListItem: return true
-            default: return false
-            }
-        default: return false
-        }
-    }
-    
-    // Returns true if block type can accept lines of text.
-    var acceptsLines:Bool {
-        switch self {
-        case .Paragraph: fallthrough
-        case .IndentedCode: fallthrough
-        case .FencedCode: return true
-        default: return false
-        }
-    }
-    
-    var containsPlainText:Bool {
-        switch self {
-        case .FencedCode: fallthrough
-        case .IndentedCode: fallthrough
-        case .HtmlBlock: return true
-        default: return false
-        }
-    }
-    
-    func isListOfType(type:ListType) -> Bool {
-        switch self {
-        case .List(let data, _): return data.type == type
-        default: return false
-        }
-    }
-}
-
 public class Block {
     var type:BlockType
     let startLine:Int
@@ -139,12 +59,21 @@ extension Block : Printable {
     
     public var description: String {
         
+        func escape(var s:String) -> String {
+            s.replaceAll(regex("\n"), withTemplate: "\\n")
+            return s
+        }
+        
+        func indentedLines<T where T:Printable>(line:T) -> String {
+            return join("\n", split(line.description, { $0 == "\n" }).map({ "  \($0)"}))
+        }
+        
         if children.count > 0 {
             
-            var description = "\(type) (\(children.count) children)\n"
+            var description = "\(type) (\(children.count) children)"
             
             for child in children {
-                description += join("\n", split(child.description, { $0 == "\n" }, maxSplit: .max, allowEmptySlices: true).map({ "  \($0)"})) + "\n\n"
+                description += "\n" + indentedLines(child)
             }
             
             return description
@@ -152,17 +81,17 @@ extension Block : Printable {
         
         if inlineContent.count > 0 {
             
-            var description = "\(type) (\(children.count) inlines)\n"
+            var description = "\(type) (\(inlineContent.count) inlines)"
             
             for inline in inlineContent {
-                description += "\(inline)\n\n"
+                description += "\n" + indentedLines(inline)
             }
             
             return description
             
         }
         
-        return "\(type) \(stringContent)"
+        return "\(type) \(escape(stringContent))"
     }
 }
 
