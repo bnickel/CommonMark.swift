@@ -34,10 +34,10 @@
 		EB8DD00719C11E58003538B5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		EBC258EA19BE225E00F9D653 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		EBC258EC19BE534800F9D653 /* RegularExpression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpression.swift; sourceTree = "<group>"; };
-		EBDDF16719BA1BD8005F2E06 /* CommonMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBDDF16719BA1BD8005F2E06 /* CommonMark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonMark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBDDF16B19BA1BD8005F2E06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBDDF16C19BA1BD8005F2E06 /* CommonMarkdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonMarkdown.h; sourceTree = "<group>"; };
-		EBDDF17219BA1BD8005F2E06 /* CommonMarkdownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommonMarkdownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBDDF17219BA1BD8005F2E06 /* CommonMarkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommonMarkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBDDF17519BA1BD8005F2E06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBDDF17619BA1BD8005F2E06 /* CommonMarkdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMarkdownTests.swift; sourceTree = "<group>"; };
 		EBDDF18219BA1C7E005F2E06 /* DocumentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentParser.swift; sourceTree = "<group>"; };
@@ -76,8 +76,8 @@
 		EBDDF16819BA1BD8005F2E06 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EBDDF16719BA1BD8005F2E06 /* CommonMarkdown.framework */,
-				EBDDF17219BA1BD8005F2E06 /* CommonMarkdownTests.xctest */,
+				EBDDF16719BA1BD8005F2E06 /* CommonMark.framework */,
+				EBDDF17219BA1BD8005F2E06 /* CommonMarkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,9 +136,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		EBDDF16619BA1BD8005F2E06 /* CommonMarkdown */ = {
+		EBDDF16619BA1BD8005F2E06 /* CommonMark */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EBDDF17A19BA1BD8005F2E06 /* Build configuration list for PBXNativeTarget "CommonMarkdown" */;
+			buildConfigurationList = EBDDF17A19BA1BD8005F2E06 /* Build configuration list for PBXNativeTarget "CommonMark" */;
 			buildPhases = (
 				EBDDF16219BA1BD8005F2E06 /* Sources */,
 				EBDDF16319BA1BD8005F2E06 /* Frameworks */,
@@ -149,14 +149,14 @@
 			);
 			dependencies = (
 			);
-			name = CommonMarkdown;
+			name = CommonMark;
 			productName = CommonMarkdown;
-			productReference = EBDDF16719BA1BD8005F2E06 /* CommonMarkdown.framework */;
+			productReference = EBDDF16719BA1BD8005F2E06 /* CommonMark.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		EBDDF17119BA1BD8005F2E06 /* CommonMarkdownTests */ = {
+		EBDDF17119BA1BD8005F2E06 /* CommonMarkTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EBDDF17D19BA1BD8005F2E06 /* Build configuration list for PBXNativeTarget "CommonMarkdownTests" */;
+			buildConfigurationList = EBDDF17D19BA1BD8005F2E06 /* Build configuration list for PBXNativeTarget "CommonMarkTests" */;
 			buildPhases = (
 				EBDDF16E19BA1BD8005F2E06 /* Sources */,
 				EBDDF16F19BA1BD8005F2E06 /* Frameworks */,
@@ -167,9 +167,9 @@
 			dependencies = (
 				EBC4C22319C7AF1C00C66C1E /* PBXTargetDependency */,
 			);
-			name = CommonMarkdownTests;
+			name = CommonMarkTests;
 			productName = CommonMarkdownTests;
-			productReference = EBDDF17219BA1BD8005F2E06 /* CommonMarkdownTests.xctest */;
+			productReference = EBDDF17219BA1BD8005F2E06 /* CommonMarkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -189,7 +189,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EBDDF16119BA1BD8005F2E06 /* Build configuration list for PBXProject "CommonMarkdown" */;
+			buildConfigurationList = EBDDF16119BA1BD8005F2E06 /* Build configuration list for PBXProject "CommonMark" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -201,8 +201,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EBDDF16619BA1BD8005F2E06 /* CommonMarkdown */,
-				EBDDF17119BA1BD8005F2E06 /* CommonMarkdownTests */,
+				EBDDF16619BA1BD8005F2E06 /* CommonMark */,
+				EBDDF17119BA1BD8005F2E06 /* CommonMarkTests */,
 			);
 		};
 /* End PBXProject section */
@@ -251,7 +251,7 @@
 /* Begin PBXTargetDependency section */
 		EBC4C22319C7AF1C00C66C1E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EBDDF16619BA1BD8005F2E06 /* CommonMarkdown */;
+			target = EBDDF16619BA1BD8005F2E06 /* CommonMark */;
 			targetProxy = EBC4C22219C7AF1C00C66C1E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -352,7 +352,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CommonMark;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -372,7 +372,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CommonMark;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -391,7 +391,7 @@
 				);
 				INFOPLIST_FILE = CommonMarkdownTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CommonMarkTests;
 			};
 			name = Debug;
 		};
@@ -405,14 +405,14 @@
 				);
 				INFOPLIST_FILE = CommonMarkdownTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CommonMarkTests;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EBDDF16119BA1BD8005F2E06 /* Build configuration list for PBXProject "CommonMarkdown" */ = {
+		EBDDF16119BA1BD8005F2E06 /* Build configuration list for PBXProject "CommonMark" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EBDDF17819BA1BD8005F2E06 /* Debug */,
@@ -421,7 +421,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EBDDF17A19BA1BD8005F2E06 /* Build configuration list for PBXNativeTarget "CommonMarkdown" */ = {
+		EBDDF17A19BA1BD8005F2E06 /* Build configuration list for PBXNativeTarget "CommonMark" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EBDDF17B19BA1BD8005F2E06 /* Debug */,
@@ -430,7 +430,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EBDDF17D19BA1BD8005F2E06 /* Build configuration list for PBXNativeTarget "CommonMarkdownTests" */ = {
+		EBDDF17D19BA1BD8005F2E06 /* Build configuration list for PBXNativeTarget "CommonMarkTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EBDDF17E19BA1BD8005F2E06 /* Debug */,

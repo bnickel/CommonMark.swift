@@ -5,6 +5,6 @@
       location = "group:stmd-wrapped/stmd-wrapped.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:CommonMarkdown/CommonMarkdown.xcodeproj">
+      location = "group:CommonMarkdown/CommonMark.xcodeproj">
    </FileRef>
 </Workspace>
