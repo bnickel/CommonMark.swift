@@ -47,6 +47,13 @@ public class DocumentParser {
     
     public func incorporateLine(var line: String, _ lineNumber:Int) -> IncorporationResult {
         
+        func isParagraph(block:Block) -> Bool {
+            switch block.type {
+            case .Paragraph: return true
+            default: return false
+            }
+        }
+        
         var allMatched = true
         let CODE_INDENT = 4
         
@@ -195,7 +202,7 @@ public class DocumentParser {
             if indent >= CODE_INDENT {
                 
                 // indented code
-                if tip.type != .Paragraph && !blank {
+                if !isParagraph(tip) && !blank {
                     offset = advance(offset, CODE_INDENT)
                     closeUnmatchedBlocks()
                     container = addChild(.IndentedCode, lineNumber, distance(line.startIndex, offset))
@@ -240,7 +247,7 @@ public class DocumentParser {
                 // note, we don't adjust offset because the tag is part of the text
                 break
                 
-            } else if container.type == .Paragraph && container.strings.count == 1 && line.substringFromIndex(firstNonspace).firstMatch(regex("^(?:=+|-+) *$")) != nil {
+            } else if isParagraph(container) && container.strings.count == 1 && line.substringFromIndex(firstNonspace).matches(regex("^(?:=+|-+) *$")) {
                 let match = line.substringFromIndex(firstNonspace).firstMatch(regex("^(?:=+|-+) *$"))!.text
                 
                 // setext header line
@@ -303,7 +310,7 @@ public class DocumentParser {
         let indent = distance(offset, firstNonspace)
         
         // First check for a lazy paragraph continuation:
-        if tip !== lastMatchedContainer && !blank && tip.type == .Paragraph && tip.strings.count > 0 {
+        if tip !== lastMatchedContainer && !blank && isParagraph(tip) && tip.strings.count > 0 {
             
             tip.lastLineBlank = false // TODO: Possible bug in stmd.js?
             let result = addLine(line, offset: offset)
@@ -369,20 +376,24 @@ public class DocumentParser {
                 
                 if container.type.acceptsLines {
                     addLine(line, offset: firstNonspace)
-                } else if blank {
-                    // do nothing
-                } else if container.type != .HorizontalRule && !(container.type ~= .SetextHeader(0)) {
-                    // create paragraph container for line
-                    container = addChild(.Paragraph, lineNumber, distance(line.startIndex, firstNonspace))
-                    addLine(line, offset: firstNonspace)
-                } else {
-                    return .Error("Line \(lineNumber) with container type \(container.type) did not match any condition.")
+                } else if !blank {
+                    
+                    switch container.type {
+                    case .HorizontalRule: fallthrough
+                    case .SetextHeader:
+                        return .Error("Line \(lineNumber) with container type \(container.type) did not match any condition.")
+                        
+                    default:
+                        // create paragraph container for line
+                        container = addChild(.Paragraph, lineNumber, distance(line.startIndex, firstNonspace))
+                        addLine(line, offset: firstNonspace)
+                    }
                 }
                 
             }
         }
         
-        return IncorporationResult.Success
+        return .Success
     }
     
     func highestList(block: Block) -> Block? {

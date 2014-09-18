@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import CommonMarkdown
+import CommonMark
 
 let version = "1.0"
 
@@ -56,7 +56,7 @@ for argument in arguments {
     }
 }
 
-let doc = DocumentParser()
+let parser = DocumentParser()
 
 func readLine(file:UnsafeMutablePointer<FILE>) -> String? {
     
@@ -74,7 +74,7 @@ func readFile(file:UnsafeMutablePointer<FILE>) -> IncorporationResult {
     
     while let line = readLine(file) {
         
-        switch doc.incorporateLine(line, lineNumber) {
+        switch parser.incorporateLine(line, lineNumber) {
             
         case .Success:
             lineNumber += 1
@@ -115,6 +115,10 @@ for file in files {
     }
 }
 
-let renderer = HTMLRenderer()
+let doc = parser.finalize(lineNumber)
 
-println(renderer.renderBlock(doc.finalize(lineNumber)))
+if outputAST {
+    println(doc)
+} else {
+    println(HTMLRenderer().renderBlock(doc))
+}

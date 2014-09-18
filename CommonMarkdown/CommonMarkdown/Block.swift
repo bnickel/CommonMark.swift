@@ -42,39 +42,6 @@ extension BlockType : Printable {
     }
 }
 
-extension BlockType : Equatable {}
-
-func == (lhs: BlockType, rhs:BlockType) -> Bool {
-    
-    switch (lhs, rhs) {
-    case (.Document, .Document):             return true
-    case (.List(let a, let b), .List(let y, let z)): return a == y && b == z
-    case (.ListItem(let a), .ListItem(let b)): return a == b
-    case (.Paragraph, .Paragraph):           return true
-    case (.BlockQuote, .BlockQuote):         return true
-    case (.ATXHeader(let a), .ATXHeader(let b)): return a == b
-    case (.SetextHeader(let a), .SetextHeader(let b)): return a == b
-    case (.FencedCode(let a, let b, let c, let d), .FencedCode(let w, let x, let y, let z)): return a == w && b == x && c == y && d == z
-    case (.IndentedCode, .IndentedCode):     return true
-    case (.HtmlBlock, .HtmlBlock):           return true
-    case (.ReferenceDef, .ReferenceDef):     return true
-    case (.HorizontalRule, .HorizontalRule): return true
-    default:                                 return false
-    }
-}
-
-func ~= (lhs: BlockType, rhs:BlockType) -> Bool {
-    
-    switch (lhs, rhs) {
-    case (.List, .List):                     return true
-    case (.ListItem, .ListItem):             return true
-    case (.ATXHeader, .ATXHeader):           return true
-    case (.SetextHeader, .SetextHeader):     return true
-    case (.FencedCode, .FencedCode):         return true
-    default: return lhs == rhs
-    }
-}
-
 extension BlockType {
     
     // Returns true if parent block can contain child block.
