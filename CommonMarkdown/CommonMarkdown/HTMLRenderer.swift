@@ -75,7 +75,7 @@ public class HTMLRenderer {
             
             return inTags("pre", contents: inTags("code", contents: escape(block.stringContent)))
             
-        case .FencedCode(_, _, _):
+        case .FencedCode:
             
             var attributes = [String: String]()
             let infoWords = split(block.info, { $0 == " " }, maxSplit: 1, allowEmptySlices: true)
