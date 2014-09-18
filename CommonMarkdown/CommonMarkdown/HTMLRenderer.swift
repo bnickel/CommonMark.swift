@@ -63,16 +63,19 @@ public class HTMLRenderer {
             
             return inTags(tag, attributes: attributes, contents: innerSeparator + renderBlocks(block.children, inTightList: block.tight) + innerSeparator)
             
-        case .ATXHeader:    fallthrough
-        case .SetextHeader:
+        case .ATXHeader(let level):
             
-            return inTags("h\(block.level)", contents: renderInlines(block.inlineContent))
-                
+            return inTags("h\(level)", contents: renderInlines(block.inlineContent))
+            
+        case .SetextHeader(let level):
+            
+            return inTags("h\(level)", contents: renderInlines(block.inlineContent))
+            
         case .IndentedCode:
             
             return inTags("pre", contents: inTags("code", contents: escape(block.stringContent)))
             
-        case .FencedCode:
+        case .FencedCode(_, _, _):
             
             var attributes = [String: String]()
             let infoWords = split(block.info, { $0 == " " }, maxSplit: 1, allowEmptySlices: true)

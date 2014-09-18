@@ -12,10 +12,10 @@ enum BlockType {
     case ListItem
     case Paragraph
     case BlockQuote
-    case ATXHeader
-    case SetextHeader
+    case ATXHeader(Int)
+    case SetextHeader(Int)
     case IndentedCode
-    case FencedCode
+    case FencedCode(offset:Int, length:Int, character:Character)
     case HtmlBlock
     case ReferenceDef
     case HorizontalRule
@@ -31,10 +31,10 @@ extension BlockType : Printable {
         case .ListItem: return "ListItem"
         case .Paragraph: return "Paragraph"
         case .BlockQuote: return "BlockQuote"
-        case .ATXHeader: return "ATXHeader"
-        case .SetextHeader: return "SetextHeader"
+        case .ATXHeader(let level): return "ATXHeader(level:\(level))"
+        case .SetextHeader(let level): return "SetextHeader(level:\(level))"
         case .IndentedCode: return "IndentedCode"
-        case .FencedCode: return "FencedCode"
+        case .FencedCode(let offset, let length, let character): return ("FencedCode(offset:\(offset), length:\(length), character:\(character))")
         case .HtmlBlock: return "HtmlBlock"
         case .ReferenceDef: return "ReferenceDef"
         case .HorizontalRule: return "HorizontalRule"
@@ -52,10 +52,10 @@ func == (lhs: BlockType, rhs:BlockType) -> Bool {
     case (.ListItem, .ListItem):             return true
     case (.Paragraph, .Paragraph):           return true
     case (.BlockQuote, .BlockQuote):         return true
-    case (.ATXHeader, .ATXHeader):           return true
-    case (.SetextHeader, .SetextHeader):     return true
+    case (.ATXHeader(let a), .ATXHeader(let b)): return a == b
+    case (.SetextHeader(let a), .SetextHeader(let b)): return a == b
+    case (.FencedCode(let a, let b, let c), .FencedCode(let x, let y, let z)): return a == x && b == y && c == z
     case (.IndentedCode, .IndentedCode):     return true
-    case (.FencedCode, .FencedCode):         return true
     case (.HtmlBlock, .HtmlBlock):           return true
     case (.ReferenceDef, .ReferenceDef):     return true
     case (.HorizontalRule, .HorizontalRule): return true
@@ -64,7 +64,13 @@ func == (lhs: BlockType, rhs:BlockType) -> Bool {
 }
 
 func ~= (lhs: BlockType, rhs:BlockType) -> Bool {
-    return lhs == rhs
+    
+    switch (lhs, rhs) {
+    case (.ATXHeader, .ATXHeader):           return true
+    case (.SetextHeader, .SetextHeader):     return true
+    case (.FencedCode, .FencedCode):         return true
+    default: return lhs == rhs
+    }
 }
 
 extension BlockType {
@@ -76,7 +82,21 @@ extension BlockType {
     
     // Returns true if block type can accept lines of text.
     var acceptsLines:Bool {
-        return contains([.Paragraph, .IndentedCode, .FencedCode], self)
+        switch self {
+        case .Paragraph: fallthrough
+        case .IndentedCode: fallthrough
+        case .FencedCode(_, _, _): return true
+        default: return false
+        }
+    }
+    
+    var containsPlainText:Bool {
+        switch self {
+        case .FencedCode(_, _, _): fallthrough
+        case .IndentedCode: fallthrough
+        case .HtmlBlock: return true
+        default: return false
+        }
     }
 }
 
@@ -102,11 +122,7 @@ public class Block {
     }
     
     // TODO: Messy duck type stuff that should be fixed with subclasses maybe.
-    var fenceOffset:Int!
-    var fenceLength:Int!
-    var fenceCharacter:Character!
     var listData:ListData!
-    var level:Int!
     var info:String!
     var tight:Bool!
 }
@@ -132,6 +148,16 @@ extension Block {
             return children.count > 0 && children.last!.endsWithBlankLine
         default:
             return false
+        }
+    }
+    
+    func shouldRememberBlankLine(lineNumber:Int) -> Bool {
+        switch type {
+        case .BlockQuote: return false
+        case .FencedCode(_, _, _): return false
+        case .ListItem:
+            return !(children.count == 0 && startLine == lineNumber)
+        default: return true
         }
     }
 }

@@ -124,10 +124,9 @@ public class DocumentParser {
                 // a header can never container > 1 line, so fail to match:
                 allMatched = false
                 
-            case .FencedCode:
+            case .FencedCode(var index, _, _):
                 
                 // skip optional spaces of fence offset
-                var index = container.fenceOffset!
                 while (index > 0 && offset != line.endIndex && line[offset] == " ") {
                     offset = advance(offset, 1);
                     index -= 1
@@ -179,8 +178,7 @@ public class DocumentParser {
         
         // Unless last matched container is a code block, try new container starts,
         // adding children to the last matched container:
-        while !contains([.FencedCode, .IndentedCode, .HtmlBlock], container.type) && line.rangeOfFirstMatch(regex("^[ #`~*+_=<>0-9-]"), options: nil, from: offset) != nil {
-            
+        while !container.type.containsPlainText && line.rangeOfFirstMatch(regex("^[ #`~*+_=<>0-9-]"), options: nil, from: offset) != nil {
             
             var firstNonspace: String.Index
                 
@@ -220,8 +218,7 @@ public class DocumentParser {
                 // ATX header
                 offset = advance(firstNonspace, countElements(match))
                 closeUnmatchedBlocks()
-                container = addChild(.ATXHeader, lineNumber, distance(line.startIndex, firstNonspace))
-                container.level = countElements(trim(match)) // number of #s
+                container = addChild(.ATXHeader(countElements(trim(match))), lineNumber, distance(line.startIndex, firstNonspace))
                 // remove trailing ###s:
                 container.strings = [line.substringFromIndex(offset).stringByReplacingFirst(regex("(?:(\\\\#) *#*| *#+) *$"), withTemplate: "$1")]
                 break
@@ -231,10 +228,7 @@ public class DocumentParser {
                 // fenced code block
                 let fenceLength = countElements(match)
                 closeUnmatchedBlocks()
-                container = addChild(.FencedCode, lineNumber, distance(line.startIndex, firstNonspace))
-                container.fenceLength = fenceLength
-                container.fenceOffset = distance(offset, firstNonspace)
-                container.fenceCharacter = match[match.startIndex]
+                container = addChild(.FencedCode(offset: distance(offset, firstNonspace), length: fenceLength, character: match[match.startIndex]), lineNumber, distance(line.startIndex, firstNonspace))
                 offset = advance(firstNonspace, fenceLength)
                 break
                 
@@ -251,8 +245,7 @@ public class DocumentParser {
                 
                 // setext header line
                 closeUnmatchedBlocks()
-                container.type = .SetextHeader // convert Paragraph to SetextHeader
-                container.level = match.hasPrefix("=") ? 1 : 2
+                container.type = .SetextHeader(match.hasPrefix("=") ? 1 : 2) // convert Paragraph to SetextHeader
                 offset = line.endIndex
                 
             } else if line.firstMatch(reHrule, options: nil, from: firstNonspace) != nil {
@@ -329,12 +322,7 @@ public class DocumentParser {
             // and we don't count blanks in fenced code for purposes of tight/loose
             // lists or breaking out of lists.  We also don't set last_line_blank
             // on an empty list item.
-            container.lastLineBlank = blank &&
-                !(container.type == .BlockQuote ||
-                    container.type == .FencedCode ||
-                        (container.type == .ListItem &&
-                            container.children.count == 0 &&
-                            container.startLine == lineNumber))
+            container.lastLineBlank = blank && container.shouldRememberBlankLine(lineNumber)
             
             var parent = container.parent
             while let c = parent {
@@ -350,14 +338,14 @@ public class DocumentParser {
             case .HtmlBlock:
                 addLine(line, offset: offset)
                 
-            case .FencedCode:
+            case .FencedCode(_, let fenceLength, let fenceCharacter):
                 
                 var matched = false
                 
                 // check for closing code fence:
-                if indent <= 3 && firstNonspace < line.endIndex && line[firstNonspace] == container.fenceCharacter {
+                if indent <= 3 && firstNonspace < line.endIndex && line[firstNonspace] == fenceCharacter {
                     if let match = line.substringFromIndex(firstNonspace).firstMatch(regex("^(?:`{3,}|~{3,})(?= *$)"))?.text {
-                        if countElements(match) >= container.fenceLength {
+                        if countElements(match) >= fenceLength {
                             // don't add closing fence to container; instead, close it:
                             finalize(container, lineNumber: lineNumber)
                             matched = true
@@ -385,7 +373,7 @@ public class DocumentParser {
                     addLine(line, offset: firstNonspace)
                 } else if blank {
                     // do nothing
-                } else if container.type != .HorizontalRule && container.type != .SetextHeader {
+                } else if container.type != .HorizontalRule && !(container.type ~= .SetextHeader(0)) {
                     // create paragraph container for line
                     container = addChild(.Paragraph, lineNumber, distance(line.startIndex, firstNonspace))
                     addLine(line, offset: firstNonspace)
