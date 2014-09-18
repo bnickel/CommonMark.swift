@@ -63,6 +63,23 @@ func == (lhs: BlockType, rhs:BlockType) -> Bool {
     }
 }
 
+func ~= (lhs: BlockType, rhs:BlockType) -> Bool {
+    return lhs == rhs
+}
+
+extension BlockType {
+    
+    // Returns true if parent block can contain child block.
+    func canContain(childType:BlockType) -> Bool {
+        return contains([.Document, .BlockQuote, .ListItem], self) || (self == .List && childType == .ListItem)
+    }
+    
+    // Returns true if block type can accept lines of text.
+    var acceptsLines:Bool {
+        return contains([.Paragraph, .IndentedCode, .FencedCode], self)
+    }
+}
+
 public class Block {
     var type:BlockType
     let startLine:Int

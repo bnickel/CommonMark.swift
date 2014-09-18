@@ -289,7 +289,7 @@ public class DocumentParser {
                 
             }
             
-            if acceptsLines(container.type) {
+            if container.type.acceptsLines {
                 // if it's a line container, it can't contain other containers
                 break
             }
@@ -381,7 +381,7 @@ public class DocumentParser {
                 
             default:
                 
-                if acceptsLines(container.type) {
+                if container.type.acceptsLines {
                     addLine(line, offset: firstNonspace)
                 } else if blank {
                     // do nothing
@@ -417,7 +417,7 @@ public class DocumentParser {
     // accept children, close and finalize it and try its parent,
     // and so on til we find a block that can accept children.
     func addChild(type:BlockType, _ lineNumber:Int, _ offset:Int) -> Block {
-        while (!parentType(tip.type, canContain:type)) {
+        while !tip.type.canContain(type) {
             finalize(tip, lineNumber: lineNumber)
         }
         
@@ -427,17 +427,7 @@ public class DocumentParser {
         newBlock.parent = tip
         tip = newBlock
         return newBlock
-    };
-    
-    // Returns true if parent block can contain child block.
-    func parentType(parentType:BlockType, canContain childType:BlockType) -> Bool {
-        return contains([.Document, .BlockQuote, .ListItem], parentType) || (parentType == .List && childType == .ListItem)
-    };
-    
-    // Returns true if block type can accept lines of text.
-    func acceptsLines(type:BlockType) -> Bool {
-        return contains([.Paragraph, .IndentedCode, .FencedCode], type)
-    };
+    }
     
     func addLine(line:String, offset:String.Index) -> IncorporationResult {
         if !tip.open {
