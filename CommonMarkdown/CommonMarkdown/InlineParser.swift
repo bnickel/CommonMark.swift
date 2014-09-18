@@ -317,15 +317,14 @@ class InlineParser {
             
             while true {
                 var (closeDelimiterCount, _, canClose) = scanDelims(text, character)
-                if closeDelimiterCount >= 1 && closeDelimiterCount <= 3 && canClose && (firstClose == nil || closeDelimiterCount != firstClose.delimiterCount) {
-                    if closeDelimiterCount == 3 {
-                        // If we opened with ***, then we interpret *** as * followed by **
-                        // giving us <strong><em>
-                        closeDelimiterCount = 1
-                    }
-                    text.skip(closeDelimiterCount)
+                if canClose && (firstClose == nil || closeDelimiterCount != firstClose.delimiterCount) {
                     
                     if firstClose != nil { // if we've already passed the first closer:
+                        
+                        if closeDelimiterCount > 3 - firstClose.delimiterCount {
+                            closeDelimiterCount = 3 - firstClose.delimiterCount
+                        }
+                        text.skip(closeDelimiterCount)
                         
                         let deepInlines = Array(inlines[delimiterPosition+1..<firstClose.position])
                         let shallowInlines = Array(inlines[firstClose.position+1..<inlines.endIndex])
@@ -333,7 +332,16 @@ class InlineParser {
                         inlines[delimiterPosition] = firstClose.delimiterCount == 1 ? .Strong(subinlines) : .Emphasis(subinlines)
                         inlines.removeRange(delimiterPosition+1..<inlines.endIndex)
                         break
-                    } else {  // this is the first closer; for now, add literal string;
+                    } else {
+                        
+                        if closeDelimiterCount == 3 {
+                            // If we opened with ***, then we interpret *** as * followed by **
+                            // giving us <strong><em>
+                            closeDelimiterCount = 1
+                        }
+                        text.skip(closeDelimiterCount)
+                        
+                        // this is the first closer; for now, add literal string;
                         // we'll change this when he hit the second closer
                         inlines.append(.Str(text.prev(closeDelimiterCount)))
                         firstClose = (inlines.endIndex - 1, closeDelimiterCount)
