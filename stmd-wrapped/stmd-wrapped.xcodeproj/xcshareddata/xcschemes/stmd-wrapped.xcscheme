@@ -59,7 +59,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "$SRCROOT/../CommonMarkdown/specs/spec.txt"
+            argument = "$SRCROOT/../CommonMark/specs/spec.txt"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

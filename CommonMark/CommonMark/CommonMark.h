@@ -15,5 +15,3 @@ FOUNDATION_EXPORT double CommonMarkdownVersionNumber;
 FOUNDATION_EXPORT const unsigned char CommonMarkdownVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <CommonMarkdown/PublicHeader.h>
-
-

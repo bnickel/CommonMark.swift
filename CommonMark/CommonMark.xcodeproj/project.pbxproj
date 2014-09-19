@@ -14,8 +14,8 @@
 		EBBF7BCB19CB5D35004B694A /* Inline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBF7BCA19CB5D35004B694A /* Inline.swift */; };
 		EBC258EB19BE225E00F9D653 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC258EA19BE225E00F9D653 /* Block.swift */; };
 		EBC258ED19BE534800F9D653 /* RegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC258EC19BE534800F9D653 /* RegularExpression.swift */; };
-		EBDDF16D19BA1BD8005F2E06 /* CommonMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = EBDDF16C19BA1BD8005F2E06 /* CommonMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EBDDF17719BA1BD8005F2E06 /* CommonMarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDDF17619BA1BD8005F2E06 /* CommonMarkdownTests.swift */; };
+		EBDDF16D19BA1BD8005F2E06 /* CommonMark.h in Headers */ = {isa = PBXBuildFile; fileRef = EBDDF16C19BA1BD8005F2E06 /* CommonMark.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EBDDF17719BA1BD8005F2E06 /* CommonMarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDDF17619BA1BD8005F2E06 /* CommonMarkTests.swift */; };
 		EBDDF18319BA1C7E005F2E06 /* DocumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDDF18219BA1C7E005F2E06 /* DocumentParser.swift */; };
 		EBDDF18519BA20D9005F2E06 /* text.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDDF18419BA20D9005F2E06 /* text.swift */; };
 /* End PBXBuildFile section */
@@ -26,7 +26,7 @@
 			containerPortal = EBDDF15E19BA1BD8005F2E06 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = EBDDF16619BA1BD8005F2E06;
-			remoteInfo = CommonMarkdown;
+			remoteInfo = CommonMark;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -39,10 +39,10 @@
 		EBC258EC19BE534800F9D653 /* RegularExpression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpression.swift; sourceTree = "<group>"; };
 		EBDDF16719BA1BD8005F2E06 /* CommonMark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonMark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBDDF16B19BA1BD8005F2E06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EBDDF16C19BA1BD8005F2E06 /* CommonMarkdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonMarkdown.h; sourceTree = "<group>"; };
+		EBDDF16C19BA1BD8005F2E06 /* CommonMark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonMark.h; sourceTree = "<group>"; };
 		EBDDF17219BA1BD8005F2E06 /* CommonMarkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommonMarkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBDDF17519BA1BD8005F2E06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EBDDF17619BA1BD8005F2E06 /* CommonMarkdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMarkdownTests.swift; sourceTree = "<group>"; };
+		EBDDF17619BA1BD8005F2E06 /* CommonMarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMarkTests.swift; sourceTree = "<group>"; };
 		EBDDF18219BA1C7E005F2E06 /* DocumentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentParser.swift; sourceTree = "<group>"; };
 		EBDDF18419BA20D9005F2E06 /* text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = text.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,8 +69,8 @@
 		EBDDF15D19BA1BD8005F2E06 = {
 			isa = PBXGroup;
 			children = (
-				EBDDF16919BA1BD8005F2E06 /* CommonMarkdown */,
-				EBDDF17319BA1BD8005F2E06 /* CommonMarkdownTests */,
+				EBDDF16919BA1BD8005F2E06 /* CommonMark */,
+				EBDDF17319BA1BD8005F2E06 /* CommonMarkTests */,
 				EBDDF16819BA1BD8005F2E06 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,12 +84,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EBDDF16919BA1BD8005F2E06 /* CommonMarkdown */ = {
+		EBDDF16919BA1BD8005F2E06 /* CommonMark */ = {
 			isa = PBXGroup;
 			children = (
 				EBBF7BC819CB5D00004B694A /* BlockType.swift */,
 				EBBF7BCA19CB5D35004B694A /* Inline.swift */,
-				EBDDF16C19BA1BD8005F2E06 /* CommonMarkdown.h */,
+				EBDDF16C19BA1BD8005F2E06 /* CommonMark.h */,
 				EBDDF16A19BA1BD8005F2E06 /* Supporting Files */,
 				EBDDF18219BA1C7E005F2E06 /* DocumentParser.swift */,
 				EB4044BF19C3693600B8C9AE /* InlineParser.swift */,
@@ -98,7 +98,7 @@
 				EBC258EA19BE225E00F9D653 /* Block.swift */,
 				EBDDF18419BA20D9005F2E06 /* text.swift */,
 			);
-			path = CommonMarkdown;
+			path = CommonMark;
 			sourceTree = "<group>";
 		};
 		EBDDF16A19BA1BD8005F2E06 /* Supporting Files */ = {
@@ -109,13 +109,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		EBDDF17319BA1BD8005F2E06 /* CommonMarkdownTests */ = {
+		EBDDF17319BA1BD8005F2E06 /* CommonMarkTests */ = {
 			isa = PBXGroup;
 			children = (
-				EBDDF17619BA1BD8005F2E06 /* CommonMarkdownTests.swift */,
+				EBDDF17619BA1BD8005F2E06 /* CommonMarkTests.swift */,
 				EBDDF17419BA1BD8005F2E06 /* Supporting Files */,
 			);
-			path = CommonMarkdownTests;
+			path = CommonMarkTests;
 			sourceTree = "<group>";
 		};
 		EBDDF17419BA1BD8005F2E06 /* Supporting Files */ = {
@@ -133,7 +133,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBDDF16D19BA1BD8005F2E06 /* CommonMarkdown.h in Headers */,
+				EBDDF16D19BA1BD8005F2E06 /* CommonMark.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +154,7 @@
 			dependencies = (
 			);
 			name = CommonMark;
-			productName = CommonMarkdown;
+			productName = CommonMark;
 			productReference = EBDDF16719BA1BD8005F2E06 /* CommonMark.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -172,7 +172,7 @@
 				EBC4C22319C7AF1C00C66C1E /* PBXTargetDependency */,
 			);
 			name = CommonMarkTests;
-			productName = CommonMarkdownTests;
+			productName = CommonMarkTests;
 			productReference = EBDDF17219BA1BD8005F2E06 /* CommonMarkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -248,7 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBDDF17719BA1BD8005F2E06 /* CommonMarkdownTests.swift in Sources */,
+				EBDDF17719BA1BD8005F2E06 /* CommonMarkTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,7 +354,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = CommonMarkdown/Info.plist;
+				INFOPLIST_FILE = CommonMark/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -374,7 +374,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = CommonMarkdown/Info.plist;
+				INFOPLIST_FILE = CommonMark/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -395,7 +395,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = CommonMarkdownTests/Info.plist;
+				INFOPLIST_FILE = CommonMarkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = CommonMarkTests;
 			};
@@ -409,7 +409,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = CommonMarkdownTests/Info.plist;
+				INFOPLIST_FILE = CommonMarkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = CommonMarkTests;
 			};

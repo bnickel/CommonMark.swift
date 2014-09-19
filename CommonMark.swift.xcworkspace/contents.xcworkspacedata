@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:stmd/stmd.xcodeproj">
+      location = "group:CommonMark/CommonMark.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:stmd.swift/stmd.swift.xcodeproj">
+      location = "group:stmd-wrapped/stmd-wrapped.xcodeproj">
    </FileRef>
 </Workspace>
